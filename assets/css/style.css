@@ -1,10 +1,15 @@
+/* ===== CONFIGURACIÓN GENERAL ===== */
+
+/* Eliminan las margenes y espacios predeterminados 
+y facilita el cálculo de las dimensiones. */
 * {
   margin: 0;
-  border: 0;
   padding: 0;
+  border: 0;
   box-sizing: border-box;
 }
 
+/* Variables reutilizables de la identidad visual */
 :root {
   --color-fondo: #006d46;
   --color-borde: #004d31;
@@ -12,12 +17,14 @@
   --fuente-titulo: "Cormorant Garamond", serif;
 }
 
-/* Html */
+/* ===== HTML Y BODY ===== */
+
+/* Desplazamiento suave al navegar por secciones */
 html {
   scroll-behavior: smooth;
 }
 
-/* Body */
+/* Estilos generales de toda la página */
 body {
   font-family: "Cormorant Garamond", serif;
   background-color: aliceblue;
@@ -25,17 +32,21 @@ body {
   transition: 0.3s;
 }
 
+/* Estilo común de los enlaces */
 a {
   color: inherit;
   text-decoration: none;
 }
 
-/* ===== Encabezado ===== */
+/* ===== ENCABEZADO Y NAVEGACIÓN ===== */
+
+/* Colores generales del encabezado */
 header {
   background-color: var(--color-fondo);
   color: var(--color-acento);
 }
 
+/* Distribución de las tres zonas del encabezado */
 .encabezado {
   display: flex;
   align-items: center;
@@ -43,11 +54,12 @@ header {
   gap: 1.5rem;
   padding: 1rem 2rem;
   border-bottom: 1px solid var(--color-borde);
-  position: sticky;
+  position: sticky; /* Mantiene el encabezado visible al desplazarse */
   top: 0;
   z-index: 10;
 }
 
+/* Agrupa los elementos de navegación de ambos lados */ 
 .nav-izquierdo,
 .nav-derecho {
   display: flex;
@@ -56,16 +68,19 @@ header {
   flex: 1;
 }
 
+/* Alinea los elementos del lado derecho */
 .nav-derecho {
   justify-content: flex-end;
 }
 
+/* Distribuye los enlaces de navegación */
 .nav-principal,
 .nav-secundario {
   display: flex;
   gap: 1.5rem;
 }
 
+/* Apariencia de los enlaces de navegación */
 .nav-principal a,
 .nav-secundario a {
   font-size: 0.85rem;
@@ -74,14 +89,15 @@ header {
   padding-bottom: 2px;
   border-bottom: 1px solid transparent;
   transition: border-color 0.2s ease;
-  justify-content: space-between;
 }
 
+/* Subraya los enlaces al pasar el cursor */
 .nav-principal a:hover,
 .nav-secundario a:hover {
   border-color: var(--color-acento);
 }
 
+/* Nombre principal de la tienda */
 .nombre-marca {
   font-family: var(--fuente-titulo);
   font-size: 1.6rem;
@@ -90,6 +106,7 @@ header {
   white-space: nowrap;
 }
 
+/* Enlace del carrito */
 .nav-icono {
   display: flex;
   align-items: center;
@@ -101,40 +118,112 @@ header {
   font-size: 1.2rem;
 }
 
-.campo-buscar {
+/* Botón del perfil */
+.nav-icono {
   display: flex;
   align-items: center;
   gap: 0.4rem;
-}
-
-.campo-buscar input {
-  padding: 0.35rem 0.7rem;
-  border-radius: 4px;
+  background: transparent;
   border: none;
-  font-family: inherit;
-}
-
-.boton-buscar {
-  background: none;
-  border: none;
+  box-shadow: none;
   color: var(--color-acento);
+  font-family: inherit;
+  font-size: 0.85rem;
   cursor: pointer;
-  font-size: 1.1rem;
 }
 
-/* ===== Contenido principal ===== */
+/* Evita que el botón cambie de fondo al interactuar */
+.nav-icono:hover,
+.nav-icon:focus,
+.nav-icon:active {
+  background-color: transparent;
+  color: var(--color-acento);
+}
+
+/* Tamaño del icono del perfil */
+.nav-icono i {
+  font-size: 1.2rem;
+}
+
+/* ===== BARRA DE BÚSQUEDA ===== */
+
+/* Contenedor que se amplia al pasar el cursor */
+.campoBuscar {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 60px;
+  height: 36px;
+  transition: width 0.4s ease;
+}
+
+/* Amplia el campo de busqueda */
+.campoBuscar:hover {
+  width: 300px;
+}
+
+/* Campo de texto de busqueda */
+.campoBuscar input {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  padding: 0.5rem 40px 0.5rem 12px;
+  border-radius: 4px;
+  outline: none;
+  font-family: inherit;
+  font-size: 1rem;
+  background-color: var(--color-fondo);
+  color: aliceblue;
+  box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s ease,
+  color 0.3s ease;
+}
+
+/* Ocultar el texto sin eliminarlo */
+.campoBuscar input::placeholder {
+  color: transparent;
+  transition: color 0.3s ease;
+}
+
+/* Muestra el campo al expandirse */
+.campoBuscar:hover input {
+  background-color: #005438;
+  color: aliceblue;
+}
+
+.campoBuscar:hover input::placeholder {
+  color: #d9e8e1;
+}
+
+/* Icono de búsqueda */
+.iconoBusqueda {
+  position: absolute;
+  right: 12px;
+  z-index: 1;
+  color: var(--color-acento);
+  font-size: 1.3rem;
+  cursor: pointer;
+}
+
+/* ===== CONTENIDO PRINCIPAL ===== */
+
+/* Limita el ancho y centra el contenido de la tienda */
 .contenido-principal {
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 2rem;
 }
 
+/* Estilo general de los titulos */
 .titulo {
   font-family: var(--fuente-titulo);
   font-weight: 600;
 }
 
+/* Estilo compartido de los botones de la tienda */
 .boton {
+  display:inline-block;
   font-family: var(--fuente-titulo);
   background-color: var(--color-fondo);
   color: var(--color-acento);
@@ -142,16 +231,20 @@ header {
   padding: 0.65rem 1.5rem;
   border-radius: 4px;
   cursor: pointer;
-  transition: 0.2s ease;
+  transition: background-color 0.2s ease,
+  color 0.2s ease, border-color 0.2s ease;
 }
 
+/*  Efecto visual al pasar el cursor por los botones */
 .boton:hover {
   background-color: var(--color-acento);
   color: var(--color-fondo);
   border-color: var(--color-acento);
 }
 
-/* Nueva colección */
+/* ===== SECCIÓN NUEVA COLECCIÓN ===== */
+
+/* Banner principal de la página de inicio */
 .nueva-coleccion {
   position: relative;
   display: flex;
@@ -169,6 +262,7 @@ header {
   background-repeat: no-repeat;
 }
 
+/* Organiza el titulo y el boton del banner */
 .nueva-coleccion__texto {
   position: relative;
   z-index: 1;
@@ -178,22 +272,27 @@ header {
   gap: 1.5rem;
 }
 
+/* Tamaño del titulo del banner */
 .nueva-coleccion .titulo {
   font-size: 3rem;
 }
 
-/* Más vendidos */
+/* ===== SECCIÓN MÁS VENDIDOS ===== */
+
+/* Espaciado y alineación de la sección */
 .mas-vendidos {
   padding: 3rem 0;
   text-align: center;
 }
 
+/* Titulo de productos más vendidos */
 .mas-vendidos .titulo {
   font-size: 2.2rem;
   margin-bottom: 2rem;
-  color: #ecc440;
+  color: var(--color-acento);
 }
 
+/* Distribución automática de las tarjetas */
 .productos {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -201,12 +300,14 @@ header {
   text-align: left;
 }
 
+/* Organización interna de cada producto */
 .tarjeta-producto {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
 }
 
+/* Contenedor cuadrado de la imagen del producto */
 .tarjeta-producto__imagen {
   position: relative;
   background-color: #e0e0e0;
@@ -215,6 +316,7 @@ header {
   aspect-ratio: 1 / 1;
 }
 
+/* Ajuste de la imagen al espacio disponible */
 .tarjeta-producto__imagen img {
   width: 100%;
   height: 100%;
@@ -222,6 +324,7 @@ header {
   display: block;
 }
 
+/* Botón para añadir productos al carrito */
 .boton--pequeno {
   position: absolute;
   bottom: 0.75rem;
@@ -236,69 +339,257 @@ header {
     color 0.2s ease;
 }
 
+/* Mostrar el botón cuando se señala la imagen */
 .tarjeta-producto__imagen:hover .boton--pequeno {
   opacity: 1;
 }
 
+/* Nombre del producto */
 .tarjeta-producto__nombre {
   font-size: 1rem;
   font-weight: 600;
 }
 
+/* Agrupa los dos precios */
 .tarjeta-producto__precio {
   display: flex;
   gap: 0.6rem;
   align-items: baseline;
 }
 
+/* Precio actul */
 .precio-actual {
   font-weight: 600;
 }
 
+/* Precio anterior tachado */
 .precio-anterior {
   text-decoration: line-through;
   color: #777;
   font-size: 0.9rem;
 }
 
+/* Separar el botón de la cuadricula de productos */
 .boton--catalogo {
   margin-top: 2.5rem;
 }
 
-/* ===== Pie de página ===== */
-.pie-pagina {
+/* ===== MODAL DE INICIO DE SESIÓN Y DE REGISTRO ===== */
+
+/* Fondo que cubre la página cuando se abre el modal */
+.modal-auth {
+  position: fixed;
+  inset: 0;
+  z-index: 1050;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.25rem;
+  background-color: rgba(0, 0, 0, 0.65);
+  overflow-y: auto;
+}
+
+/* Respeta el atributo hidden del HTML */
+.modal-auth[hidden] {
+  display: none;
+}
+
+/* Caja que contiene los formularios */
+.modal__container {
+  position: relative; 
+  width: 100%;
+  max-width: 420px;
+  max-height: calc(100vh - 2.5rem);
+  overflow-y: auto;
+  padding: 2.5rem;
+  border-radius: 8px;
+  background-color: aliceblue;
+  color: #222;
+  box-shadow: 0 15px 45px rgba(0, 0, 0, 0.25);
+
+  /* Animación inicial al abrir la ventana */
+  animation: aparecerModal 0.3s ease both;
+}
+
+/* Animación de entrada del contenedor */
+@keyframes aparecerModal {
+  from {
+    opacity: 0;
+    transform: translateY(15px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Botón para cerrar el modal */
+.modal__cerrar {
+  position: absolute;
+  top: 12px;
+  right: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: transparent;
+  color: #333;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease, 
+  color 0.2s ease;
+}
+
+/* Efecto de botón de cierre */
+.modal__cerrar:hover {
+  background-color: var(--color-fondo);
+  color: white;
+}
+
+/* Titulo de los formularios */
+.modal__title {
+  margin-bottom: 1.5rem;
+  color: var(--color-fondo);
+  font-family: var(--fuente-titulo);
+  font-size: 2rem;
+  text-align: center;
+}
+
+/* Organizar verticalmente los campos del formulario */
+.modal__sign_in form,
+.modal__registro form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+
+/* Etiquetas de los campos */
+.modal__sign_in label,
+.modal__registro label {
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+/* campos de correo y contraseña */
+.modal__sign_in input,
+.modal__registro input {
+  width: 100%;
+  padding: 0.7rem 0.8rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  color: #222;
+  font-family: inherit;
+  font-size: 1rem;
+  transition: border-color 0.2s ease;
+}
+
+/* Resaltar el campo que este activo */
+.modal__sign_in input:focus,
+.modal__registro input:focus {
+  border-color: var(--color-fondo);
+}
+
+/* Enlace para recuperar la contraseña */
+.modal__enlace {
+  align-self: flex-end;
+  margin: 0.2rem 0 0.6rem;
+  color: var(--color-fondo);
+  font-size: 0.9rem;
+  text-decoration: underline;
+}
+
+/* Botones principales de autenticación */
+.modal__boton {
+  width: 100%;
+  padding: 0.8rem;
+  border: 1px solid var(--color-fondo);
+  border-radius: 4px;
   background-color: var(--color-fondo);
   color: var(--color-acento);
-  margin-top: 3rem;
-  padding: 2.5rem 2rem;
+  font-family: inherit;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease, 
+  color 0.2s ease;
+}
+
+/* Cambiar de color al pasar el cursor */
+.modal__boton:hover {
+  background-color: var(--color-acento);
+  color: var(--color-fondo);
+}
+
+/* Texto y botón para cambiar de formulario */
+.modal__cambio {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.35rem;
+  margin-top: 1rem;
+  font-size: 0.95rem;
+  text-align: center;
+}
+
+/* Enlace que cambia entre registro e inicio de sesión */
+.modal__cambio button {
+  background: transparent;
+  color: var(--color-fondo);
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+/* Oculta los formularios secundarios marcados con hidden */
+.modal-auth [hidden] {
+  display: none !important;
+}
+
+/* ===== PIE DE PÁGINA ===== */ 
+
+/* Distribuye la marca y los enlaces */
+.pie-pagina {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
   gap: 1.5rem;
+  margin-top: 3rem;
+  padding: 2.5rem 2rem;
+  background-color: var(--color-fondo);
+  color: var(--color-acento);
 }
 
+/* Agrupa el logo, el nombre y las redes sociales */
 .pie-pagina__marca {
   display: flex;
   align-items: center;
   gap: 0.75rem;
 }
 
+/* Dimensiones del logo */
 .pie-pagina__marca img {
   height: 32px;
 }
 
+/* Nombre de la tienda en el pie */
 .pie-pagina__nombre {
   font-family: var(--fuente-titulo);
   font-size: 1.2rem;
 }
 
+/* Icono de redes sociales */
 .redes-sociales {
   display: flex;
   gap: 0.75rem;
   font-size: 1.1rem;
 }
 
+/* Lista de enlaces legales */
 .pie-pagina__enlaces {
   display: flex;
   flex-wrap: wrap;
@@ -307,7 +598,8 @@ header {
   font-size: 0.85rem;
 }
 
-/* ===== Responsive ===== */
+/* ===== DISEÑO RESPONSIVE ===== */
+
 @media (max-width: 768px) {
   .encabezado {
     flex-wrap: wrap;
@@ -322,62 +614,129 @@ header {
     width: 100%;
   }
 
+  .nav-principal,
+  .nav-secundario {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .campoBuscar:hover {
+    width: min(300px, 80vw);
+  }
+
   .nueva-coleccion {
     flex-direction: column;
+    justify-content: center;
+    padding: 2.5rem 1.5rem;
     text-align: center;
   }
 
   .nueva-coleccion__texto {
     align-items: center;
   }
+
+  .nueva-coleccion .titulo {
+    font-size: 2.3rem;
+  }
+
+  .contenido-principal {
+    padding: 0 1rem;
+  }
+
+  .modal__container {
+    padding: 2rem 1.25rem;
+  }
+
+  .pie-pagina {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .pie-pagina__enlaces {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
 }
 
-/* Barra de busqueda */
-.campoBuscar {
-  position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 60px;
-  height: 30px;
-  transition: 0.5s;
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.1ms !important;
+  }
 }
 
-.campoBuscar:hover {
-  width: 300px;
+/* Corrección del fondo del botón Perfil */
+button.nav-icon.boton-perfil,
+button.nav-icon.boton-perfil:visited {
+    background-color: transparent;
+    background-image: none;
+    border: none;
+    box-shadow: none;
+    color: var(--color-acento);
+    appearance: none;
+    -webkit-appearance: none;
 }
 
-.campoBuscar input {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  border: none;
-  font-size: 1.1em;
-  padding: 0.5em 20px;
-  background: linear-gradient(#006d46, #006d46);
-  color: #006d46;
-  box-shadow:
-    5px 5px 5px rgba(0, 0, 0, 0.1),
-    15px 15px 15px rgba(0, 0, 0, 0.1),
-    20px 20px 15px rgba(0, 0, 0, 0.1),
-    30px 30px 15px rgba(0, 0, 0, 0.1);
+/* ===== ANIMACIÓNES DEL MODAL DE AUTENTICACIÓN ===== */
+
+/* Fondo que cubre la página */
+.modal-auth {
+  opacity: 0;
+  transition: opacity 0.25s ease;
 }
 
-.campoBuscar input::placeholder,
-.campoBuscar input {
-  border: none;
-  color: transparent;
+/* Estilo visual del fondo */
+.modal-auth:not([hidden]) {
+  opacity: 1;
 }
 
-.campoBuscar input:hover::placeholder,
-.campoBuscar input:hover {
-  border: none;
-  color: aliceblue;
+/* Ventana de inicio de sesión o registro */
+.modal-auth .modal__container {
+  animation: aparecerModal 0.3s ease both;
+  transform-origin: center;
 }
 
-.iconoBusqueda {
-  position: absolute;
-  right: 20px;
-  font-size: 1.5em;
-  cursor: pointer;
+/* Animación de entrada */
+@keyframes aparecerModal {
+  from {
+    opacity: 0;
+    transform: translateY(16px) scale(0.97);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Cambio entre formularios */
+.modal-auth .modal__sign_in,
+.modal-auth .modal__registro {
+  animation: aparecerFormulario 0.25s ease both;
+}
+
+@keyframes aparecerFormulario {
+  from {
+    opacity: 0;
+    transform: translateX(8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Respeta la preferencia de movimiento reducido */
+@media (prefers-reduced-motion: reduce) {
+  .modal-auth,
+  .modal-auth .modal__container,
+  .modal-auth .modal__sign_in,
+  .modal-auth .modal__registro {
+    animation: none;
+    transition: none;
+  }
 }

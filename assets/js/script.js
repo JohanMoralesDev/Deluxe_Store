@@ -1,157 +1,108 @@
-const botonAbrirBuscador = document.getElementById("abrirBuscador");
-const campoBuscar = document.getElementById("campoBuscar");
+/* ===== MODAL DE INICIO DE SESIÓN Y REGISTRO ===== */
+const botonAbrirModal = document.getElementById("abrirModalPerfil");
+const modalAutenticacion = document.getElementById("modalAutenticacion");
+const botonCerrarModal = document.getElementById("cerrarModal");
 
-if (botonAbrirBuscador && campoBuscar) {
-  botonAbrirBuscador.addEventListener("click", () => {
-    campoBuscar.classList.toggle("activo");
+const formularioInicio = document.getElementById("formularioLogin");
+const formularioRegistro = document.getElementById("formularioRegistro");
 
-    if (campoBuscar.classList.contains("activo")) {
-      const input = campoBuscar.querySelector("input");
-      if (input) input.focus();
+const botonMostrarRegistro = document.getElementById("mostrarRegistro");
+const botonMostrarLogin = document.getElementById("mostrarLogin");
+
+const seccionInicio = document.querySelector(".modal__sign_in");
+const seccionRegistro = document.querySelector(".modal__registro");
+
+/* Abrir el modal desde el perfil */
+function abrirModal() {
+  if (!modalAutenticacion) return;
+
+  modalAutenticacion.hidden = false;
+  modalAutenticacion.setAttribute("aria-hidden", "false");
+
+  document.body.style.overflow = "hidden";
+
+/* Mostrar primero el inicio de sesión */
+  mostrarInicio();
+
+  const campoEmail = document.getElementById("loginEmail");
+  if(campoEmail) campoEmail.focus();
+}
+
+function cerrarModal() {
+  if (!modalAutenticacion) return;
+  modalAutenticacion.hidden = true;
+  modalAutenticacion.setAttribute("aria-hidden", "true");
+
+  document.body.style.overflow = "";
+}
+
+/* Mostrar el formulario de inicio de sesión */
+function mostrarInicio() {
+  if (!seccionInicio || !seccionRegistro) return;
+
+  seccionInicio.hidden = false;
+  seccionRegistro.hidden = true;
+}
+
+/* Mostrar el formulario de registro */
+function mostrarRegistro() {
+  if (!seccionInicio || !seccionRegistro) return;
+
+  seccionInicio.hidden = true;
+  seccionRegistro.hidden = false;
+
+  const campoNombre = document.getElementById("registroNombre");
+  if (campoNombre) campoNombre.focus();
+}
+
+/* Conectar los botones */
+if (botonAbrirModal) {
+  botonAbrirModal.addEventListener("click", abrirModal);
+}
+ 
+if (botonCerrarModal) {
+  botonCerrarModal.addEventListener("click", cerrarModal);
+}
+
+if (botonMostrarRegistro) {
+  botonMostrarRegistro.addEventListener("click", mostrarRegistro);
+}
+
+if (botonMostrarLogin) {
+  botonMostrarLogin.addEventListener("click", mostrarInicio);
+}
+
+/* Cerrar al hacer clic en el fondo del modal */
+if (modalAutenticacion) {
+  modalAutenticacion.addEventListener("click", (evento) => {
+    if (evento.target === modalAutenticacion) {
+      cerrarModal();
     }
   });
 }
 
-const botonDescubrirMas = document.querySelector(".Nueva.coleccion .Boton");
-const seccionMasVendidos = document.querySelector(".Mas.vendidos");
-
-if (botonDescubrirMas && seccionMasVendidos) {
-  botonDescubrirMas.addEventListener("click", () => {
-    seccionMasVendidos.scrollIntoView({ behavior: "smooth" });
-  });
-}
-
-const botonesAnadirCarrito = document.querySelectorAll(".Productos .Boton");
-const enlaceCarrito = document.querySelector('a[href="#Carrito"]');
-
-let totalCarrito = 0;
-let contadorCarrito = 0;
-
-if (enlaceCarrito) {
-  contadorCarrito = document.createElement("span");
-  contadorCarrito.className = "contador-carrito";
-  contadorCarrito.textContent = "0";
-  enlaceCarrito.appendChild(contadorCarrito);
-}
-
-botonesAnadirCarrito.forEach((boton) => {
-  boton.addEventListener("click", () => {
-    totalCarrito++;
-
-    if (contadorCarrito) {
-      contadorCarrito.textContent = totalCarrito;
-    }
-
-    const textoOriginal = boton.textContent;
-
-    boton.textContent = "Añadido";
-    boton.disabled = true;
-
-    setTimeout(() => {
-      boton.textContent = textoOriginal;
-      boton.disabled = false;
-    }, 1000);
-  });
+/* Cerrar al pulsar Escape */
+document.addEventListener("keydown", (evento) => {
+  if (
+    evento.key === "Escape" &&
+    modalAutenticacion &&
+    !modalAutenticacion.hidden
+  ) {
+    cerrarModal();
+  }
 });
 
-document.querySelectorAll('a[href^="#"]').forEach((enlace) => {
-  enlace.addEventListener("click", (evento) => {
-    const idDestino = enlace.getAttribute("href").slice(1);
-    const elementoDestino = document.getElementById(idDestino);
-
-    if (elementoDestino) {
-      evento.preventDefault();
-      elementoDestino.scrollIntoView({ behavior: "smooth" });
-    }
-  });
-});
-
-// Menú responsive (hamburguesa): muestra/oculta las opciones del menú
-const menuToggle = document.querySelector(".menu-toggle");
-const encabezado = document.querySelector(".encabezado");
-
-if (menuToggle && encabezado) {
-  menuToggle.addEventListener("click", () => {
-    const abierto = encabezado.classList.toggle("menu-abierto");
-    menuToggle.setAttribute("aria-expanded", String(abierto));
-  });
-
-  // Al elegir una opción se vuelve a ocultar el menú
-  encabezado.querySelectorAll(".nav-derecho a").forEach((enlace) => {
-    enlace.addEventListener("click", () => {
-      encabezado.classList.remove("menu-abierto");
-      menuToggle.setAttribute("aria-expanded", "false");
-    });
+/* Evitar recargas mientras probamos los formularios */
+if (formularioInicio) {
+  formularioInicio.addEventListener("submit", (evento) => {
+    evento.preventDefault();
+    console.log("Formulario de inicio de sesión enviado");
   });
 }
 
-//Ejecutando funciones (solo aplica en la página de login)
-const btnIniciarSesion = document.getElementById("btn__iniciar-sesion");
-const btnRegistrarse = document.getElementById("btn__registrarse");
-
-if (btnIniciarSesion) btnIniciarSesion.addEventListener("click", iniciarSesion);
-if (btnRegistrarse) btnRegistrarse.addEventListener("click", register);
-window.addEventListener("resize", anchoPage);
-
-//Declarando variables
-var formulario_login = document.querySelector(".formulario__login");
-var formulario_register = document.querySelector(".formulario__register");
-var contenedor_login_register = document.querySelector(".contenedor__login-register");
-var caja_trasera_login = document.querySelector(".caja__trasera-login");
-var caja_trasera_register = document.querySelector(".caja__trasera-register");
-
-    //FUNCIONES
-
-function anchoPage(){
-
-    // Fuera de la página de login no existe el formulario: evitamos el error
-    if (!caja_trasera_register || !caja_trasera_login || !formulario_login || !contenedor_login_register) return;
-
-    if (window.innerWidth > 850){
-        caja_trasera_register.style.display = "block";
-        caja_trasera_login.style.display = "block";
-    }else{
-        caja_trasera_register.style.display = "block";
-        caja_trasera_register.style.opacity = "1";
-        caja_trasera_login.style.display = "none";
-        formulario_login.style.display = "block";
-        contenedor_login_register.style.left = "0px";
-        formulario_register.style.display = "none";   
-    }
-}
-
-anchoPage();
-
-
-    function iniciarSesion(){
-        if (window.innerWidth > 850){
-            formulario_login.style.display = "block";
-            contenedor_login_register.style.left = "10px";
-            formulario_register.style.display = "none";
-            caja_trasera_register.style.opacity = "1";
-            caja_trasera_login.style.opacity = "0";
-        }else{
-            formulario_login.style.display = "block";
-            contenedor_login_register.style.left = "0px";
-            formulario_register.style.display = "none";
-            caja_trasera_register.style.display = "block";
-            caja_trasera_login.style.display = "none";
-        }
-    }
-
-    function register(){
-        if (window.innerWidth > 850){
-            formulario_register.style.display = "block";
-            contenedor_login_register.style.left = "410px";
-            formulario_login.style.display = "none";
-            caja_trasera_register.style.opacity = "0";
-            caja_trasera_login.style.opacity = "1";
-        }else{
-            formulario_register.style.display = "block";
-            contenedor_login_register.style.left = "0px";
-            formulario_login.style.display = "none";
-            caja_trasera_register.style.display = "none";
-            caja_trasera_login.style.display = "block";
-            caja_trasera_login.style.opacity = "1";
-        }
+if (formularioRegistro) {
+  formularioRegistro.addEventListener("submit", (evento) => {
+    evento.preventDefault();
+    console.log("Formulario de registro enviado");
+  });
 }
