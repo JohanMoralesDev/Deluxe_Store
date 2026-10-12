@@ -6,6 +6,10 @@ let elemementoAnterior = null;
 
 const formularioInicio = document.getElementById("formularioLogin");
 const formularioRegistro = document.getElementById("formularioRegistro");
+let usuarioActual = null;
+
+console.log("Usuario actual:", usuarioActual);
+
 const campoPassword = document.getElementById("registroPassword");
 const campoConfirmarPassword = document.getElementById("confirmarPassword");
 const mensajeRegistro = document.getElementById("mensajeRegistro");
@@ -15,6 +19,8 @@ const botonMostrarLogin = document.getElementById("mostrarLogin");
 
 const seccionInicio = document.querySelector(".modal__sign_in");
 const seccionRegistro = document.querySelector(".modal__registro");
+
+const mensajeLogin = document.getElementById("mensajeLogin");
 
 /* Abrir el modal desde el perfil */
 function abrirModal() {
@@ -128,10 +134,32 @@ document.querySelectorAll(".alternar-password").forEach((boton) => {
 });
 
 /* Evitar recargas mientras probamos los formularios */
+if (formularioInicio && formularioRegistro) {
+  formularioInicio.addEventListener("input", () => {
+    mensajeLogin.textContent = "";
+  });
+}
+
 if (formularioInicio) {
   formularioInicio.addEventListener("submit", (evento) => {
     evento.preventDefault();
-    console.log("Formulario de inicio de sesión enviado");
+    
+    const correoIngresado = document.getElementById("loginEmail").value.trim();
+    const contrasenaIngresada = document.getElementById("loginPassword").value;
+
+    if (correoIngresado === "") {
+      mensajeLogin.textContent = "Por favor, ingresa tu correo electrónico.";
+      return;
+    }
+
+    if (contrasenaIngresada === "") {
+      mensajeLogin.textContent = "Por favor, ingresa tu contraseña.";
+      return;
+    }
+
+    mensajeLogin.textContent = "Los campos están completos."
+
+    console.log("Correo ingresado: ", correoIngresado);
   });
 }
 
