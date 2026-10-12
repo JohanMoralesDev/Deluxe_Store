@@ -107,19 +107,19 @@ header {
 }
 
 /* Enlace del carrito */
-.nav-icono {
+.nav-icon {
   display: flex;
   align-items: center;
   gap: 0.4em;
   font-size: 0.85rem;
 }
 
-.nav-icono i {
+.nav-icon i {
   font-size: 1.2rem;
 }
 
 /* Botón del perfil */
-.nav-icono {
+.nav-icon {
   display: flex;
   align-items: center;
   gap: 0.4rem;
@@ -133,7 +133,7 @@ header {
 }
 
 /* Evita que el botón cambie de fondo al interactuar */
-.nav-icono:hover,
+.nav-icon:hover,
 .nav-icon:focus,
 .nav-icon:active {
   background-color: transparent;
@@ -141,7 +141,7 @@ header {
 }
 
 /* Tamaño del icono del perfil */
-.nav-icono i {
+.nav-icon i {
   font-size: 1.2rem;
 }
 
@@ -409,18 +409,6 @@ header {
 
   /* Animación inicial al abrir la ventana */
   animation: aparecerModal 0.3s ease both;
-}
-
-/* Animación de entrada del contenedor */
-@keyframes aparecerModal {
-  from {
-    opacity: 0;
-    transform: translateY(15px) scale(0.98);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
 }
 
 /* Botón para cerrar el modal */
@@ -739,4 +727,63 @@ button.nav-icon.boton-perfil:visited {
     animation: none;
     transition: none;
   }
+}
+
+/* Mensaje de validación del formulario */
+.mesaje-formulario {
+  font-size: 0.9rem;
+  text-align: center;
+  margin: 0.25rem 0;
+  color: var(--color-fondo);
+}
+
+.mensaje-formulario:empty {
+  display: none;
+}
+
+/* Campo de contraseña con botón para mostrar u ocultar */
+.campo-password {
+  position: relative;
+  width: 100%;
+}
+
+.modal__sign_in .campo-password input,
+.modal__registro .campo-password input {
+  width: 100%;
+  box-sizing: border-box;
+  padding-right: 3rem;
+}
+
+.alternar-password {
+  position: absolute;
+  top: 50%;
+  right: 0.75rem;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.25rem;
+  border: none;
+  box-shadow: none;
+  background: transparent;
+  color: #555;
+  font-size: 1.1rem;
+  line-height: 1;
+  cursor: pointer;
+  z-index: 2;
+}
+
+.alternar-password:hover {
+  background: transparent;
+  color: var(--color-fondo);
+}
+
+.alternar-password:focus-visible {
+  outline: 2px solid var(--color-fondo);
+  outline-offset: 2px;
+  border-radius: 3px;
+}
+
+.alternar-password i {
+  pointer-events: none;
 }

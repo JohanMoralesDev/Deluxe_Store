@@ -2,9 +2,13 @@
 const botonAbrirModal = document.getElementById("abrirModalPerfil");
 const modalAutenticacion = document.getElementById("modalAutenticacion");
 const botonCerrarModal = document.getElementById("cerrarModal");
+let elemementoAnterior = null;
 
 const formularioInicio = document.getElementById("formularioLogin");
 const formularioRegistro = document.getElementById("formularioRegistro");
+const campoPassword = document.getElementById("registroPassword");
+const campoConfirmarPassword = document.getElementById("confirmarPassword");
+const mensajeRegistro = document.getElementById("mensajeRegistro");
 
 const botonMostrarRegistro = document.getElementById("mostrarRegistro");
 const botonMostrarLogin = document.getElementById("mostrarLogin");
@@ -15,6 +19,8 @@ const seccionRegistro = document.querySelector(".modal__registro");
 /* Abrir el modal desde el perfil */
 function abrirModal() {
   if (!modalAutenticacion) return;
+
+  elemementoAnterior = document.activeElement;
 
   modalAutenticacion.hidden = false;
   modalAutenticacion.setAttribute("aria-hidden", "false");
@@ -30,10 +36,15 @@ function abrirModal() {
 
 function cerrarModal() {
   if (!modalAutenticacion) return;
+
   modalAutenticacion.hidden = true;
   modalAutenticacion.setAttribute("aria-hidden", "true");
 
   document.body.style.overflow = "";
+
+  if (elemementoAnterior && typeof elemementoAnterior.focus === "function") {
+    elemementoAnterior.focus();
+  }
 }
 
 /* Mostrar el formulario de inicio de sesión */
@@ -92,6 +103,30 @@ document.addEventListener("keydown", (evento) => {
   }
 });
 
+/* Mostrar u ocultar la contraseña */
+document.querySelectorAll(".alternar-password").forEach((boton) => {
+  boton.addEventListener("click", () => {
+    const campo = document.getElementById(boton.dataset.target);
+    const icono = boton.querySelector("i");
+
+    if (!campo || !icono) return;
+
+    const mostrar = campo.type === "password";
+
+    campo.type = mostrar ? "text" : "password";
+
+    icono.classList.toggle("bi-eye", !mostrar);
+    icono.classList.toggle("bi-eye-slash", mostrar);
+
+    boton.setAttribute(
+      "aria-label",
+      mostrar ? "Ocultar contraseña" : "Mostrar contraseña"
+    );
+
+    boton.setAttribute("aria-pressed", String(mostrar));
+  });
+});
+
 /* Evitar recargas mientras probamos los formularios */
 if (formularioInicio) {
   formularioInicio.addEventListener("submit", (evento) => {
@@ -103,6 +138,13 @@ if (formularioInicio) {
 if (formularioRegistro) {
   formularioRegistro.addEventListener("submit", (evento) => {
     evento.preventDefault();
-    console.log("Formulario de registro enviado");
+    
+    if (campoPassword.value !== campoConfirmarPassword.value) {
+      mensajeRegistro.textContent = "Las constraseñas no coinciden.";
+      campoConfirmarPassword.focus();
+      return;
+    }
+
+    mensajeRegistro.textContent = "¡Formulario valido correctamente!";
   });
 }
