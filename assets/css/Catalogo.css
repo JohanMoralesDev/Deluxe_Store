@@ -389,6 +389,14 @@ header.encabezado {
 
 /* Responsive */
 @media (max-width: 900px) {
+  .encabezado {
+    display-flex: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    width: 100%;
+  }
+    
+    
   .contenido-catalogo .row {
     grid-template-columns: repeat(2, 1fr);
   }

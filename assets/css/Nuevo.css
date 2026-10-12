@@ -261,13 +261,24 @@ header {
 }
 
 /* ===== Responsive ===== */
-@media (max-width: 900px) {
+@media (max-width: 786px) {
+  .encabezado {
+    flex-wrap: wrap;
+    justify-content: center;
+    text-align: center;
+  }
+
+  .nav-izquierdo, 
+  .nav-derecho {
+    justify-content: center;
+    flex: none;
+    width: 100%;
+  }
+
   .nuevos-productos {
     grid-template-columns: repeat(2, 1fr);
   }
-}
 
-@media (max-width: 560px) {
   .contenido-nuevo {
     padding: 2rem 1rem;
   }
@@ -288,15 +299,6 @@ header {
     grid-template-columns: 1fr;
   }
 }
-
-
-
-
-
-
-
-
-
 
 /* ===== Pie de página ===== */
 .pie-pagina {

@@ -99,6 +99,56 @@ header.encabezado {
   font-size: 1.2rem;
 }
 
+/* Barra de busqueda */
+.campoBuscar {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 60px;
+  height: 30px;
+  transition: 0.5s;
+}
+
+.campoBuscar:hover {
+  width: 300px;
+}
+
+.campoBuscar input {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border: none;
+  font-size: 1.1em;
+  padding: 0.5em 20px;
+  background: linear-gradient(#006d46,#006d46);
+  color: #006d46;
+  box-shadow:
+    5px 5px 5px rgba(0, 0, 0, 0.1),
+    15px 15px 15px rgba(0, 0, 0, 0.1),
+    20px 20px 15px rgba(0, 0, 0, 0.1),
+    30px 30px 15px rgba(0, 0, 0, 0.1);
+}
+
+.campoBuscar input::placeholder,
+.campoBuscar input {
+  border: none;
+  color: transparent;
+}
+
+.campoBuscar input:hover::placeholder,
+.campoBuscar input:hover {
+  border: none;
+  color:aliceblue;
+}
+
+.iconoBusqueda {
+  position: absolute;
+  right: 20px;
+  font-size: 1.5em;
+  cursor: pointer;
+}
+
 .campo-buscar {
   display: flex;
   align-items: center;
