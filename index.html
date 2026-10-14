@@ -6,20 +6,11 @@
     <!-- Tipografía externa -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300..700;1,300..700&display=swap"
-      rel="stylesheet"
-    />
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300..700;1,300..700&display=swap" rel="stylesheet"/>
     <!-- Bootstrap -->
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-    />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"/>
     <!-- Bootstrap Icons -->
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css"
-    />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css"/>
     <!-- CSS Propio -->
     <link rel="stylesheet" href="assets/css/style.css">
     <title>Deluxe Store</title>
@@ -59,6 +50,22 @@
           <span>Perfil</span>
           </button>
       </div>
+
+      <!-- Botòn del menù movil -->
+       <button type="button" class="boton-menu-tienda" id="botonMenuTienda" 
+       aria-label="Abrir menú de navegación" aria-control="cemuPantallaCompleta" aria-expanded="false">
+      <i class="bi bi-list" aria-hidden="true"></i>
+    </button>
+
+    <!-- Menu navegacion pantalla completa -->
+     <nav class="menu-pantalla-completa" id="menuPantallaCompleta"   aria-label="Navegación principal"
+     aria-hidden="true" inert>
+
+    <a href="index.html">Inicio</a>
+    <a href="Nuevo.html">Nuevo</a>
+    <a href="catalogo.html">Catálogo</a>
+    <a href="#sobre-nosotros">Sobre Nosotros</a></nav>
+</nav>
     </header>
 
     <main class="contenido-principal">
@@ -72,77 +79,142 @@
       </section>
 
       <section class="mas-vendidos" id="catalogo">
-        <h2 class="titulo">Más Vendidos</h2>
+  <div class="mas-vendidos__encabezado">
+    <span class="mas-vendidos__etiqueta">SELECCIÓN DEL MOMENTO</span>
+    <br>
+    <h2 class="titulo">Más vendidos</h2>
 
-        <div class="productos">
-          <article class="tarjeta-producto">
-            <div class="tarjeta-producto__imagen">
-              <img
-                src="assets/Imagenes/Calvin-Klein.jpeg"
-                alt="Reloj Calvin Klein para hombre"
-              />
-              <a href="carrito.html">
-              <button class="boton boton--pequeno">Añadir al carrito</button>
-              </a>
-            </div>
+    <p class="mas-vendidos__descripcion">
+      Descubre los favoritos de nuestra colección y encuentra
+      el reloj ideal para tu estilo.
+    </p>
+  </div>
 
-            <h3 class="tarjeta-producto__nombre">
-              Reloj Calvin Klein para hombre
-            </h3>
+  <div class="productos">
 
-            <p class="tarjeta-producto__precio">
-              <span class="precio-actual">$20.000,00</span>
-              <span class="precio-anterior">$25.000,00</span>
-            </p>
-          </article>
+    <!-- Producto 1 -->
+    <article class="tarjeta-producto">
+      <div class="tarjeta-producto__imagen">
+        <img
+          src="assets/Imagenes/Calvin-Klein.jpeg"
+          alt="Reloj Calvin Klein para hombre"
+          loading="lazy"
+        />
 
-          <article class="tarjeta-producto">
-            <div class="tarjeta-producto__imagen">
-              <img src="assets/Imagenes/Q&Q.jpeg" alt="Reloj Q&Q" />
-              <a href="carrito.html">
-              <button class="boton boton--pequeno">Añadir al carrito</button>
-              </a>
-            </div>
-            <h3 class="tarjeta-producto__nombre">Reloj Q&Q</h3>
-            <p class="tarjeta-producto__precio">
-              <span class="precio-actual">86.000,00</span>
-              <span class="precio-anterior">90.000,00</span>
-            </p>
-          </article>
+        <span class="producto-etiqueta">Destacado</span>
 
-          <article class="tarjeta-producto">
-            <div class="tarjeta-producto__imagen">
-              <img src="assets/Imagenes/G-Fox-Automatico.jpeg" alt="Reloj G-Fox Automático" />
-              <a href="carrito.html">
-              <button class="boton boton--pequeno">Añadir al carrito</button>
-              </a>
-            </div>
-            <h3 class="tarjeta-producto__nombre">Reloj G-Fox Automático</h3>
-            <p class="tarjeta-producto__precio">
-              <span class="precio-actual">140.000,00</span>
-              <span class="precio-anterior">145.000,00</span>
-            </p>
-          </article>
-
-          <article class="tarjeta-producto">
-            <div class="tarjeta-producto__imagen">
-              <img src="assets/Imagenes/FairWhale.jpeg" alt="Reloj FairWhale" />
-              <a href="carrito.html">
-              <button class="boton boton--pequeno">Añadir al carrito</button>
-              </a>
-            </div>
-            <h3 class="tarjeta-producto__nombre">Reloj FairWhale</h3>
-            <p class="tarjeta-producto__precio">
-              <span class="precio-actual">160.000,00</span>
-              <span class="precio-anterior">175.000,00</span>
-            </p>
-          </article>
-        </div>
-
-        <a href="catalogo.html">
-        <button class="boton boton--catalogo">Ver catálogo</button>
+        <a href="carrito.html" class="producto-accion">
+          <i class="bi bi-cart-plus" aria-hidden="true"></i>
+          Ver carrito
         </a>
-      </section>
+      </div>
+
+      <div class="tarjeta-producto__contenido">
+        <span class="tarjeta-producto__categoria">Relojes · Hombre</span>
+
+        <h3 class="tarjeta-producto__nombre">
+          Reloj Calvin Klein para hombre
+        </h3>
+
+        <div class="tarjeta-producto__precios">
+          <span class="precio-actual">$20.000</span>
+          <span class="precio-anterior">$25.000</span>
+        </div>
+      </div>
+    </article>
+
+    <!-- Producto 2 -->
+    <article class="tarjeta-producto">
+      <div class="tarjeta-producto__imagen">
+        <img
+          src="assets/Imagenes/Q&Q.jpeg"
+          alt="Reloj Q&Q"
+          loading="lazy"
+        />
+
+        <a href="carrito.html" class="producto-accion">
+          <i class="bi bi-cart-plus" aria-hidden="true"></i>
+          Ver carrito
+        </a>
+      </div>
+
+      <div class="tarjeta-producto__contenido">
+        <span class="tarjeta-producto__categoria">Relojes</span>
+
+        <h3 class="tarjeta-producto__nombre">Reloj Q&Q</h3>
+
+        <div class="tarjeta-producto__precios">
+          <span class="precio-actual">$86.000</span>
+          <span class="precio-anterior">$90.000</span>
+        </div>
+      </div>
+    </article>
+
+    <!-- Producto 3 -->
+    <article class="tarjeta-producto">
+      <div class="tarjeta-producto__imagen">
+        <img
+          src="assets/Imagenes/G-Fox-Automatico.jpeg"
+          alt="Reloj G-Fox automático"
+          loading="lazy"
+        />
+
+        <a href="carrito.html" class="producto-accion">
+          <i class="bi bi-cart-plus" aria-hidden="true"></i>
+          Ver carrito
+        </a>
+      </div>
+
+      <div class="tarjeta-producto__contenido">
+        <span class="tarjeta-producto__categoria">Relojes</span>
+
+        <h3 class="tarjeta-producto__nombre">
+          Reloj G-Fox Automático
+        </h3>
+
+        <div class="tarjeta-producto__precios">
+          <span class="precio-actual">$140.000</span>
+          <span class="precio-anterior">$145.000</span>
+        </div>
+      </div>
+    </article>
+
+    <!-- Producto 4 -->
+    <article class="tarjeta-producto">
+      <div class="tarjeta-producto__imagen">
+        <img
+          src="assets/Imagenes/FairWhale.jpeg"
+          alt="Reloj FairWhale"
+          loading="lazy"
+        />
+
+        <a href="carrito.html" class="producto-accion">
+          <i class="bi bi-cart-plus" aria-hidden="true"></i>
+          Ver carrito
+        </a>
+      </div>
+
+      <div class="tarjeta-producto__contenido">
+        <span class="tarjeta-producto__categoria">Relojes</span>
+
+        <h3 class="tarjeta-producto__nombre">Reloj FairWhale</h3>
+
+        <div class="tarjeta-producto__precios">
+          <span class="precio-actual">$160.000</span>
+          <span class="precio-anterior">$175.000</span>
+        </div>
+      </div>
+    </article>
+
+  </div>
+
+  <div class="mas-vendidos__pie">
+    <a href="catalogo.html" class="boton boton--catalogo">
+      Explorar colección completa
+      <i class="bi bi-arrow-right" aria-hidden="true"></i>
+    </a>
+  </div>
+</section>
     </main>
 
     <!-- Modal de autenticación -->
@@ -222,7 +294,9 @@
     <!-- Pie de página -->
     <footer class="pie-pagina" id="sobre-nosotros">
       <div class="pie-pagina__marca">
-        <img src="" alt="Logo de Deluxe Store" />
+        <a href="index.html" class="logo-tienda">
+        <img src="assets/Imagenes/Logo.png" alt="Logo de Deluxe Store" />
+        </a>
         <p class="pie-pagina__nombre">Deluxe Store</p>
 
         <div class="redes-sociales">

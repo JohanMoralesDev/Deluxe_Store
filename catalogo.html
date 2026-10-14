@@ -4,21 +4,16 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <!-- Tipografía externa -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300..700;1,300..700&display=swap"
-      rel="stylesheet"/>
+    <link rel="preconnect" href="https://fonts.googleapis.com"/>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300..700;1,300..700&display=swap" rel="stylesheet"/>
     <!-- Bootstrap -->
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
-      rel="stylesheet"/>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"/>
     <!-- Bootstrap Icons -->
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css"/>
     <!-- CSS Propio -->
     <link rel="stylesheet" href="assets/css/Catalogo.css">
+     <link rel="stylesheet" href="assets/css/style.css">
     <title>Catálogo - Deluxe Store</title>
   </head>
 
@@ -30,7 +25,6 @@
         <input type="text" placeholder="Buscar productos..." />
         <i class="bi bi-search iconoBusqueda"></i>
         </div>
-        </form>
 
         <nav class="nav-principal">
           <a href="index.html">Inicio</a>
@@ -43,125 +37,194 @@
       <div class="nav-derecho">
         <nav class="nav-secundario">
           <a href="catalogo.html">Catálogo</a>
-          <a href="sobre-nosotros.html">Sobre Nosotros</a>
+          <a href="#sobre-nosotros">Sobre Nosotros</a>
         </nav>
 
-        <a href="carrito.html" class="nav-icono">
+        <a href="carrito.html" class="nav-icon">
           <i class="bi bi-cart-check"></i>
           <span>Carrito</span>
         </a>
 
-        <a href="login.php" class="nav-icono">
-          <i class="bi bi-person-circle"></i>
+        <button type="button" class="nav-icon boton-perfil" id="abrirModalPerfil"
+        aria-haspopup="dialog" aria-controls="modalAutenticacion">
+          <i class="bi bi-person-circle" aria-hidden="true"></i>
           <span>Perfil</span>
-        </a>
+          </button>
       </div>
+
+      <!-- Botòn del menù movil -->
+       <button type="button" class="boton-menu-tienda" id="botonMenuTienda" 
+       aria-label="Abrir menú de navegación" aria-control="menuPantallaCompleta" aria-expanded="false">
+      
+      <i class="bi bi-list" aria-hidden="true"></i>
+    </button>
+
+    <!-- Menu navegacion pantalla completa -->
+     <nav class="menu-pantalla-completa" id="menuPantallaCompleta"   aria-label="Navegación principal"
+     aria-hidden="true" inert>
+
+    <a href="index.html">Inicio</a>
+    <a href="Nuevo.html">Nuevo</a>
+    <a href="catalogo.html">Catálogo</a>
+    <a href="#sobre-nosotros">Sobre Nosotros</a></nav>
+    </nav>
     </header>
 
     <div class="contenido-catalogo">
       <h1 class="titulo-catalogo">TODA NUESTRA COLECCIÓN</h1>
 
       <div class="arrow">
-        <div class="column-xs-12">
+    <div class="column-xs-12">
 
-          <div class="arrow_container">
-            <p class="arrow_text">Todos</p>
-          </div>
-
-          <div class="arrow_container">
-            <p class="arrow_text">Nuevos modelos</p>
-          </div>
-
-          <div class="arrow_container">
-            <p class="arrow_text">Colección</p>
-          </div>
-
-          <div class="arrow_container">
-            <p class="arrow_text">Tamaños</p>
-          </div>
-
-          <select class="filtro">
-            <option value="filtro">FILTRO</option>
-            <option value="dama">DAMA</option>
-            <option value="caballero">CABALLERO</option>
-            <option value="ninos">NIÑOS</option>
-          </select>
+        <!-- Mostrar todos los productos -->
+        <div class="arrow_container">
+            <button type="button"
+                    class="arrow_text filtro-opcion activo"
+                    data-filtro="todos"
+                    aria-pressed="true">
+                Todos
+            </button>
         </div>
-      </div>
+
+        <!-- Ordenar por fecha de incorporación -->
+        <div class="arrow_container">
+            <button type="button"
+                    class="arrow_text filtro-opcion"
+                    data-filtro="nuevos"
+                    aria-pressed="false">
+                Nuevos modelos
+            </button>
+        </div>
+
+        <!-- Filtrar por colección -->
+        <div class="arrow_container">
+            <label class="arrow_text" for="filtroColeccion">
+                Colección
+            </label>
+
+            <select class="filtro" id="filtroColeccion">
+                <option value="todas">Todas las colecciones</option>
+                <option value="clasica">Clásica</option>
+                <option value="elegante">Elegante</option>
+                <option value="deportiva">Deportiva</option>
+            </select>
+        </div>
+
+        <!-- Filtrar por tamaño de esfera -->
+        <div class="arrow_container">
+            <label class="arrow_text" for="filtroTamano">
+                Tamaños
+            </label>
+
+            <select class="filtro" id="filtroTamano">
+                <option value="todos">Todos los tamaños</option>
+                <option value="pequeno">Pequeño</option>
+                <option value="mediano">Mediano</option>
+                <option value="grande">Grande</option>
+            </select>
+        </div>
+
+        <!-- Filtrar por público -->
+        <div class="arrow_container">
+            <label class="arrow_text" for="filtroPublico">
+                Público
+            </label>
+
+            <select class="filtro" id="filtroPublico">
+                <option value="todos">Todos</option>
+                <option value="dama">Dama</option>
+                <option value="caballero">Caballero</option>
+                <option value="ninos">Niños</option>
+            </select>
+        </div>
+
+    </div>
+</div>
 
       <div class="row">
 
-      <a href="catalogo.html" class="col-m-4 col-s-6 product-box">
+      <a href="catalogo.html" class="col-m-4 col-s-6 product-box" data-id="reloj-curren-hombre"
+      data-nombre="Curren" data-publico="caballero" data-coleccion="clasica" data-tamano="" data-fecha="2025-11-06">
         <img src="assets/Imagenes/Curren-Hombre.jpeg" alt="Reloj marca Curren para hombre"/>
         <div class="hidden offer">OFERTA</div>
         <h2>Reloj marca Curren para caballero</h2>
         <strong class="product-price">$160.000,00<del class="precio-anterior">$175.000,00</del></strong>
       </a>
 
-      <a href="#" class="col-m-4 col-s-6 product-box">
+      <a href="#" class="col-m-4 col-s-6 product-box" data-id="reloj-curren-dama" data-nombre="Curren"
+      data-publico="dama" data-coleccion="elegante" data-tamano="" data-fecha="2025-08-29">
         <img src="assets/Imagenes/Curren-Dama.jpeg" alt="Curren para mujer"/>
         <div class="hidden offer">OFERTA</div>
         <h2>Reloj marca Curren para mujer</h2>
         <strong class="product-price">$130.000,00<del class="precio-anterior">$136.000,00</del></strong>
       </a>
 
-      <a href="#" class="col-m-4 col-s-6 product-box">
+      <a href="#" class="col-m-4 col-s-6 product-box" data-id="reloj-qq" data-nombre="Q&Q"
+      data-publico="caballero" data-coleccion="clasica" data-tamano="" data-fecha="2026-03-01">
         <img src="assets/Imagenes/Q&Q.jpeg" alt="Reloj marca Q&Q"/>
         <div class="hidden offer">OFERTA</div>
         <h2>Reloj marca Q&Q</h2>
         <strong class="product-price">$86.000,00<del class="precio-anterior">$90.000,00</del></strong>
       </a>
 
-      <a href="#" class="col-m-4 col-s-6 product-box">
+      <a href="#" class="col-m-4 col-s-6 product-box" data-id="reloj-rolex" data-nombre="Rolex"
+      data-publico="caballero" data-coleccion="elegante" data-tamano="" data-fecha="2026-06-15">
         <img src="assets/Imagenes/Rolex.jpeg" alt="Rolex para hombre"/>
         <div class="hidden offer">OFERTA</div>
         <h2>Reloj marca Rolex para caballero</h2>
         <strong class="product-price">$120.000,00<del class="precio-anterior">$135.000,00</del></strong>
       </a>
 
-      <a href="#" class="col-m-4 col-s-6 product-box">
+      <a href="#" class="col-m-4 col-s-6 product-box" data-id="reloj-calvin-klein" data-nombre="Calvin Klein"
+      data-publico="caballero" data-coleccion="elegante" data-tamano="" data-fecha="2025-06-06">
         <img src="assets/Imagenes/Calvin-Klein.jpeg" alt="Reloj Calvin Klein para hombre"/>
         <div class="hidden offer">OFERTA</div>
         <h2>Reloj marca Calvin Klein para caballero</h2>
         <strong class="product-price">$20.000,00<del class="precio-anterior">$25.000,00</del></strong>
       </a>
 
-      <a href="#" class="col-m-4 col-s-6 product-box">
+      <a href="#" class="col-m-4 col-s-6 product-box" data-id="reloj-pandora" data-nombre="Pandora"
+      data-publico="dama" data-coleccion="elegante" data-tamano="" data-fecha="2025-12-09">
         <img src="assets/Imagenes/Pandora.jpeg" alt="Reloj Pandora"/>
         <div class="hidden offer">OFERTA</div>
         <h2>Reloj marca Pandora para dama</h2>
         <strong class="product-price">$35.000,00<del class="precio-anterior">$38.000,00</del></strong>
       </a>
 
-      <a href="#" class="col-m-4 col-s-6 product-box">
+      <a href="#" class="col-m-4 col-s-6 product-box" data-id="reloj-naviforce" data-nombre="Naviforce"
+      data-publico="caballero" data-coleccion="deportiva" data-tamano="" data-fecha="2026-09-14">
         <img src="assets/Imagenes/Naviforce.jpeg" alt="Reloj Naviforce"/>
         <div class="hidden offer">OFERTA</div>
         <h2>Reloj Naviforce para caballero</h2>
         <strong class="product-price">$115.000,00<del class="precio-anterior">$136.000,00</del></strong>
       </a>
 
-      <a href="#" class="col-m-4 col-s-6 product-box">
+      <a href="#" class="col-m-4 col-s-6 product-box" data-id="reloj-qubano" data-nombre="Qubano"
+     data-publico="caballero" data-coleccion="clasica" data-tamano="" data-fecha="2026-02-16">
         <img src="assets/Imagenes/Qubano.jpeg" alt="Reloj Qubano"/>
         <div class="hidden offer">OFERTA</div>
         <h2>Reloj Cubano para caballero</h2>
         <strong class="product-price">$86.000,00<del class="precio-anterior">$90.000,00</del></strong>
       </a>
 
-      <a href="#" class="col-m-4 col-s-6 product-box">
+      <a href="#" class="col-m-4 col-s-6 product-box" data-id="reloj-fairwhale" data-nombre="FairWhale"
+     data-publico="caballero" data-coleccion="clasica" data-tamano="" data-fecha="2025-05-08">
         <img src="assets/Imagenes/FairWhale.jpeg" alt="Reloj FairWhale"/>
         <div class="hidden offer">OFERTA</div>
         <h2>Reloj FairWhale para caballero</h2>
         <strong class="product-price">$160.000,00<del class="precio-anterior">$175.000,00</del></strong>
       </a>
 
-      <a href="#" class="col-m-4 col-s-6 product-box">
+      <a href="#" class="col-m-4 col-s-6 product-box" data-id="reloj-g-fox-automatico" data-nombre="G-Fox Automático"
+     data-publico="caballero" data-coleccion="elegante" data-tamano="" data-fecha="2025-09-18">
         <img src="assets/Imagenes/G-Fox-Automatico.jpeg" alt="Reloj G-Fox Automático"/>
         <div class="hidden offer">OFERTA</div>
         <h2>Reloj G-Fox Automático para caballero</h2>
         <strong class="product-price">$140.000,00<del class="precio-anterior">$145.000,00</del></strong>
       </a>
 
-      <a href="#" class="col-m-4 col-s-6 product-box">
+      <a href="#" class="col-m-4 col-s-6 product-box" data-id="reloj-foxbox" data-nombre="FoxBox"
+      data-publico="caballero" data-coleccion="deportiva" data-tamano="" data-fecha="2025-03-26">
         <img src="assets/Imagenes/FoxBox.jpeg" alt="Reloj FoxBox"/>
         <div class="hidden offer">OFERTA</div>
         <h2>Reloj FoxBox para caballero</h2>
@@ -169,10 +232,13 @@
       </a>
       </div>
     </div>
-</body>
+
+    <!-- Pie de página -->
     <footer class="pie-pagina" id="sobre-nosotros">
       <div class="pie-pagina__marca">
-        <img src="" alt="Logo de Deluxe Store" />
+        <a href="index.html" class="logo-tienda">
+        <img src="assets/Imagenes/Logo.png" alt="Logo de Deluxe Store" />
+        </a>
         <p class="pie-pagina__nombre">Deluxe Store</p>
 
         <div class="redes-sociales">
@@ -189,6 +255,7 @@
         <li><a href="#devoluciones">Cambios y devolución</a></li>
       </ul>
     </footer>
-
+    <!-- JavaScript -->
     <script src="assets/js/script.js"></script>
+  </body>
 </html>
