@@ -1,23 +1,22 @@
 <!DOCTYPE html>
 <html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <!-- Tipografía externa -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300..700;1,300..700&display=swap" rel="stylesheet">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Tipografía externa -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300..700;1,300..700&display=swap" rel="stylesheet"/>
     <!-- Bootstrap -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"/>
     <!-- Bootstrap Icons -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
-    <!-- CSS propio -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css"/>
+    <!-- CSS Propio -->
     <link rel="stylesheet" href="assets/css/Carrito.css">
-    <title>Tu carrito | Deluxe Store</title>
-</head>
+    <title>Deluxe Store</title>
+  </head>
 
-<body>
-
+  <body>
     <header class="encabezado">
       <div class="nav-izquierdo">
       <!-- Barra de navegación -->
@@ -25,7 +24,6 @@
         <input type="text" placeholder="Buscar productos..." />
         <i class="bi bi-search iconoBusqueda"></i>
         </div>
-        </form>
 
         <nav class="nav-principal">
           <a href="index.html">Inicio</a>
@@ -41,16 +39,33 @@
           <a href="#sobre-nosotros">Sobre Nosotros</a>
         </nav>
 
-        <a href="carrito.html" class="nav-icono">
+        <a href="carrito.html" class="nav-icon">
           <i class="bi bi-cart-check"></i>
           <span>Carrito</span>
         </a>
 
-        <a href="login.php" class="nav-icono">
-          <i class="bi bi-person-circle"></i>
+        <button type="button" class="nav-icon boton-perfil" id="abrirModalPerfil"
+        aria-haspopup="dialog" aria-controls="modalAutenticacion">
+          <i class="bi bi-person-circle" aria-hidden="true"></i>
           <span>Perfil</span>
-        </a>
+          </button>
       </div>
+
+      <!-- Botòn del menù movil -->
+       <button type="button" class="boton-menu-tienda" id="botonMenuTienda" 
+       aria-label="Abrir menú de navegación" aria-control="cemuPantallaCompleta" aria-expanded="false">
+      <i class="bi bi-list" aria-hidden="true"></i>
+    </button>
+
+    <!-- Menu navegacion pantalla completa -->
+     <nav class="menu-pantalla-completa" id="menuPantallaCompleta"   aria-label="Navegación principal"
+     aria-hidden="true" inert>
+
+    <a href="index.html">Inicio</a>
+    <a href="Nuevo.html">Nuevo</a>
+    <a href="catalogo.html">Catálogo</a>
+    <a href="#sobre-nosotros">Sobre Nosotros</a></nav>
+</nav>
     </header>
 
     
@@ -211,9 +226,12 @@
 
     </main>
 
+    <!-- Pie de página -->
     <footer class="pie-pagina" id="sobre-nosotros">
       <div class="pie-pagina__marca">
-        <img src="" alt="Logo de Deluxe Store" />
+        <a href="index.html" class="logo-tienda">
+        <img src="assets/Imagenes/Logo.png" alt="Logo de Deluxe Store" />
+        </a>
         <p class="pie-pagina__nombre">Deluxe Store</p>
 
         <div class="redes-sociales">
@@ -230,8 +248,7 @@
         <li><a href="#devoluciones">Cambios y devolución</a></li>
       </ul>
     </footer>
-
-    <script src="carrito.js"></script>
-
-</body>
+    <!-- JavaScript -->
+    <script src="assets/js/carrito.js"></script>
+  </body>
 </html>

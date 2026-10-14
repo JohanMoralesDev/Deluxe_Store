@@ -22,6 +22,64 @@
   const botonPagar = document.querySelector(".boton-pagar");
   const enlaceCarrito = document.querySelector('a[href="carrito.html"]');
 
+  // AGREGAR PRODUCTOS DESDE EL CATÁLOGO
+  document.querySelectorAll(".agregar-carrito").forEach((boton) => {
+    boton.addEventListener("click", () => {
+      const tarjeta = boton.closest(".product-box");
+
+      if (!tarjeta) return;
+
+      const id = tarjeta.dataset.id;
+      const nombre =
+        tarjeta.dataset.nombre ||
+        tarjeta.querySelector("h2")?.textContent.trim();
+
+      const imagen = tarjeta.querySelector("img")?.getAttribute("src");
+      const precio = Number(tarjeta.dataset.precio);
+      const precioAntes = Number(tarjeta.dataset.precioAnterior) || 0;
+
+      if (!id || !nombre || !imagen || !Number.isFinite(precio) || precio <= 0) {
+        console.error("El producto no tiene todos los datos necesarios.");
+        return;
+      }
+
+      const productos = leerCarrito();
+      const existente = productos.find((p) => String(p.id) === String(id));
+
+      if (existente) {
+        if (existente.cantidad >= CANTIDAD_MAXIMA) {
+          alert("Has alcanzado la cantidad máxima de este producto.");
+          return;
+        }
+
+        existente.cantidad += 1;
+      } else {
+        productos.push({
+          id,
+          nombre,
+          imagen,
+          precio,
+          precioAntes: precioAntes > precio ? precioAntes : precio,
+          descripcion: "",
+          cantidad: 1
+        });
+      }
+
+      guardarCarrito(productos);
+      actualizarContador(productos);
+
+      const textoOriginal = boton.textContent;
+      boton.textContent = "Agregado";
+
+      window.setTimeout(() => {
+        boton.textContent = textoOriginal;
+      }, 1200);
+    });
+  });
+
+  // Actualizar el contador al cargar cualquier página
+  actualizarContador(leerCarrito());
+  
   if (!listaCarrito) return;
 
 
