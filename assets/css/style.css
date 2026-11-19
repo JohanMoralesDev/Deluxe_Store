@@ -1,37 +1,59 @@
+/* =========================================================
+   DELUXE STORE · HOJA DE ESTILOS
+   Paleta única: esmeralda · dorado · blanco · negro
+   Todo lo demás (grises, sombras, degradados) se obtiene
+   con transparencias y mezclas de esos cuatro colores.
+   ========================================================= */
+
+
+/* =========================================================
+   1. VARIABLES DE DISEÑO
+   ========================================================= */
 :root {
-  
+  /* Esmeralda */
   --esmeralda: #006d46;
   --esmeralda-profundo: #004d31;
   --esmeralda-noche: #00281b;
   --esmeralda-rgb: 0 109 70;
 
+  /* Dorado */
   --oro: #ecc440;
   --oro-claro: #f6dc82;
   --oro-oscuro: #c9a227;
   --oro-rgb: 236 196 64;
 
+  /* Blanco y negro */
   --blanco: #fff;
   --negro: #000;
   --texto: rgb(0 0 0 / 0.88);
   --texto-suave: rgb(0 0 0 / 0.64);
   --linea: rgb(0 0 0 / 0.14);
 
+  /* Degradados (solo combinan los cuatro colores) */
   --grad-oro: linear-gradient(135deg, var(--oro-claro) 0%, var(--oro) 55%, var(--oro-oscuro) 100%);
   --grad-esmeralda: linear-gradient(135deg, var(--esmeralda) 0%, var(--esmeralda-profundo) 55%, var(--esmeralda-noche) 100%);
   --grad-encabezado: linear-gradient(180deg, var(--esmeralda-profundo) 0%, var(--esmeralda-noche) 100%);
 
+  /* Tipografía */
   --fuente-titulo: "Cormorant Garamond", Georgia, serif;
   --fuente-texto: "Helvetica Neue", Arial, sans-serif;
 
+  /* Movimiento */
   --suave: cubic-bezier(0.22, 0.8, 0.26, 1);
 
+  /* Color del aro de foco: cambia según el fondo */
   --anillo: var(--oro);
 
+  /* Alias de los nombres anteriores, por compatibilidad */
   --color-fondo: var(--esmeralda);
   --color-borde: var(--esmeralda-profundo);
   --color-acento: var(--oro);
 }
 
+
+/* =========================================================
+   2. BASE
+   ========================================================= */
 * {
   margin: 0;
   padding: 0;
@@ -41,7 +63,7 @@
 
 html {
   scroll-behavior: smooth;
-
+  /* Evita que el encabezado fijo tape las secciones al navegar por anclas */
   scroll-padding-top: 5.5rem;
   scrollbar-color: var(--esmeralda) rgb(0 0 0 / 0.06);
 }
@@ -67,11 +89,43 @@ a {
   text-decoration: none;
 }
 
+/* Texto solo para lectores de pantalla */
+.visually-hidden {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  clip-path: inset(50%);
+}
+
+/* Enlace "Saltar al contenido": visible solo al navegar con teclado */
+.enlace-salto {
+  position: fixed;
+  top: 0.75rem;
+  left: 0.75rem;
+  z-index: 2000;
+  padding: 0.7rem 1.3rem;
+  border-radius: 999px;
+  background: var(--oro);
+  color: var(--esmeralda-noche);
+  font-weight: 700;
+  translate: 0 -250%;
+  transition: translate 0.25s var(--suave);
+}
+
+.enlace-salto:focus {
+  translate: 0 0;
+}
+
 ::selection {
   background: var(--oro);
   color: var(--esmeralda-noche);
 }
 
+/* Foco visible en teclado, en todos los elementos interactivos */
 :where(a, button, input):focus-visible {
   outline: 3px solid var(--anillo);
   outline-offset: 3px;
@@ -83,6 +137,12 @@ a {
   font-weight: 600;
 }
 
+
+/* =========================================================
+   3. ENCABEZADO Y NAVEGACIÓN
+   IMPORTANTE: no añadir backdrop-filter, filter ni transform
+   al encabezado: rompería el menú móvil (position: fixed).
+   ========================================================= */
 .encabezado {
   position: sticky;
   top: 0;
@@ -109,12 +169,14 @@ a {
   justify-content: flex-end;
 }
 
-.nav-principal,
-.nav-secundario {
+.nav-principal ul,
+.nav-secundario ul {
   display: flex;
   gap: 1.5rem;
+  list-style: none;
 }
 
+/* Enlaces con subrayado dorado que se dibuja al pasar el cursor */
 .nav-principal a,
 .nav-secundario a {
   position: relative;
@@ -158,6 +220,7 @@ a {
   transform-origin: left;
 }
 
+/* Marca: texto dorado con destello al pasar el cursor */
 .nombre-marca {
   font-family: var(--fuente-titulo);
   font-size: clamp(0.9rem, 4.2vw, 1.7rem);
@@ -178,6 +241,7 @@ a {
   background-position: 0 0;
 }
 
+/* Carrito y perfil */
 .nav-icon {
   display: flex;
   align-items: center;
@@ -215,11 +279,13 @@ a {
   transform: scale(0.95);
 }
 
+/* Elementos solo para móvil / tablet (se activan en la sección 11) */
 .boton-menu-tienda,
 .menu-pantalla-completa {
   display: none;
 }
 
+/* Sombra del encabezado que aparece al desplazarse (solo CSS) */
 @supports (animation-timeline: scroll()) {
   .encabezado {
     animation: sombraEncabezado linear both;
@@ -233,6 +299,12 @@ a {
   to   { box-shadow: 0 12px 32px rgb(0 0 0 / 0.38); }
 }
 
+
+/* =========================================================
+   4. BARRA DE BÚSQUEDA
+   El contenedor conserva su tamaño; solo el campo se expande
+   (así no empuja ni deforma el resto del encabezado).
+   ========================================================= */
 .campoBuscar {
   position: relative;
   flex: 0 0 auto;
@@ -292,6 +364,10 @@ a {
   pointer-events: none;
 }
 
+
+/* =========================================================
+   5. CONTENIDO PRINCIPAL Y BOTONES
+   ========================================================= */
 .contenido-principal {
   --anillo: var(--esmeralda);
   max-width: 1240px;
@@ -299,6 +375,7 @@ a {
   padding: 0 clamp(1rem, 4vw, 2rem);
 }
 
+/* Botón base (dorado). Al pasar el cursor, un barrido lo vuelve blanco */
 .boton {
   display: inline-block;
   padding: 0.75rem 1.8rem;
@@ -332,6 +409,12 @@ a {
   transform: translateY(0) scale(0.97);
 }
 
+
+/* =========================================================
+   6. SECCIÓN NUEVA COLECCIÓN (HERO)
+   La foto se tiñe de esmeralda con mezcla de color para que
+   no aparezcan tonos ajenos a la paleta (la original es morada).
+   ========================================================= */
 .nueva-coleccion {
   --anillo: var(--oro);
   position: relative;
@@ -356,6 +439,7 @@ a {
   box-shadow: 0 30px 60px -30px rgb(0 40 27 / 0.6);
 }
 
+/* Resplandor dorado que "respira" lentamente */
 .nueva-coleccion::before {
   content: "";
   position: absolute;
@@ -365,6 +449,7 @@ a {
   animation: respirar 9s ease-in-out infinite alternate;
 }
 
+/* Marco dorado fino: aporta exclusividad */
 .nueva-coleccion::after {
   content: "";
   position: absolute;
@@ -383,6 +468,7 @@ a {
   gap: 1.5rem;
 }
 
+/* Línea dorada sobre el título */
 .nueva-coleccion__texto::before {
   content: "";
   width: 72px;
@@ -407,15 +493,14 @@ a {
 }
 
 .nueva-coleccion__texto .boton {
-  padding: 0;
+  padding: 0.85rem 2.2rem;
   animation: entradaSuave 0.9s var(--suave) 0.35s both;
 }
 
-.nueva-coleccion__texto .boton a {
-  display: block;
-  padding: 0.85rem 2.2rem;
-}
 
+/* =========================================================
+   7. SECCIÓN MÁS VENDIDOS
+   ========================================================= */
 .mas-vendidos {
   padding: clamp(3.5rem, 7vw, 6rem) 0;
   text-align: center;
@@ -428,8 +513,9 @@ a {
 }
 
 .mas-vendidos__etiqueta {
-  display: inline-flex;
+  display: flex;
   align-items: center;
+  justify-content: center;
   gap: 0.9rem;
   margin-bottom: 0.75rem;
   color: var(--esmeralda);
@@ -474,6 +560,7 @@ a {
   line-height: 1.7;
 }
 
+/* Cuadrícula */
 .mas-vendidos .productos {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -481,6 +568,7 @@ a {
   text-align: left;
 }
 
+/* Tarjeta */
 .mas-vendidos .tarjeta-producto {
   position: relative;
   display: flex;
@@ -496,6 +584,7 @@ a {
     border-color 0.4s var(--suave);
 }
 
+/* Barra dorada que se dibuja en la base de la tarjeta */
 .mas-vendidos .tarjeta-producto::after {
   content: "";
   position: absolute;
@@ -523,6 +612,7 @@ a {
   transform: scaleX(1);
 }
 
+/* Imagen (con animación de carga mientras llega la foto) */
 .mas-vendidos .tarjeta-producto__imagen {
   position: relative;
   aspect-ratio: 4 / 4.5;
@@ -545,6 +635,7 @@ a {
   transform: scale(1.07);
 }
 
+/* Velo oscuro inferior para que el botón se lea bien sobre la foto */
 .mas-vendidos .tarjeta-producto__imagen::after {
   content: "";
   position: absolute;
@@ -560,6 +651,7 @@ a {
   opacity: 1;
 }
 
+/* Etiqueta "Destacado" */
 .producto-etiqueta {
   position: absolute;
   top: 0.8rem;
@@ -576,6 +668,7 @@ a {
   box-shadow: 0 4px 14px rgb(0 0 0 / 0.3);
 }
 
+/* Acción sobre la imagen */
 .producto-accion {
   position: absolute;
   right: 0.7rem;
@@ -627,6 +720,7 @@ a {
   transform: translateX(3px) scale(1.1);
 }
 
+/* Información del producto */
 .tarjeta-producto__contenido {
   display: flex;
   flex: 1;
@@ -1295,6 +1389,14 @@ a {
     transition: opacity 0.35s var(--suave), visibility 0.35s;
   }
 
+  .menu-pantalla-completa ul {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: clamp(1.25rem, 4vh, 2rem);
+    list-style: none;
+  }
+
   .menu-pantalla-completa.menu-abierto {
     opacity: 1;
     visibility: visible;
@@ -1336,10 +1438,10 @@ a {
     translate: 0 0;
   }
 
-  .menu-pantalla-completa.menu-abierto a:nth-child(1) { transition-delay: 0.08s, 0.08s, 0s; }
-  .menu-pantalla-completa.menu-abierto a:nth-child(2) { transition-delay: 0.15s, 0.15s, 0s; }
-  .menu-pantalla-completa.menu-abierto a:nth-child(3) { transition-delay: 0.22s, 0.22s, 0s; }
-  .menu-pantalla-completa.menu-abierto a:nth-child(4) { transition-delay: 0.29s, 0.29s, 0s; }
+  .menu-pantalla-completa.menu-abierto li:nth-child(1) a { transition-delay: 0.08s, 0.08s, 0s; }
+  .menu-pantalla-completa.menu-abierto li:nth-child(2) a { transition-delay: 0.15s, 0.15s, 0s; }
+  .menu-pantalla-completa.menu-abierto li:nth-child(3) a { transition-delay: 0.22s, 0.22s, 0s; }
+  .menu-pantalla-completa.menu-abierto li:nth-child(4) a { transition-delay: 0.29s, 0.29s, 0s; }
 
   .menu-pantalla-completa a:hover,
   .menu-pantalla-completa a:focus-visible {
@@ -1368,6 +1470,7 @@ a {
   }
 }
 
+/* Móvil */
 @media (max-width: 768px) {
   .nueva-coleccion {
     min-height: 360px;
@@ -1479,6 +1582,7 @@ a {
   }
 }
 
+/* Móviles muy estrechos */
 @media (max-width: 360px) {
   .mas-vendidos .tarjeta-producto__nombre {
     font-size: 1rem;
@@ -1490,6 +1594,12 @@ a {
   }
 }
 
+
+/* =========================================================
+   12. ACCESIBILIDAD: MOVIMIENTO REDUCIDO
+   Se desactivan las animaciones y los desplazamientos de los
+   efectos hover; el contenido queda siempre visible.
+   ========================================================= */
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
