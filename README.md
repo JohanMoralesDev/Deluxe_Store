@@ -7,6 +7,29 @@
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
 </p>
 
+## Deluxe Store: preparación local
+
+El proyecto utiliza Laravel 12 y MySQL Server. No se debe crear una base SQLite.
+
+Configura localmente las variables `DB_CONNECTION=mysql`, `DB_HOST`, `DB_PORT`,
+`DB_DATABASE`, `DB_USERNAME` y `DB_PASSWORD` en el entorno local. No incluyas
+credenciales en el repositorio ni compartas el archivo `.env`.
+
+Requisitos: PHP 8.2 o superior, Composer, MySQL Server y Node.js/npm para los
+recursos frontend. Las dependencias y el build no se ejecutaron durante la
+reorganización.
+
+Vite utiliza los CSS y JavaScript originales de `assets/` como entradas, sin
+modificarlos. Las imágenes para Blade se sirven desde
+`public/assets/images/store/`; los HTML estáticos mantienen sus rutas a
+`assets/Imagenes/`. Ejecuta `npm run build` únicamente cuando las dependencias
+estén instaladas y se autorice preparar el build.
+
+No ejecutes el script `composer run setup` durante esta fase: instala
+dependencias y ejecuta migraciones. Las migraciones de dominio y las relaciones
+de base de datos siguen pendientes de definición por el equipo. No se ejecutan
+migraciones destructivas.
+
 ## About Laravel
 
 Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:

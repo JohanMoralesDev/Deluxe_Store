@@ -12,7 +12,7 @@
     <!-- Bootstrap Icons -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css"/>
     <!-- CSS Propio -->
-    @vite(['resources/css/store/catalogo.css', 'resources/css/store/style.css', 'resources/js/store/script.js', 'resources/js/store/carrito.js'])
+    @vite(['assets/css/Catalogo.css', 'assets/css/style.css', 'assets/js/script.js', 'assets/js/carrito.js'])
     <title>Catálogo - Deluxe Store</title>
   </head>
 
@@ -21,7 +21,7 @@
       <div class="nav-izquierdo">
       <!-- Barra de navegación -->
         <div class="campoBuscar">
-        <input type="text" placeholder="Buscar productos..." />
+        <input id="buscarProducto" type="text" placeholder="Buscar productos..." />
         <i class="bi bi-search iconoBusqueda"></i>
         </div>
 
@@ -52,9 +52,9 @@
       </div>
 
       <!-- Botòn del menù movil -->
-       <button type="button" class="boton-menu-tienda" id="botonMenuTienda" 
+       <button type="button" class="boton-menu-tienda" id="botonMenuTienda"
        aria-label="Abrir menú de navegación" aria-control="menuPantallaCompleta" aria-expanded="false">
-      
+
       <i class="bi bi-list" aria-hidden="true"></i>
     </button>
 
@@ -145,7 +145,7 @@
       <article class="col-m-4 col-s-6 product-box" data-id="reloj-curren-hombre"
       data-nombre="Curren" data-publico="caballero" data-coleccion="clasica" data-tamano="1" data-fecha="2025-11-06"
       data-precio="160000" data-precio-anterior="175000">
-        <img src="{{ asset('images/store/Curren-Hombre.jpeg') }}" alt="Reloj marca Curren para hombre"/>
+        <img src="{{ asset('assets/images/store/Curren-Hombre.jpeg') }}" alt="Reloj marca Curren para hombre"/>
         <div class="hidden offer">OFERTA</div>
         <h2>Reloj marca Curren para caballero</h2>
         <strong class="product-price">$160.000,00<del class="precio-anterior">$175.000,00</del></strong>
@@ -157,7 +157,7 @@
       <article class="col-m-4 col-s-6 product-box" data-id="reloj-curren-dama" data-nombre="Curren"
       data-publico="dama" data-coleccion="elegante" data-tamano="1" data-fecha="2025-08-29"
       data-precio="130000" data-precio-anterior="136000">
-        <img src="{{ asset('images/store/Curren-Dama.jpeg') }}" alt="Curren para mujer"/>
+        <img src="{{ asset('assets/images/store/Curren-Dama.jpeg') }}" alt="Curren para mujer"/>
         <div class="hidden offer">OFERTA</div>
         <h2>Reloj marca Curren para mujer</h2>
         <strong class="product-price">$130.000,00<del class="precio-anterior">$136.000,00</del></strong>
@@ -169,7 +169,7 @@
       <article class="col-m-4 col-s-6 product-box" data-id="reloj-qq" data-nombre="Q&Q"
       data-publico="caballero" data-coleccion="clasica" data-tamano="1" data-fecha="2026-03-01"
       data-precio="86000" data-precio-anterior="90000">
-        <img src="{{ asset('images/store/Q&Q.jpeg') }}" alt="Reloj marca Q&Q"/>
+        <img src="{{ asset('assets/images/store/Q&Q.jpeg') }}" alt="Reloj marca Q&Q"/>
         <div class="hidden offer">OFERTA</div>
         <h2>Reloj marca Q&Q</h2>
         <strong class="product-price">$86.000,00<del class="precio-anterior">$90.000,00</del></strong>
@@ -181,7 +181,7 @@
       <article class="col-m-4 col-s-6 product-box" data-id="reloj-rolex" data-nombre="Rolex"
       data-publico="caballero" data-coleccion="elegante" data-tamano="1" data-fecha="2026-06-15"
       data-precio="120000" data-precio-anterior="135000">
-        <img src="{{ asset('images/store/Rolex.jpeg') }}" alt="Rolex para hombre"/>
+        <img src="{{ asset('assets/images/store/Rolex.jpeg') }}" alt="Rolex para hombre"/>
         <div class="hidden offer">OFERTA</div>
         <h2>Reloj marca Rolex para caballero</h2>
         <strong class="product-price">$120.000,00<del class="precio-anterior">$135.000,00</del></strong>
@@ -193,7 +193,7 @@
       <article class="col-m-4 col-s-6 product-box" data-id="reloj-calvin-klein" data-nombre="Calvin Klein"
       data-publico="caballero" data-coleccion="elegante" data-tamano="1" data-fecha="2025-06-06"
       data-precio="20000" data-precio-anterior="25000">
-        <img src="{{ asset('images/store/Calvin-Klein.jpeg') }}" alt="Reloj Calvin Klein para hombre"/>
+        <img src="{{ asset('assets/images/store/Calvin-Klein.jpeg') }}" alt="Reloj Calvin Klein para hombre"/>
         <div class="hidden offer">OFERTA</div>
         <h2>Reloj marca Calvin Klein para caballero</h2>
         <strong class="product-price">$20.000,00<del class="precio-anterior">$25.000,00</del></strong>
@@ -205,7 +205,7 @@
       <article class="col-m-4 col-s-6 product-box" data-id="reloj-pandora" data-nombre="Pandora"
       data-publico="dama" data-coleccion="elegante" data-tamano="1" data-fecha="2025-12-09"
       data-precio="35000" data-precio-anterior="38000">
-        <img src="{{ asset('images/store/Pandora.jpeg') }}" alt="Reloj Pandora"/>
+        <img src="{{ asset('assets/images/store/Pandora.jpeg') }}" alt="Reloj Pandora"/>
         <div class="hidden offer">OFERTA</div>
         <h2>Reloj marca Pandora para dama</h2>
         <strong class="product-price">$35.000,00<del class="precio-anterior">$38.000,00</del></strong>
@@ -217,7 +217,7 @@
       <article class="col-m-4 col-s-6 product-box" data-id="reloj-naviforce" data-nombre="Naviforce"
       data-publico="caballero" data-coleccion="deportiva" data-tamano="1" data-fecha="2026-09-14"
       data-precio="115000" data-precio-anterior="136000">
-        <img src="{{ asset('images/store/Naviforce.jpeg') }}" alt="Reloj Naviforce"/>
+        <img src="{{ asset('assets/images/store/Naviforce.jpeg') }}" alt="Reloj Naviforce"/>
         <div class="hidden offer">OFERTA</div>
         <h2>Reloj Naviforce para caballero</h2>
         <strong class="product-price">$115.000,00<del class="precio-anterior">$136.000,00</del></strong>
@@ -229,7 +229,7 @@
       <article class="col-m-4 col-s-6 product-box" data-id="reloj-qubano" data-nombre="Qubano"
      data-publico="caballero" data-coleccion="clasica" data-tamano="1" data-fecha="2026-02-16"
      data-precio="86000" data-precio-anterior="90000">
-        <img src="{{ asset('images/store/Qubano.jpeg') }}" alt="Reloj Qubano"/>
+        <img src="{{ asset('assets/images/store/Qubano.jpeg') }}" alt="Reloj Qubano"/>
         <div class="hidden offer">OFERTA</div>
         <h2>Reloj Cubano para caballero</h2>
         <strong class="product-price">$86.000,00<del class="precio-anterior">$90.000,00</del></strong>
@@ -241,7 +241,7 @@
       <article class="col-m-4 col-s-6 product-box" data-id="reloj-fairwhale" data-nombre="FairWhale"
      data-publico="caballero" data-coleccion="clasica" data-tamano="1" data-fecha="2025-05-08"
      data-precio="160000" data-precio-anterior="175000">
-        <img src="{{ asset('images/store/FairWhale.jpeg') }}" alt="Reloj FairWhale"/>
+        <img src="{{ asset('assets/images/store/FairWhale.jpeg') }}" alt="Reloj FairWhale"/>
         <div class="hidden offer">OFERTA</div>
         <h2>Reloj FairWhale para caballero</h2>
         <strong class="product-price">$160.000,00<del class="precio-anterior">$175.000,00</del></strong>
@@ -253,7 +253,7 @@
       <article class="col-m-4 col-s-6 product-box" data-id="reloj-g-fox-automatico" data-nombre="G-Fox Automático"
      data-publico="caballero" data-coleccion="elegante" data-tamano="1" data-fecha="2025-09-18"
      data-precio="140000" data-precio-anterior="145000">
-        <img src="{{ asset('images/store/G-Fox-Automatico.jpeg') }}" alt="Reloj G-Fox Automático"/>
+        <img src="{{ asset('assets/images/store/G-Fox-Automatico.jpeg') }}" alt="Reloj G-Fox Automático"/>
         <div class="hidden offer">OFERTA</div>
         <h2>Reloj G-Fox Automático para caballero</h2>
         <strong class="product-price">$140.000,00<del class="precio-anterior">$145.000,00</del></strong>
@@ -265,7 +265,7 @@
       <article class="col-m-4 col-s-6 product-box" data-id="reloj-foxbox" data-nombre="FoxBox"
       data-publico="caballero" data-coleccion="deportiva" data-tamano="1" data-fecha="2025-03-26"
       data-precio="145000" data-precio-anterior="150000">
-        <img src="{{ asset('images/store/FoxBox.jpeg') }}" alt="Reloj FoxBox"/>
+        <img src="{{ asset('assets/images/store/FoxBox.jpeg') }}" alt="Reloj FoxBox"/>
         <div class="hidden offer">OFERTA</div>
         <h2>Reloj FoxBox para caballero</h2>
         <strong class="product-price">$145.000,00<del class="precio-anterior">$150.000,00</del></strong>
@@ -280,7 +280,7 @@
     <footer class="pie-pagina" id="sobre-nosotros">
       <div class="pie-pagina__marca">
         <a href="{{ route('store.index') }}" class="logo-tienda">
-        <img src="{{ asset('images/store/Logo.png') }}" alt="Logo de Deluxe Store" />
+        <img src="{{ asset('assets/images/store/Logo.png') }}" alt="Logo de Deluxe Store" />
         </a>
         <p class="pie-pagina__nombre">Deluxe Store</p>
 

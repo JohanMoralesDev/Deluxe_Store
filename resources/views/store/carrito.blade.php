@@ -12,7 +12,7 @@
     <!-- Bootstrap Icons -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css"/>
     <!-- CSS Propio -->
-    @vite(['resources/css/store/carrito.css', 'resources/js/store/script.js', 'resources/js/store/carrito.js'])
+    @vite(['assets/css/Carrito.css', 'assets/js/script.js', 'assets/js/carrito.js'])
     <title>Deluxe Store</title>
   </head>
 
@@ -52,7 +52,7 @@
       </div>
 
       <!-- Botòn del menù movil -->
-       <button type="button" class="boton-menu-tienda" id="botonMenuTienda" 
+       <button type="button" class="boton-menu-tienda" id="botonMenuTienda"
        aria-label="Abrir menú de navegación" aria-control="cemuPantallaCompleta" aria-expanded="false">
       <i class="bi bi-list" aria-hidden="true"></i>
     </button>
@@ -68,25 +68,25 @@
 </nav>
     </header>
 
-    
+
     <button type="button" class="boton-chatbot" aria-label="Abrir chatbot">
         <i class="bi bi-chat-dots"></i>
         <span>Chatbot</span>
     </button>
 
-   
+
     <main class="contenido-carrito">
 
         <h1 class="titulo-carrito">TU CARRITO</h1>
 
         <div class="carrito-layout">
 
-            
+
             <section class="carrito-lista" aria-label="Productos en el carrito">
 
                 <article class="carrito-item" data-id="1">
                     <div class="carrito-item-imagen">
-                        <img src="{{ asset('images/store/Curren-Hombre.jpeg') }}" alt="Nombre del producto">
+                        <img src="{{ asset('assets/images/store/Curren-Hombre.jpeg') }}" alt="Nombre del producto">
                     </div>
 
                     <div class="carrito-item-info">
@@ -119,7 +119,7 @@
 
                 <article class="carrito-item" data-id="2">
                     <div class="carrito-item-imagen">
-                        <img src="{{ asset('images/store/Rolex.jpeg') }}" alt="Nombre del producto">
+                        <img src="{{ asset('assets/images/store/Rolex.jpeg') }}" alt="Nombre del producto">
                     </div>
 
                     <div class="carrito-item-info">
@@ -152,7 +152,7 @@
 
                 <article class="carrito-item" data-id="3">
                     <div class="carrito-item-imagen">
-                        <img src="{{ asset('images/store/Naviforce.jpeg') }}" alt="Nombre del producto">
+                        <img src="{{ asset('assets/images/store/Naviforce.jpeg') }}" alt="Nombre del producto">
                     </div>
 
                     <div class="carrito-item-info">
@@ -229,7 +229,7 @@
     <footer class="pie-pagina" id="sobre-nosotros">
       <div class="pie-pagina__marca">
         <a href="{{ route('store.index') }}" class="logo-tienda">
-        <img src="{{ asset('images/store/Logo.png') }}" alt="Logo de Deluxe Store" />
+        <img src="{{ asset('assets/images/store/Logo.png') }}" alt="Logo de Deluxe Store" />
         </a>
         <p class="pie-pagina__nombre">Deluxe Store</p>
 

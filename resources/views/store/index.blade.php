@@ -12,7 +12,7 @@
     <!-- Bootstrap Icons -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css"/>
     <!-- CSS Propio -->
-    @vite(['resources/css/store/style.css', 'resources/js/store/script.js'])
+    @vite(['assets/css/style.css', 'assets/js/script.js'])
     <title>Deluxe Store</title>
   </head>
 
@@ -52,7 +52,7 @@
       </div>
 
       <!-- Botòn del menù movil -->
-       <button type="button" class="boton-menu-tienda" id="botonMenuTienda" 
+       <button type="button" class="boton-menu-tienda" id="botonMenuTienda"
        aria-label="Abrir menú de navegación" aria-controls="menuPantallaCompleta" aria-expanded="false">
       <i class="bi bi-list" aria-hidden="true"></i>
     </button>
@@ -96,7 +96,7 @@
     <article class="tarjeta-producto">
       <div class="tarjeta-producto__imagen">
         <img
-          src="{{ asset('images/store/Calvin-Klein.jpeg') }}"
+          src="{{ asset('assets/images/store/Calvin-Klein.jpeg') }}"
           alt="Reloj Calvin Klein para hombre"
           loading="lazy"
         />
@@ -127,7 +127,7 @@
     <article class="tarjeta-producto">
       <div class="tarjeta-producto__imagen">
         <img
-          src="{{ asset('images/store/Q&Q.jpeg') }}"
+          src="{{ asset('assets/images/store/Q&Q.jpeg') }}"
           alt="Reloj Q&Q"
           loading="lazy"
         />
@@ -154,7 +154,7 @@
     <article class="tarjeta-producto">
       <div class="tarjeta-producto__imagen">
         <img
-          src="{{ asset('images/store/G-Fox-Automatico.jpeg') }}"
+          src="{{ asset('assets/images/store/G-Fox-Automatico.jpeg') }}"
           alt="Reloj G-Fox automático"
           loading="lazy"
         />
@@ -183,7 +183,7 @@
     <article class="tarjeta-producto">
       <div class="tarjeta-producto__imagen">
         <img
-          src="{{ asset('images/store/FairWhale.jpeg') }}"
+          src="{{ asset('assets/images/store/FairWhale.jpeg') }}"
           alt="Reloj FairWhale"
           loading="lazy"
         />
@@ -296,7 +296,7 @@
     <footer class="pie-pagina" id="sobre-nosotros">
       <div class="pie-pagina__marca">
         <a href="{{ route('store.index') }}" class="logo-tienda">
-        <img src="{{ asset('images/store/Logo.png') }}" alt="Logo de Deluxe Store" />
+        <img src="{{ asset('assets/images/store/Logo.png') }}" alt="Logo de Deluxe Store" />
         </a>
         <p class="pie-pagina__nombre">Deluxe Store</p>
 

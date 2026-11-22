@@ -21,11 +21,11 @@
       href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css"
     />
     <!-- CSS Propio -->
-    @vite(['resources/css/store/style.css', 'resources/css/store/nuevo.css', 'resources/js/store/script.js'])
+    @vite(['assets/css/style.css', 'assets/css/Nuevo.css', 'assets/js/script.js'])
     <title>Nuevo - Deluxe Store</title>
   </head>
 <body>
-    
+
     <header class="encabezado">
       <div class="nav-izquierdo">
       <!-- Barra de navegación -->
@@ -63,7 +63,7 @@
 
     <main class="contenido-nuevo">
         <section class="nuevo-modelo" id="nuevo">
-            <img src="{{ asset('images/store/Rolex.jpeg') }}" alt="Nuevos modelos de la colección" />
+            <img src="{{ asset('assets/images/store/Rolex.jpeg') }}" alt="Nuevos modelos de la colección" />
             <div class="contenedor-texto">
                 <h1 class="titulo-nuevo">Nuevos Modelos</h1>
                 <p class="subtitulo-nuevo">Disponibles</p>
@@ -75,7 +75,7 @@
         <section class="nuevos-productos">
             <article class="producto-nuevo">
                 <div class="producto-nuevo__imagen">
-                    <img src="{{ asset('images/store/Naviforce.jpeg') }}" alt="Reloj Naviforce para hombre" />
+                    <img src="{{ asset('assets/images/store/Naviforce.jpeg') }}" alt="Reloj Naviforce para hombre" />
                     <span class="descuento">-15%</span>
                 </div>
                 <h2 class="producto-nuevo__nombre">Reloj Naviforce para hombre</h2>
@@ -88,7 +88,7 @@
 
             <article class="producto-nuevo">
                 <div class="producto-nuevo__imagen">
-                    <img src="{{ asset('images/store/Pandora.jpeg') }}" alt="Reloj Pandora para dama" />
+                    <img src="{{ asset('assets/images/store/Pandora.jpeg') }}" alt="Reloj Pandora para dama" />
                     <span class="descuento">-18%</span>
                 </div>
                 <h2 class="producto-nuevo__nombre">Reloj Pandora para dama</h2>
@@ -101,7 +101,7 @@
 
             <article class="producto-nuevo">
                 <div class="producto-nuevo__imagen">
-                    <img src="{{ asset('images/store/Qubano.jpeg') }}" alt="Reloj Qubano para hombre" />
+                    <img src="{{ asset('assets/images/store/Qubano.jpeg') }}" alt="Reloj Qubano para hombre" />
                     <span class="descuento">-17%</span>
                 </div>
                 <h2 class="producto-nuevo__nombre">Reloj Qubano para hombre</h2>
@@ -114,7 +114,7 @@
 
             <article class="producto-nuevo">
                 <div class="producto-nuevo__imagen">
-                    <img src="{{ asset('images/store/FoxBox.jpeg') }}" alt="Reloj FoxBox para hombre" />
+                    <img src="{{ asset('assets/images/store/FoxBox.jpeg') }}" alt="Reloj FoxBox para hombre" />
                     <span class="descuento">-14%</span>
                 </div>
                 <h2 class="producto-nuevo__nombre">Reloj FoxBox para hombre</h2>
@@ -133,7 +133,7 @@
     </main>
 <footer class="pie-pagina" id="sobre-nosotros">
       <div class="pie-pagina__marca">
-        <img src="{{ asset('images/store/Logo.png') }}" alt="Logo de Deluxe Store" />
+        <img src="{{ asset('assets/images/store/Logo.png') }}" alt="Logo de Deluxe Store" />
         <p class="pie-pagina__nombre">Deluxe Store</p>
 
         <div class="redes-sociales">
