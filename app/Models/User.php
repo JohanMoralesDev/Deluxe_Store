@@ -2,48 +2,82 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable
 {
-    /** @use HasFactory<UserFactory> */
     use HasFactory, Notifiable;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var list<string>
-     */
+    // Tabla real en MySQL
+    protected $table = 'usuarios';
+
+    // Clave primaria
+    protected $primaryKey = 'id_usuario';
+
+    // Tipo de clave primaria
+    protected $keyType = 'int';
+
+    public $incrementing = true;
+
+    // Nombres de las columnas de fechas
+    public const CREATED_AT = 'creado_en';
+    public const UPDATED_AT = 'actualizado_en';
+
+    // Campos que se pueden asignar masivamente
     protected $fillable = [
-        'name',
-        'email',
-        'password',
+        'nombre',
+        'correo',
+        'contrasena',
+        'telefono',
+        'direccion',
+        'ciudad',
+        'departamento',
+        'esta_activo',
     ];
 
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var list<string>
-     */
+    // Campos que no deben exponerse al serializar el usuario
     protected $hidden = [
-        'password',
-        'remember_token',
+        'contrasena',
+        'token_recordatorio',
     ];
 
-    /**
-     * Get the attributes that should be cast.
-     *
-     * @return array<string, string>
-     */
+    // Adaptación de la contraseña
+    public function getAuthPasswordName(): string
+    {
+        return 'contrasena';
+    }
+
+    // Adaptación del token de sesión persistente
+    public function getRememberTokenName(): string
+    {
+        return 'token_recordatorio';
+    }
+
+    // Conversión automática de tipos
     protected function casts(): array
     {
         return [
-            'email_verified_at' => 'datetime',
-            'password' => 'hashed',
+            'contrasena' => 'hashed',
+            'esta_activo' => 'boolean',
+            'correo_verificado_en' => 'datetime',
+            'creado_en' => 'datetime',
+            'actualizado_en' => 'datetime',
         ];
     }
+
+    public function roles(): BelongsToMany
+{
+    return $this->belongsToMany(
+        Role::class,
+        'usuario_rol',
+        'id_usuario',
+        'id_rol',
+        'id_usuario',
+        'id_rol'
+    );
 }
+}
+
