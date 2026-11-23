@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Tipografía externa -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300..700;1,300..700&display=swap" rel="stylesheet"/>
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"/>
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css"/>
+    <!-- CSS Propio -->
+    @vite(['assets/css/Carrito.css', 'assets/js/script.js', 'assets/js/carrito.js'])
+    <title>Deluxe Store</title>
+  </head>
+
+  <body>
+    <header class="encabezado">
+      <div class="nav-izquierdo">
+      <!-- Barra de navegación -->
+        <div class="campoBuscar">
+        <input type="text" placeholder="Buscar productos..." />
+        <i class="bi bi-search iconoBusqueda"></i>
+        </div>
+
+        <nav class="nav-principal">
+          <a href="{{ route('store.index') }}">Inicio</a>
+          <a href="{{ route('store.nuevo') }}">Nuevo</a>
+        </nav>
+      </div>
+
+      <a href="{{ route('store.index') }}" class="nombre-marca">DELUXE STORE</a>
+
+      <div class="nav-derecho">
+        <nav class="nav-secundario">
+          <a href="{{ route('store.catalogo') }}">Catálogo</a>
+          <a href="#sobre-nosotros">Sobre Nosotros</a>
+        </nav>
+
+        <a href="{{ route('store.carrito') }}" class="nav-icon">
+          <i class="bi bi-cart-check"></i>
+          <span>Carrito</span>
+        </a>
+
+        <button type="button" class="nav-icon boton-perfil" id="abrirModalPerfil"
+        aria-haspopup="dialog" aria-controls="modalAutenticacion">
+          <i class="bi bi-person-circle" aria-hidden="true"></i>
+          <span>Perfil</span>
+          </button>
+      </div>
+
+      <!-- Botòn del menù movil -->
+       <button type="button" class="boton-menu-tienda" id="botonMenuTienda"
+       aria-label="Abrir menú de navegación" aria-control="cemuPantallaCompleta" aria-expanded="false">
+      <i class="bi bi-list" aria-hidden="true"></i>
+    </button>
+
+    <!-- Menu navegacion pantalla completa -->
+     <nav class="menu-pantalla-completa" id="menuPantallaCompleta"   aria-label="Navegación principal"
+     aria-hidden="true" inert>
+
+    <a href="{{ route('store.index') }}">Inicio</a>
+    <a href="{{ route('store.nuevo') }}">Nuevo</a>
+    <a href="{{ route('store.catalogo') }}">Catálogo</a>
+    <a href="#sobre-nosotros">Sobre Nosotros</a></nav>
+</nav>
+    </header>
+
+
+    <button type="button" class="boton-chatbot" aria-label="Abrir chatbot">
+        <i class="bi bi-chat-dots"></i>
+        <span>Chatbot</span>
+    </button>
+
+
+    <main class="contenido-carrito">
+
+        <h1 class="titulo-carrito">TU CARRITO</h1>
+
+        <div class="carrito-layout">
+
+
+            <section class="carrito-lista" aria-label="Productos en el carrito">
+
+                <article class="carrito-item" data-id="1">
+                    <div class="carrito-item-imagen">
+                        <img src="{{ asset('assets/images/store/Curren-Hombre.jpeg') }}" alt="Nombre del producto">
+                    </div>
+
+                    <div class="carrito-item-info">
+                        <h2 class="carrito-item-nombre">Reloj para caballero marca Curren</h2>
+                        <p class="carrito-item-descripcion">Descripción corta del producto</p>
+
+                        <div class="carrito-item-acciones">
+                            <div class="selector-cantidad" role="group" aria-label="Cantidad">
+                                <button type="button" class="cantidad-menos" aria-label="Disminuir cantidad">
+                                    <i class="bi bi-dash"></i>
+                                </button>
+                                <span class="cantidad-valor" aria-live="polite">1</span>
+                                <button type="button" class="cantidad-mas" aria-label="Aumentar cantidad">
+                                    <i class="bi bi-plus"></i>
+                                </button>
+                            </div>
+
+                            <button type="button" class="boton-eliminar">
+                                <i class="bi bi-trash3"></i>
+                                <span>Eliminar</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <p class="carrito-item-precios">
+                        <span class="precio-antes">Precio antes</span>
+                        <span class="precio-actual">Precio</span>
+                    </p>
+                </article>
+
+                <article class="carrito-item" data-id="2">
+                    <div class="carrito-item-imagen">
+                        <img src="{{ asset('assets/images/store/Rolex.jpeg') }}" alt="Nombre del producto">
+                    </div>
+
+                    <div class="carrito-item-info">
+                        <h2 class="carrito-item-nombre">Reloj marca Rolex</h2>
+                        <p class="carrito-item-descripcion">Descripción corta del producto</p>
+
+                        <div class="carrito-item-acciones">
+                            <div class="selector-cantidad" role="group" aria-label="Cantidad">
+                                <button type="button" class="cantidad-menos" aria-label="Disminuir cantidad">
+                                    <i class="bi bi-dash"></i>
+                                </button>
+                                <span class="cantidad-valor" aria-live="polite">1</span>
+                                <button type="button" class="cantidad-mas" aria-label="Aumentar cantidad">
+                                    <i class="bi bi-plus"></i>
+                                </button>
+                            </div>
+
+                            <button type="button" class="boton-eliminar">
+                                <i class="bi bi-trash3"></i>
+                                <span>Eliminar</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <p class="carrito-item-precios">
+                        <span class="precio-antes">Precio antes</span>
+                        <span class="precio-actual">Precio</span>
+                    </p>
+                </article>
+
+                <article class="carrito-item" data-id="3">
+                    <div class="carrito-item-imagen">
+                        <img src="{{ asset('assets/images/store/Naviforce.jpeg') }}" alt="Nombre del producto">
+                    </div>
+
+                    <div class="carrito-item-info">
+                        <h2 class="carrito-item-nombre">Reloj Naviforce</h2>
+                        <p class="carrito-item-descripcion">Descripción corta del producto</p>
+
+                        <div class="carrito-item-acciones">
+                            <div class="selector-cantidad" role="group" aria-label="Cantidad">
+                                <button type="button" class="cantidad-menos" aria-label="Disminuir cantidad">
+                                    <i class="bi bi-dash"></i>
+                                </button>
+                                <span class="cantidad-valor" aria-live="polite">1</span>
+                                <button type="button" class="cantidad-mas" aria-label="Aumentar cantidad">
+                                    <i class="bi bi-plus"></i>
+                                </button>
+                            </div>
+
+                            <button type="button" class="boton-eliminar">
+                                <i class="bi bi-trash3"></i>
+                                <span>Eliminar</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <p class="carrito-item-precios">
+                        <span class="precio-antes">Precio antes</span>
+                        <span class="precio-actual">Precio</span>
+                    </p>
+                </article>
+
+            </section>
+
+            <aside class="resumen-pedido" aria-labelledby="titulo-resumen">
+
+                <h2 id="titulo-resumen" class="resumen-titulo">Resumen del pedido</h2>
+
+                <dl class="resumen-detalle">
+                    <div class="resumen-fila">
+                        <dt>Subtotal</dt>
+                        <dd id="resumen-subtotal">$----</dd>
+                    </div>
+
+                    <div class="resumen-fila resumen-descuento">
+                        <dt>Descuento aplicado</dt>
+                        <dd id="resumen-descuento">-$----</dd>
+                    </div>
+
+                    <div class="resumen-fila">
+                        <dt>Envío estimado</dt>
+                        <dd id="resumen-envio">Gratis</dd>
+                    </div>
+                </dl>
+
+                <div class="resumen-fila resumen-total">
+                    <span>Total</span>
+                    <span id="resumen-total">$---</span>
+                </div>
+
+                <a href="pago.html" class="boton-pagar">Proceder al pago</a>
+                <a href="{{ route('store.catalogo') }}" class="boton-continuar">Continuar comprando</a>
+
+                <p class="resumen-seguro">
+                    <i class="bi bi-lock"></i>
+                    <span>Pago seguro SSL encriptado</span>
+                </p>
+
+            </aside>
+
+        </div>
+
+    </main>
+
+    <!-- Pie de página -->
+    <footer class="pie-pagina" id="sobre-nosotros">
+      <div class="pie-pagina__marca">
+        <a href="{{ route('store.index') }}" class="logo-tienda">
+        <img src="{{ asset('assets/images/store/Logo.png') }}" alt="Logo de Deluxe Store" />
+        </a>
+        <p class="pie-pagina__nombre">Deluxe Store</p>
+
+        <div class="redes-sociales">
+          <a href="https://www.instagram.com/deluxestoremajo?stkn=MXQ2NDFqejMweWdpYg==" aria-label="Instagram"><i class="bi bi-instagram"></i></a>
+          <a href="https://www.tiktok.com/@deluxestoremajo?_r=1&_t=ZS-9ALdsl9GegP" aria-label="TikTok"><i class="bi bi-tiktok"></i></a>
+        </div>
+      </div>
+
+      <ul class="pie-pagina__enlaces">
+        <li><a href="#informacion-legal">Información legal</a></li>
+        <li><a href="#terminos">Términos y Condiciones</a></li>
+        <li><a href="#privacidad">Políticas de privacidad</a></li>
+        <li><a href="#envio">Políticas de envío</a></li>
+        <li><a href="#devoluciones">Cambios y devolución</a></li>
+      </ul>
+    </footer>
+    <!-- JavaScript -->
+  </body>
+</html>
