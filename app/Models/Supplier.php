@@ -39,7 +39,7 @@ class Supplier extends Model
     public function receptions(): HasMany
     {
         return $this->hasMany(
-            SupplierReception::class,
+            'App\\Models\\SupplierReception',
             'id_proveedor',
             'id_proveedor'
         );

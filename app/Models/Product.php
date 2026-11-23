@@ -54,7 +54,7 @@ class Product extends Model
     public function inventory(): HasOne
     {
         return $this->hasOne(
-            Inventory::class,
+            'App\\Models\\Inventory',
             'id_producto',
             'id_producto'
         );
