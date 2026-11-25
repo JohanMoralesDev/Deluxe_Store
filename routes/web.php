@@ -1,8 +1,11 @@
 <?php
 
+use App\Http\Controllers\Admin\AdminProductController;
+use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CategoryController;
-use App\Http\Controllers\LoginController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
@@ -10,7 +13,6 @@ use Illuminate\Support\Facades\Route;
 
 Route::view('/', 'home.index')->name('store.index');
 Route::view('/nuevo', 'store.nuevo')->name('store.nuevo');
-
 Route::get('/catalogo', [ProductController::class, 'index'])->name('store.catalogo');
 Route::get('/productos/{product}', [ProductController::class, 'show'])->name('products.show');
 
@@ -20,15 +22,19 @@ Route::patch('/carrito/{product}', [CartController::class, 'update'])->name('car
 Route::delete('/carrito/{product}', [CartController::class, 'remove'])->name('cart.remove');
 Route::delete('/carrito', [CartController::class, 'clear'])->name('cart.clear');
 
+Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
+Route::get('/registro', [RegisterController::class, 'showRegistrationForm'])->name('register');
+
 Route::middleware('guest')->group(function () {
-    Route::get('/registro', [LoginController::class, 'showRegistrationForm'])->name('register');
-    Route::post('/registro', [LoginController::class, 'register'])->name('register.store');
-    Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
     Route::post('/login', [LoginController::class, 'login'])->name('login.store');
+    Route::post('/registro', [RegisterController::class, 'register'])->name('register.store');
+    Route::post('/login-modal', [LoginController::class, 'login'])->name('auth.login.store');
+    Route::post('/registro-modal', [RegisterController::class, 'register'])->name('auth.register.store');
 });
 
 Route::middleware('auth')->group(function () {
     Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
+
     Route::get('/perfil', [ProfileController::class, 'index'])->name('profile.index');
     Route::put('/perfil', [ProfileController::class, 'update'])->name('profile.update');
 
@@ -40,7 +46,12 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
-    Route::view('/inicio', 'admin.index')->name('admin.index');
-    Route::resource('productos', ProductController::class)->names('admin.products');
+    Route::get('/', [DashboardController::class, 'index'])->name('admin.index');
+    Route::get('/productos', [AdminProductController::class, 'index'])->name('admin.productos.index');
+
+    Route::resource('administrar-productos', ProductController::class)
+        ->parameters(['administrar-productos' => 'product'])
+        ->names('admin.products');
+
     Route::resource('categorias', CategoryController::class)->names('admin.categories');
 });

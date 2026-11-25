@@ -1,0 +1,1623 @@
+/* =========================================================
+   DELUXE STORE Â· HOJA DE ESTILOS
+   Paleta Ãºnica: esmeralda Â· dorado Â· blanco Â· negro
+   Todo lo demÃ¡s (grises, sombras, degradados) se obtiene
+   con transparencias y mezclas de esos cuatro colores.
+   ========================================================= */
+
+
+/* =========================================================
+   1. VARIABLES DE DISEÃ‘O
+   ========================================================= */
+:root {
+  /* Esmeralda */
+  --esmeralda: #006d46;
+  --esmeralda-profundo: #004d31;
+  --esmeralda-noche: #00281b;
+  --esmeralda-rgb: 0 109 70;
+
+  /* Dorado */
+  --oro: #ecc440;
+  --oro-claro: #f6dc82;
+  --oro-oscuro: #c9a227;
+  --oro-rgb: 236 196 64;
+
+  /* Blanco y negro */
+  --blanco: #fff;
+  --negro: #000;
+  --texto: rgb(0 0 0 / 0.88);
+  --texto-suave: rgb(0 0 0 / 0.64);
+  --linea: rgb(0 0 0 / 0.14);
+
+  /* Degradados (solo combinan los cuatro colores) */
+  --grad-oro: linear-gradient(135deg, var(--oro-claro) 0%, var(--oro) 55%, var(--oro-oscuro) 100%);
+  --grad-esmeralda: linear-gradient(135deg, var(--esmeralda) 0%, var(--esmeralda-profundo) 55%, var(--esmeralda-noche) 100%);
+  --grad-encabezado: linear-gradient(180deg, var(--esmeralda-profundo) 0%, var(--esmeralda-noche) 100%);
+
+  /* TipografÃ­a */
+  --fuente-titulo: "Cormorant Garamond", Georgia, serif;
+  --fuente-texto: "Helvetica Neue", Arial, sans-serif;
+
+  /* Movimiento */
+  --suave: cubic-bezier(0.22, 0.8, 0.26, 1);
+
+  /* Color del aro de foco: cambia segÃºn el fondo */
+  --anillo: var(--oro);
+
+  /* Alias de los nombres anteriores, por compatibilidad */
+  --color-fondo: var(--esmeralda);
+  --color-borde: var(--esmeralda-profundo);
+  --color-acento: var(--oro);
+}
+
+
+/* =========================================================
+   2. BASE
+   ========================================================= */
+* {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  /* Evita que el encabezado fijo tape las secciones al navegar por anclas */
+  scroll-padding-top: 5.5rem;
+  scrollbar-color: var(--esmeralda) rgb(0 0 0 / 0.06);
+}
+
+body {
+  min-height: 100vh;
+  font-family: var(--fuente-titulo);
+  font-size: 1.125rem;
+  font-weight: 500;
+  line-height: 1.6;
+  color: var(--texto);
+  background: linear-gradient(180deg, var(--blanco) 0%, rgb(var(--esmeralda-rgb) / 0.06) 100%);
+  -webkit-font-smoothing: antialiased;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* Texto solo para lectores de pantalla */
+.visually-hidden {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  clip-path: inset(50%);
+}
+
+/* Enlace "Saltar al contenido": visible solo al navegar con teclado */
+.enlace-salto {
+  position: fixed;
+  top: 0.75rem;
+  left: 0.75rem;
+  z-index: 2000;
+  padding: 0.7rem 1.3rem;
+  border-radius: 999px;
+  background: var(--oro);
+  color: var(--esmeralda-noche);
+  font-weight: 700;
+  translate: 0 -250%;
+  transition: translate 0.25s var(--suave);
+}
+
+.enlace-salto:focus {
+  translate: 0 0;
+}
+
+::selection {
+  background: var(--oro);
+  color: var(--esmeralda-noche);
+}
+
+/* Foco visible en teclado, en todos los elementos interactivos */
+:where(a, button, input):focus-visible {
+  outline: 3px solid var(--anillo);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+.titulo {
+  font-family: var(--fuente-titulo);
+  font-weight: 600;
+}
+
+
+/* =========================================================
+   3. ENCABEZADO Y NAVEGACIÃ“N
+   IMPORTANTE: no aÃ±adir backdrop-filter, filter ni transform
+   al encabezado: romperÃ­a el menÃº mÃ³vil (position: fixed).
+   ========================================================= */
+.encabezado {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.25rem;
+  padding: 0.9rem clamp(1rem, 3vw, 2.5rem);
+  color: var(--oro);
+  background: var(--grad-encabezado);
+  border-bottom: 1px solid rgb(var(--oro-rgb) / 0.35);
+}
+
+.nav-izquierdo,
+.nav-derecho {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  flex: 1;
+}
+
+.nav-derecho {
+  justify-content: flex-end;
+}
+
+.nav-principal ul,
+.nav-secundario ul {
+  display: flex;
+  gap: 1.5rem;
+  list-style: none;
+}
+
+/* Enlaces con subrayado dorado que se dibuja al pasar el cursor */
+.nav-principal a,
+.nav-secundario a {
+  position: relative;
+  padding: 0.35rem 0;
+  font-size: 1.1rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  transition: color 0.3s var(--suave);
+}
+
+.nav-principal a::after,
+.nav-secundario a::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 2px;
+  background: var(--grad-oro);
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.35s var(--suave);
+}
+
+.nav-principal a:hover,
+.nav-secundario a:hover,
+.nav-principal a:focus-visible,
+.nav-secundario a:focus-visible,
+.nav-principal a[aria-current="page"],
+.nav-secundario a[aria-current="page"] {
+  color: var(--blanco);
+}
+
+.nav-principal a:hover::after,
+.nav-secundario a:hover::after,
+.nav-principal a:focus-visible::after,
+.nav-secundario a:focus-visible::after,
+.nav-principal a[aria-current="page"]::after,
+.nav-secundario a[aria-current="page"]::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+/* Marca: texto dorado con destello al pasar el cursor */
+.nombre-marca {
+  font-family: var(--fuente-titulo);
+  font-size: clamp(0.9rem, 4.2vw, 1.7rem);
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  white-space: nowrap;
+  background: linear-gradient(100deg, var(--oro) 0%, var(--oro-claro) 40%, var(--blanco) 50%, var(--oro-claro) 60%, var(--oro) 100%);
+  background-size: 250% 100%;
+  background-position: 100% 0;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  transition: background-position 0.9s var(--suave);
+}
+
+.nombre-marca:hover,
+.nombre-marca:focus-visible {
+  background-position: 0 0;
+}
+
+/* Carrito y perfil */
+.nav-icon {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.4rem 0.7rem;
+  border-radius: 999px;
+  background: transparent;
+  box-shadow: none;
+  color: var(--oro);
+  font: inherit;
+  font-size: 1.05rem;
+  font-weight: 600;
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+  transition: background-color 0.3s var(--suave), color 0.3s var(--suave), transform 0.2s var(--suave);
+}
+
+.nav-icon i {
+  font-size: 1.3rem;
+  transition: transform 0.35s var(--suave);
+}
+
+.nav-icon:hover,
+.nav-icon:focus-visible {
+  background-color: rgb(var(--oro-rgb) / 0.14);
+  color: var(--blanco);
+}
+
+.nav-icon:hover i {
+  transform: translateY(-2px) scale(1.12);
+}
+
+.nav-icon:active {
+  transform: scale(0.95);
+}
+
+/* Elementos solo para mÃ³vil / tablet (se activan en la secciÃ³n 11) */
+.boton-menu-tienda,
+.menu-pantalla-completa {
+  display: none;
+}
+
+/* Sombra del encabezado que aparece al desplazarse (solo CSS) */
+@supports (animation-timeline: scroll()) {
+  .encabezado {
+    animation: sombraEncabezado linear both;
+    animation-timeline: scroll(root);
+    animation-range: 0 140px;
+  }
+}
+
+@keyframes sombraEncabezado {
+  from { box-shadow: 0 0 0 rgb(0 0 0 / 0); }
+  to   { box-shadow: 0 12px 32px rgb(0 0 0 / 0.38); }
+}
+
+
+/* =========================================================
+   4. BARRA DE BÃšSQUEDA
+   El contenedor conserva su tamaÃ±o; solo el campo se expande
+   (asÃ­ no empuja ni deforma el resto del encabezado).
+   ========================================================= */
+.campoBuscar {
+  position: relative;
+  flex: 0 0 auto;
+  width: 44px;
+  height: 44px;
+}
+
+.campoBuscar input {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 5;
+  width: 44px;
+  height: 100%;
+  padding: 0 1rem 0 2.9rem;
+  border: 1px solid rgb(var(--oro-rgb) / 0.6);
+  border-radius: 999px;
+  background-color: rgb(0 0 0 / 0.25);
+  color: var(--blanco);
+  font: inherit;
+  font-size: 1.05rem;
+  cursor: pointer;
+  transition:
+    width 0.45s var(--suave),
+    background-color 0.3s var(--suave),
+    border-color 0.3s var(--suave),
+    box-shadow 0.3s var(--suave);
+}
+
+.campoBuscar input::placeholder {
+  color: transparent;
+  transition: color 0.3s var(--suave);
+}
+
+.campoBuscar:hover input,
+.campoBuscar:focus-within input {
+  width: min(320px, 28vw);
+  border-color: var(--oro);
+  background-color: var(--esmeralda-noche);
+  box-shadow: 0 0 0 4px rgb(var(--oro-rgb) / 0.18), 0 12px 30px rgb(0 0 0 / 0.35);
+  cursor: text;
+}
+
+.campoBuscar:hover input::placeholder,
+.campoBuscar:focus-within input::placeholder {
+  color: rgb(255 255 255 / 0.7);
+}
+
+.iconoBusqueda {
+  position: absolute;
+  top: 50%;
+  left: 14px;
+  z-index: 6;
+  translate: 0 -50%;
+  color: var(--oro);
+  font-size: 1.2rem;
+  pointer-events: none;
+}
+
+
+/* =========================================================
+   5. CONTENIDO PRINCIPAL Y BOTONES
+   ========================================================= */
+.contenido-principal {
+  --anillo: var(--esmeralda);
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 0 clamp(1rem, 4vw, 2rem);
+}
+
+/* BotÃ³n base (dorado). Al pasar el cursor, un barrido lo vuelve blanco */
+.boton {
+  display: inline-block;
+  padding: 0.75rem 1.8rem;
+  border-radius: 999px;
+  background-image: linear-gradient(100deg, var(--oro) 0%, var(--oro-claro) 50%, var(--blanco) 50%, var(--blanco) 100%);
+  background-size: 200% 100%;
+  background-position: 0 0;
+  color: var(--esmeralda-noche);
+  font-family: var(--fuente-titulo);
+  font-size: 1.15rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  box-shadow: 0 8px 22px rgb(var(--oro-rgb) / 0.28);
+  transition:
+    background-position 0.5s var(--suave),
+    color 0.3s var(--suave),
+    box-shadow 0.3s var(--suave),
+    transform 0.2s var(--suave);
+}
+
+.boton:hover,
+.boton:focus-visible {
+  background-position: 100% 0;
+  color: var(--esmeralda-profundo);
+  box-shadow: 0 12px 30px rgb(var(--oro-rgb) / 0.4);
+  transform: translateY(-2px);
+}
+
+.boton:active {
+  transform: translateY(0) scale(0.97);
+}
+
+
+/* =========================================================
+   6. SECCIÃ“N NUEVA COLECCIÃ“N (HERO)
+   La foto se tiÃ±e de esmeralda con mezcla de color para que
+   no aparezcan tonos ajenos a la paleta (la original es morada).
+   ========================================================= */
+.nueva-coleccion {
+  --anillo: var(--oro);
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  min-height: clamp(380px, 62vh, 560px);
+  margin-top: clamp(1rem, 2.5vw, 1.75rem);
+  padding: clamp(2rem, 6vw, 5rem);
+  border-radius: 16px;
+  color: var(--blanco);
+  background-image:
+    linear-gradient(100deg, rgb(0 0 0 / 0.88) 0%, rgb(0 40 27 / 0.74) 42%, rgb(0 77 49 / 0.4) 100%),
+    linear-gradient(var(--esmeralda), var(--esmeralda)),
+    url("https://media.gq.com.mx/photos/678ef8f1a2336bb0aa061e3d/master/w_1600%2Cc_limit/TAG_Heuer_Carrera_Chronograph_morado.jpg");
+  background-blend-mode: normal, color, normal;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  box-shadow: 0 30px 60px -30px rgb(0 40 27 / 0.6);
+}
+
+/* Resplandor dorado que "respira" lentamente */
+.nueva-coleccion::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: radial-gradient(60% 80% at 88% 15%, rgb(var(--oro-rgb) / 0.3), transparent 65%);
+  animation: respirar 9s ease-in-out infinite alternate;
+}
+
+/* Marco dorado fino: aporta exclusividad */
+.nueva-coleccion::after {
+  content: "";
+  position: absolute;
+  inset: 14px;
+  border: 1px solid rgb(var(--oro-rgb) / 0.4);
+  border-radius: 10px;
+  pointer-events: none;
+}
+
+.nueva-coleccion__texto {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1.5rem;
+}
+
+/* LÃ­nea dorada sobre el tÃ­tulo */
+.nueva-coleccion__texto::before {
+  content: "";
+  width: 72px;
+  height: 3px;
+  border-radius: 3px;
+  background: var(--grad-oro);
+  animation: entradaSuave 0.9s var(--suave) both;
+}
+
+.nueva-coleccion .titulo {
+  max-width: 12ch;
+  font-size: clamp(2.8rem, 8vw, 5.2rem);
+  font-weight: 700;
+  line-height: 1.02;
+  letter-spacing: 0.01em;
+  background: linear-gradient(100deg, var(--blanco) 0%, var(--oro-claro) 55%, var(--oro) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  filter: drop-shadow(0 4px 18px rgb(0 0 0 / 0.55));
+  animation: entradaSuave 0.9s var(--suave) 0.15s both;
+}
+
+.nueva-coleccion__texto .boton {
+  padding: 0.85rem 2.2rem;
+  animation: entradaSuave 0.9s var(--suave) 0.35s both;
+}
+
+
+/* =========================================================
+   7. SECCIÃ“N MÃS VENDIDOS
+   ========================================================= */
+.mas-vendidos {
+  padding: clamp(3.5rem, 7vw, 6rem) 0;
+  text-align: center;
+}
+
+.mas-vendidos__encabezado {
+  max-width: 640px;
+  margin: 0 auto clamp(2rem, 4vw, 3rem);
+  padding: 0 1rem;
+}
+
+.mas-vendidos__etiqueta {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.9rem;
+  margin-bottom: 0.75rem;
+  color: var(--esmeralda);
+  font-family: var(--fuente-texto);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+}
+
+.mas-vendidos__etiqueta::before,
+.mas-vendidos__etiqueta::after {
+  content: "";
+  width: 28px;
+  height: 1px;
+  background: var(--grad-oro);
+}
+
+.mas-vendidos .titulo {
+  position: relative;
+  display: inline-block;
+  margin-bottom: 1rem;
+  color: var(--esmeralda);
+  font-size: clamp(2.4rem, 5vw, 3.5rem);
+  line-height: 1.1;
+}
+
+.mas-vendidos .titulo::after {
+  content: "";
+  display: block;
+  width: 64px;
+  height: 3px;
+  margin: 0.7rem auto 0;
+  border-radius: 3px;
+  background: var(--grad-oro);
+}
+
+.mas-vendidos__descripcion {
+  max-width: 520px;
+  margin: 0 auto;
+  color: var(--texto-suave);
+  font-size: 1.2rem;
+  line-height: 1.7;
+}
+
+/* CuadrÃ­cula */
+.mas-vendidos .productos {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: clamp(1rem, 2.2vw, 1.75rem);
+  text-align: left;
+}
+
+/* Tarjeta */
+.mas-vendidos .tarjeta-producto {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  overflow: hidden;
+  border: 1px solid var(--linea);
+  border-radius: 12px;
+  background-color: var(--blanco);
+  transition:
+    transform 0.4s var(--suave),
+    box-shadow 0.4s var(--suave),
+    border-color 0.4s var(--suave);
+}
+
+/* Barra dorada que se dibuja en la base de la tarjeta */
+.mas-vendidos .tarjeta-producto::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 3px;
+  background: var(--grad-oro);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.5s var(--suave);
+}
+
+.mas-vendidos .tarjeta-producto:hover,
+.mas-vendidos .tarjeta-producto:focus-within {
+  transform: translateY(-6px);
+  border-color: rgb(var(--oro-rgb) / 0.8);
+  box-shadow:
+    0 22px 44px -12px rgb(0 40 27 / 0.28),
+    0 0 0 1px rgb(var(--oro-rgb) / 0.4);
+}
+
+.mas-vendidos .tarjeta-producto:hover::after,
+.mas-vendidos .tarjeta-producto:focus-within::after {
+  transform: scaleX(1);
+}
+
+/* Imagen (con animaciÃ³n de carga mientras llega la foto) */
+.mas-vendidos .tarjeta-producto__imagen {
+  position: relative;
+  aspect-ratio: 4 / 4.5;
+  overflow: hidden;
+  background:
+    linear-gradient(100deg, transparent 30%, rgb(var(--oro-rgb) / 0.22) 50%, transparent 70%)
+    0 0 / 250% 100% no-repeat,
+    rgb(var(--esmeralda-rgb) / 0.1);
+  animation: cargando 1.6s linear infinite;
+}
+
+.mas-vendidos .tarjeta-producto__imagen img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.8s var(--suave);
+}
+
+.mas-vendidos .tarjeta-producto:hover .tarjeta-producto__imagen img {
+  transform: scale(1.07);
+}
+
+/* Velo oscuro inferior para que el botÃ³n se lea bien sobre la foto */
+.mas-vendidos .tarjeta-producto__imagen::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 55%, rgb(0 0 0 / 0.5) 100%);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s var(--suave);
+}
+
+.mas-vendidos .tarjeta-producto:hover .tarjeta-producto__imagen::after,
+.mas-vendidos .tarjeta-producto:focus-within .tarjeta-producto__imagen::after {
+  opacity: 1;
+}
+
+/* Etiqueta "Destacado" */
+.producto-etiqueta {
+  position: absolute;
+  top: 0.8rem;
+  left: 0.8rem;
+  z-index: 2;
+  padding: 0.4rem 0.8rem;
+  border-radius: 999px;
+  background: var(--grad-oro);
+  color: var(--esmeralda-noche);
+  font-family: var(--fuente-texto);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  box-shadow: 0 4px 14px rgb(0 0 0 / 0.3);
+}
+
+/* AcciÃ³n sobre la imagen */
+.producto-accion {
+  position: absolute;
+  right: 0.7rem;
+  bottom: 0.7rem;
+  left: 0.7rem;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  min-height: 44px;
+  padding: 0.65rem 0.5rem;
+  border-radius: 999px;
+  background-color: var(--esmeralda-profundo);
+  color: var(--oro);
+  font-size: 1rem;
+  font-weight: 700;
+  text-align: center;
+  opacity: 0;
+  transform: translateY(12px);
+  transition:
+    opacity 0.35s var(--suave),
+    transform 0.35s var(--suave),
+    background-color 0.25s var(--suave),
+    color 0.25s var(--suave);
+}
+
+.mas-vendidos .tarjeta-producto:hover .producto-accion,
+.mas-vendidos .tarjeta-producto:focus-within .producto-accion {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.producto-accion:hover,
+.producto-accion:focus-visible {
+  background-color: var(--oro);
+  color: var(--esmeralda-noche);
+}
+
+.producto-accion:active {
+  transform: scale(0.97);
+}
+
+.producto-accion i {
+  transition: transform 0.3s var(--suave);
+}
+
+.producto-accion:hover i {
+  transform: translateX(3px) scale(1.1);
+}
+
+/* InformaciÃ³n del producto */
+.tarjeta-producto__contenido {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.55rem;
+  padding: 1.1rem 1.1rem 1.25rem;
+}
+
+.tarjeta-producto__categoria {
+  color: var(--texto-suave);
+  font-family: var(--fuente-texto);
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.mas-vendidos .tarjeta-producto__nombre {
+  min-height: 2.8em;
+  margin: 0;
+  color: var(--texto);
+  font-family: var(--fuente-titulo);
+  font-size: clamp(1.15rem, 1.6vw, 1.4rem);
+  font-weight: 700;
+  line-height: 1.4;
+  overflow-wrap: anywhere;
+  transition: color 0.3s var(--suave);
+}
+
+.mas-vendidos .tarjeta-producto:hover .tarjeta-producto__nombre {
+  color: var(--esmeralda);
+}
+
+.tarjeta-producto__precios {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.6rem;
+  margin-top: auto;
+  padding-top: 0.25rem;
+}
+
+.mas-vendidos .precio-actual {
+  color: var(--esmeralda);
+  font-family: var(--fuente-texto);
+  font-size: 1.05rem;
+  font-weight: 700;
+}
+
+.mas-vendidos .precio-anterior {
+  color: rgb(0 0 0 / 0.6);
+  font-family: var(--fuente-texto);
+  font-size: 0.85rem;
+  text-decoration: line-through;
+  text-decoration-thickness: 1px;
+}
+
+/* BotÃ³n inferior */
+.mas-vendidos__pie {
+  margin-top: clamp(2rem, 4vw, 3rem);
+}
+
+/* Botones esmeralda sobre fondo claro: al pasar el cursor, un barrido dorado */
+.mas-vendidos .boton--catalogo,
+.modal__boton {
+  background-image: linear-gradient(100deg, var(--esmeralda-noche) 0%, var(--esmeralda) 50%, var(--oro) 50%, var(--oro-claro) 100%);
+  background-size: 200% 100%;
+  background-position: 0 0;
+  color: var(--oro);
+  box-shadow: 0 8px 22px rgb(0 40 27 / 0.28);
+}
+
+.mas-vendidos .boton--catalogo:hover,
+.mas-vendidos .boton--catalogo:focus-visible,
+.modal__boton:hover,
+.modal__boton:focus-visible {
+  background-position: 100% 0;
+  color: var(--esmeralda-noche);
+  box-shadow: 0 12px 30px rgb(var(--oro-rgb) / 0.4);
+}
+
+.mas-vendidos .boton--catalogo {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.8rem;
+  margin: 0;
+  padding: 0.95rem 1.9rem;
+  font-family: var(--fuente-texto);
+  font-size: 0.95rem;
+  letter-spacing: 0.03em;
+}
+
+.mas-vendidos .boton--catalogo i {
+  transition: translate 0.35s var(--suave);
+}
+
+.mas-vendidos .boton--catalogo:hover i {
+  translate: 6px 0;
+}
+
+
+/* =========================================================
+   8. MODAL DE INICIO DE SESIÃ“N Y REGISTRO
+   ========================================================= */
+.modal-auth {
+  position: fixed;
+  inset: 0;
+  z-index: 1050;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem;
+  overflow-y: auto;
+  background:
+    radial-gradient(circle at 50% 0%, rgb(var(--esmeralda-rgb) / 0.4), transparent 60%),
+    rgb(0 0 0 / 0.72);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  animation: fundir 0.3s ease both;
+}
+
+.modal-auth[hidden] {
+  display: none;
+}
+
+.modal__container {
+  --anillo: var(--esmeralda);
+  position: relative;
+  width: 100%;
+  max-width: 440px;
+  max-height: calc(100vh - 1.5rem);
+  max-height: calc(100dvh - 1.5rem);
+  overflow-y: auto;
+  padding: 2.75rem 2.5rem 2.25rem;
+  border-radius: 16px;
+  background-color: var(--blanco);
+  color: var(--texto);
+  box-shadow:
+    0 30px 70px rgb(0 0 0 / 0.5),
+    0 0 0 1px rgb(var(--oro-rgb) / 0.5);
+  transform-origin: center;
+  animation: aparecerModal 0.4s var(--suave) both;
+}
+
+/* Franja dorada superior */
+.modal__container::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  height: 5px;
+  background: var(--grad-oro);
+}
+
+.modal__cerrar {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--texto);
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: background-color 0.25s var(--suave), color 0.25s var(--suave), transform 0.35s var(--suave);
+}
+
+.modal__cerrar:hover,
+.modal__cerrar:focus-visible {
+  background-color: var(--esmeralda);
+  color: var(--blanco);
+  transform: rotate(90deg);
+}
+
+.modal__title {
+  margin-bottom: 1.5rem;
+  color: var(--esmeralda);
+  font-family: var(--fuente-titulo);
+  font-size: 2.2rem;
+  font-weight: 700;
+  text-align: center;
+}
+
+.modal__title::after {
+  content: "";
+  display: block;
+  width: 48px;
+  height: 3px;
+  margin: 0.5rem auto 0;
+  border-radius: 3px;
+  background: var(--grad-oro);
+}
+
+.modal__sign_in form,
+.modal__registro form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+
+.modal__sign_in label,
+.modal__registro label {
+  font-size: 1.05rem;
+  font-weight: 700;
+}
+
+.modal__sign_in input,
+.modal__registro input {
+  width: 100%;
+  padding: 0.75rem 0.9rem;
+  border: 1px solid rgb(0 0 0 / 0.45);
+  border-radius: 8px;
+  background-color: var(--blanco);
+  color: var(--texto);
+  font-family: inherit;
+  font-size: 1.05rem;
+  transition: border-color 0.25s var(--suave), box-shadow 0.25s var(--suave);
+}
+
+.modal__sign_in input:hover,
+.modal__registro input:hover {
+  border-color: var(--esmeralda);
+}
+
+.modal__sign_in input:focus,
+.modal__registro input:focus {
+  border-color: var(--esmeralda);
+  box-shadow: 0 0 0 4px rgb(var(--oro-rgb) / 0.4);
+}
+
+/* Enlaces del modal: subrayado dorado */
+.modal__enlace,
+.modal__cambio button {
+  color: var(--esmeralda-profundo);
+  font-weight: 700;
+  text-decoration: underline;
+  text-decoration-color: var(--oro);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 4px;
+  transition: color 0.25s var(--suave), text-decoration-color 0.25s var(--suave);
+}
+
+.modal__enlace:hover,
+.modal__cambio button:hover {
+  color: var(--esmeralda);
+  text-decoration-color: var(--esmeralda);
+}
+
+.modal__enlace {
+  align-self: flex-end;
+  margin: 0.2rem 0 0.6rem;
+  font-size: 0.98rem;
+}
+
+.modal__cambio button {
+  background: transparent;
+  font-family: inherit;
+  font-size: inherit;
+  cursor: pointer;
+}
+
+.modal__boton {
+  width: 100%;
+  padding: 0.85rem;
+  border-radius: 999px;
+  font-family: inherit;
+  font-size: 1.1rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  cursor: pointer;
+  transition:
+    background-position 0.5s var(--suave),
+    color 0.3s var(--suave),
+    box-shadow 0.3s var(--suave),
+    transform 0.2s var(--suave);
+}
+
+.modal__boton:hover,
+.modal__boton:focus-visible {
+  transform: translateY(-2px);
+}
+
+.modal__boton:active {
+  transform: translateY(0) scale(0.97);
+}
+
+.modal__cambio {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.35rem;
+  margin-top: 1rem;
+  font-size: 1.02rem;
+  text-align: center;
+}
+
+.modal-auth [hidden] {
+  display: none !important;
+}
+
+/* Cambio entre formularios */
+.modal-auth .modal__sign_in,
+.modal-auth .modal__registro {
+  animation: aparecerFormulario 0.35s var(--suave) both;
+}
+
+/* Mensaje de validaciÃ³n */
+.mensaje-formulario {
+  margin: 0.25rem 0;
+  padding: 0.6rem 0.8rem;
+  border-left: 4px solid var(--oro);
+  border-radius: 6px;
+  background-color: rgb(var(--esmeralda-rgb) / 0.08);
+  color: var(--esmeralda-noche);
+  font-size: 1rem;
+  font-weight: 600;
+  text-align: center;
+}
+
+.mensaje-formulario:empty {
+  display: none;
+}
+
+/* Campo de contraseÃ±a con botÃ³n mostrar / ocultar */
+.campo-password {
+  position: relative;
+  width: 100%;
+}
+
+.modal__sign_in .campo-password input,
+.modal__registro .campo-password input {
+  padding-right: 3rem;
+}
+
+.alternar-password {
+  position: absolute;
+  top: 50%;
+  right: 0.6rem;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.35rem;
+  border-radius: 6px;
+  background: transparent;
+  box-shadow: none;
+  color: var(--texto-suave);
+  font-size: 1.15rem;
+  line-height: 1;
+  cursor: pointer;
+  transform: translateY(-50%);
+  transition: color 0.25s var(--suave);
+}
+
+.alternar-password:hover {
+  background: transparent;
+  color: var(--esmeralda);
+}
+
+.alternar-password[aria-pressed="true"] {
+  color: var(--esmeralda);
+}
+
+.alternar-password i {
+  pointer-events: none;
+}
+
+
+/* =========================================================
+   9. PIE DE PÃGINA
+   ========================================================= */
+.pie-pagina {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.75rem;
+  margin-top: 3rem;
+  padding: 2.75rem clamp(1rem, 4vw, 2.5rem);
+  background: var(--grad-esmeralda);
+  color: var(--oro);
+}
+
+/* LÃ­nea dorada superior con desvanecido en los extremos */
+.pie-pagina::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--oro), transparent);
+}
+
+.pie-pagina__marca {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+}
+
+.logo-tienda {
+  display: block;
+  flex-shrink: 0;
+  width: 56px;
+  height: 56px;
+  min-width: 56px;
+  min-height: 56px;
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  border-radius: 50%;
+  box-shadow: 0 0 0 2px var(--oro), 0 0 0 6px rgb(var(--oro-rgb) / 0.22);
+  transition: transform 0.4s var(--suave), box-shadow 0.4s var(--suave);
+}
+
+.logo-tienda:hover {
+  transform: rotate(-6deg) scale(1.06);
+  box-shadow: 0 0 0 2px var(--oro), 0 0 0 8px rgb(var(--oro-rgb) / 0.32);
+}
+
+.logo-tienda img {
+  width: 100%;
+  height: 100%;
+  aspect-ratio: 1 / 1;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.pie-pagina__nombre {
+  font-family: var(--fuente-titulo);
+  font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+}
+
+.redes-sociales {
+  display: flex;
+  gap: 0.6rem;
+  margin-left: 0.5rem;
+}
+
+.redes-sociales a {
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  border: 1px solid rgb(var(--oro-rgb) / 0.6);
+  border-radius: 50%;
+  font-size: 1.15rem;
+  transition:
+    background-color 0.3s var(--suave),
+    color 0.3s var(--suave),
+    transform 0.3s var(--suave),
+    box-shadow 0.3s var(--suave);
+}
+
+.redes-sociales a:hover,
+.redes-sociales a:focus-visible {
+  background-color: var(--oro);
+  color: var(--esmeralda-noche);
+  transform: translateY(-4px);
+  box-shadow: 0 10px 22px rgb(0 0 0 / 0.35);
+}
+
+.pie-pagina__enlaces {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem 1.5rem;
+  list-style: none;
+  font-size: 1rem;
+}
+
+.pie-pagina__enlaces a {
+  position: relative;
+  padding: 0.2rem 0;
+  font-weight: 600;
+  transition: color 0.3s var(--suave);
+}
+
+.pie-pagina__enlaces a::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 1px;
+  background: var(--oro-claro);
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.35s var(--suave);
+}
+
+.pie-pagina__enlaces a:hover,
+.pie-pagina__enlaces a:focus-visible {
+  color: var(--blanco);
+}
+
+.pie-pagina__enlaces a:hover::after,
+.pie-pagina__enlaces a:focus-visible::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+
+/* =========================================================
+   10. ANIMACIONES
+   Se usan las propiedades "translate" y "opacity" (no
+   "transform") para que no choquen con los efectos hover.
+   ========================================================= */
+@keyframes entradaSuave {
+  from { opacity: 0; translate: 0 26px; }
+  to   { opacity: 1; translate: 0 0; }
+}
+
+@keyframes respirar {
+  from { opacity: 0.55; }
+  to   { opacity: 1; }
+}
+
+@keyframes fundir {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes aparecerModal {
+  from { opacity: 0; transform: translateY(20px) scale(0.96); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes aparecerFormulario {
+  from { opacity: 0; transform: translateX(10px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes cargando {
+  from { background-position: 150% 0, 0 0; }
+  to   { background-position: -50% 0, 0 0; }
+}
+
+@keyframes revelar {
+  from { opacity: 0; translate: 0 40px; }
+  to   { opacity: 1; translate: 0 0; }
+}
+
+/* ApariciÃ³n progresiva al desplazarse (scroll reveal) solo con CSS.
+   Si el navegador no lo soporta, el contenido se muestra normal. */
+@supports (animation-timeline: view()) {
+  .mas-vendidos__encabezado,
+  .mas-vendidos .tarjeta-producto,
+  .mas-vendidos__pie,
+  .pie-pagina__marca,
+  .pie-pagina__enlaces {
+    --retraso: 0%;
+    animation: revelar linear both;
+    animation-timeline: view();
+    animation-range: entry var(--retraso) entry calc(var(--retraso) + 60%);
+  }
+
+  .mas-vendidos .tarjeta-producto:nth-child(2) { --retraso: 8%; }
+  .mas-vendidos .tarjeta-producto:nth-child(3) { --retraso: 16%; }
+  .mas-vendidos .tarjeta-producto:nth-child(4) { --retraso: 24%; }
+}
+
+
+/* =========================================================
+   11. DISEÃ‘O RESPONSIVE
+   ========================================================= */
+
+/* Escritorio pequeÃ±o y tablet: menÃº de pantalla completa.
+   (La barra completa ya no cabe por debajo de 1100 px) */
+@media (max-width: 1100px) {
+  .encabezado {
+    gap: 0.5rem;
+    padding: 0.75rem 4rem 0.75rem 1rem;
+  }
+
+  .nav-izquierdo,
+  .nav-secundario {
+    display: none;
+  }
+
+  .nombre-marca {
+    flex: 0 1 auto;
+    min-width: 0;
+  }
+
+  .nav-derecho {
+    flex: 0 0 auto;
+    gap: 0.25rem;
+    min-width: 0;
+  }
+
+  .nav-derecho .nav-icon {
+    flex: 0 0 auto;
+    flex-direction: column;
+    justify-content: center;
+    gap: 0.1rem;
+    padding: 0.25rem 0.45rem;
+    border-radius: 12px;
+    font-size: 0.8rem;
+    line-height: 1.1;
+    white-space: nowrap;
+  }
+
+  .nav-derecho .nav-icon i {
+    font-size: 1.2rem;
+  }
+
+  /* BotÃ³n del menÃº: reservado en el extremo derecho */
+  .boton-menu-tienda {
+    position: absolute;
+    top: 50%;
+    right: 0.75rem;
+    z-index: 1202;
+    translate: 0 -50%;
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    border: 1px solid var(--oro);
+    border-radius: 50%;
+    background: var(--esmeralda-noche);
+    color: var(--oro);
+    font-size: 1.6rem;
+    cursor: pointer;
+    transition: background-color 0.3s var(--suave), color 0.3s var(--suave), scale 0.2s var(--suave);
+  }
+
+  .boton-menu-tienda:hover,
+  .boton-menu-tienda[aria-expanded="true"] {
+    background-color: var(--oro);
+    color: var(--esmeralda-noche);
+  }
+
+  .boton-menu-tienda:active {
+    scale: 0.92;
+  }
+
+  /* MenÃº de navegaciÃ³n a pantalla completa */
+  .menu-pantalla-completa {
+    position: fixed;
+    inset: 0;
+    z-index: 1200;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: clamp(1.25rem, 4vh, 2rem);
+    padding: 5rem 1.5rem 2rem;
+    overflow-y: auto;
+    background:
+      radial-gradient(60% 50% at 85% 8%, rgb(var(--oro-rgb) / 0.2), transparent 70%),
+      linear-gradient(160deg, var(--esmeralda-profundo) 0%, var(--esmeralda-noche) 65%, var(--negro) 100%);
+    color: var(--oro);
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 0.35s var(--suave), visibility 0.35s;
+  }
+
+  .menu-pantalla-completa ul {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: clamp(1.25rem, 4vh, 2rem);
+    list-style: none;
+  }
+
+  .menu-pantalla-completa.menu-abierto {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+  }
+
+  /* Los enlaces entran uno tras otro al abrir el menÃº */
+  .menu-pantalla-completa a {
+    position: relative;
+    padding: 0.25rem 0.5rem;
+    color: var(--oro);
+    font-family: var(--fuente-titulo);
+    font-size: clamp(2rem, 7vw, 3rem);
+    font-weight: 600;
+    text-align: center;
+    opacity: 0;
+    translate: 0 24px;
+    transition:
+      opacity 0.5s var(--suave),
+      translate 0.5s var(--suave),
+      color 0.25s var(--suave);
+  }
+
+  .menu-pantalla-completa a::after {
+    content: "";
+    position: absolute;
+    right: 0.5rem;
+    bottom: 0;
+    left: 0.5rem;
+    height: 2px;
+    background: var(--grad-oro);
+    transform: scaleX(0);
+    transform-origin: center;
+    transition: transform 0.35s var(--suave);
+  }
+
+  .menu-pantalla-completa.menu-abierto a {
+    opacity: 1;
+    translate: 0 0;
+  }
+
+  .menu-pantalla-completa.menu-abierto li:nth-child(1) a { transition-delay: 0.08s, 0.08s, 0s; }
+  .menu-pantalla-completa.menu-abierto li:nth-child(2) a { transition-delay: 0.15s, 0.15s, 0s; }
+  .menu-pantalla-completa.menu-abierto li:nth-child(3) a { transition-delay: 0.22s, 0.22s, 0s; }
+  .menu-pantalla-completa.menu-abierto li:nth-child(4) a { transition-delay: 0.29s, 0.29s, 0s; }
+
+  .menu-pantalla-completa a:hover,
+  .menu-pantalla-completa a:focus-visible {
+    color: var(--blanco);
+  }
+
+  .menu-pantalla-completa a:hover::after,
+  .menu-pantalla-completa a:focus-visible::after {
+    transform: scaleX(1);
+  }
+}
+
+/* Tablet */
+@media (max-width: 992px) {
+  .mas-vendidos .productos {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.25rem;
+  }
+}
+
+/* Pantallas tÃ¡ctiles: el botÃ³n de la tarjeta siempre visible */
+@media (hover: none) {
+  .producto-accion {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* MÃ³vil */
+@media (max-width: 768px) {
+  .nueva-coleccion {
+    min-height: 360px;
+    padding: 2.25rem 1.5rem;
+  }
+
+  .nueva-coleccion::after {
+    inset: 10px;
+  }
+
+  .mas-vendidos {
+    padding: 3.25rem 0;
+  }
+
+  .mas-vendidos__descripcion {
+    font-size: 1.1rem;
+  }
+
+  .mas-vendidos .productos {
+    gap: 0.75rem;
+  }
+
+  .mas-vendidos .tarjeta-producto__imagen {
+    aspect-ratio: 1 / 1.15;
+  }
+
+  .tarjeta-producto__contenido {
+    gap: 0.45rem;
+    padding: 0.8rem 0.8rem 1rem;
+  }
+
+  .tarjeta-producto__categoria {
+    font-size: 0.62rem;
+  }
+
+  .mas-vendidos .tarjeta-producto__nombre {
+    min-height: 3em;
+    font-size: 1.1rem;
+  }
+
+  .tarjeta-producto__precios {
+    gap: 0.35rem;
+  }
+
+  .mas-vendidos .precio-actual {
+    font-size: 0.95rem;
+  }
+
+  .mas-vendidos .precio-anterior {
+    font-size: 0.78rem;
+  }
+
+  .producto-accion {
+    right: 0.4rem;
+    bottom: 0.4rem;
+    left: 0.4rem;
+    min-height: 40px;
+    gap: 0.3rem;
+    padding: 0.4rem 0.25rem;
+    font-size: 0.85rem;
+    opacity: 1;
+    transform: none;
+  }
+
+  .producto-etiqueta {
+    top: 0.5rem;
+    left: 0.5rem;
+    padding: 0.3rem 0.55rem;
+    font-size: 0.62rem;
+  }
+
+  .mas-vendidos .boton--catalogo {
+    max-width: 100%;
+    padding: 0.85rem 1.25rem;
+    font-size: 0.85rem;
+  }
+
+  .modal__container {
+    padding: 2.5rem 1.25rem 1.75rem;
+  }
+
+  .modal__title {
+    font-size: 1.9rem;
+  }
+
+  .logo-tienda {
+    width: 48px;
+    height: 48px;
+    min-width: 48px;
+    min-height: 48px;
+  }
+
+  .pie-pagina {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .pie-pagina__marca {
+    flex-wrap: wrap;
+  }
+
+  .redes-sociales {
+    margin-left: 0;
+  }
+
+  .pie-pagina__enlaces {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+}
+
+/* MÃ³viles muy estrechos */
+@media (max-width: 360px) {
+  .mas-vendidos .tarjeta-producto__nombre {
+    font-size: 1rem;
+  }
+
+  .nav-derecho .nav-icon {
+    padding: 0.2rem 0.3rem;
+    font-size: 0.72rem;
+  }
+}
+
+
+/* =========================================================
+   12. ACCESIBILIDAD: MOVIMIENTO REDUCIDO
+   Se desactivan las animaciones y los desplazamientos de los
+   efectos hover; el contenido queda siempre visible.
+   ========================================================= */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation: none !important;
+    transition-duration: 0.01ms !important;
+    transition-delay: 0s !important;
+  }
+
+  .mas-vendidos .tarjeta-producto:hover,
+  .mas-vendidos .tarjeta-producto:focus-within,
+  .mas-vendidos .tarjeta-producto:hover .tarjeta-producto__imagen img,
+  .boton:hover,
+  .modal__boton:hover,
+  .redes-sociales a:hover,
+  .logo-tienda:hover,
+  .modal__cerrar:hover {
+    transform: none;
+  }
+}

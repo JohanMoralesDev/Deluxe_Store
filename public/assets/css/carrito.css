@@ -1,3 +1,13 @@
+
+/* =========================================================
+   DELUXE STORE â€” CARRITO
+   Estilos generales, navegaciÃ³n y diseÃ±o responsive
+   ========================================================= */
+
+/* =========================
+   1. VARIABLES Y REINICIO
+   ========================= */
+
 *,
 *::before,
 *::after {
@@ -72,6 +82,11 @@ button:disabled {
     opacity: 0.55;
     cursor: not-allowed;
 }
+
+
+/* =========================
+   2. ENCABEZADO PRINCIPAL
+   ========================= */
 
 header.encabezado {
     position: sticky;
@@ -156,6 +171,11 @@ header.encabezado {
 .nav-icono i {
     font-size: 1.2rem;
 }
+
+
+/* =========================
+   3. BÃšSQUEDA
+   ========================= */
 
 .campoBuscar {
     position: relative;
@@ -246,6 +266,11 @@ header.encabezado {
     cursor: pointer;
 }
 
+
+/* =========================
+   4. BOTÃ“N DEL MENÃš MÃ“VIL
+   ========================= */
+
 .boton-menu-tienda {
     display: none;
     align-items: center;
@@ -281,6 +306,11 @@ header.encabezado {
 .boton-menu-tienda i {
     pointer-events: none;
 }
+
+
+/* =========================
+   5. MENÃš DE PANTALLA COMPLETA
+   ========================= */
 
 .menu-pantalla-completa {
     position: fixed;
@@ -352,6 +382,11 @@ header.encabezado {
     transform: translateY(-2px);
 }
 
+
+/* =========================
+   6. BOTÃ“N DEL CHATBOT
+   ========================= */
+
 .boton-chatbot {
     position: fixed;
     top: 6rem;
@@ -390,6 +425,11 @@ header.encabezado {
     font-weight: 600;
 }
 
+
+/* =========================
+   7. CONTENIDO DEL CARRITO
+   ========================= */
+
 .contenido-carrito {
     width: min(100% - 4rem, var(--ancho-contenido));
     margin: 0 auto;
@@ -412,6 +452,11 @@ header.encabezado {
     align-items: start;
     gap: 2rem;
 }
+
+
+/* =========================
+   8. LISTA DE PRODUCTOS
+   ========================= */
 
 .carrito-lista {
     display: flex;
@@ -479,6 +524,11 @@ header.encabezado {
     margin-top: 0.5rem;
 }
 
+
+/* =========================
+   9. SELECTOR DE CANTIDAD
+   ========================= */
+
 .selector-cantidad {
     display: inline-flex;
     align-items: center;
@@ -518,6 +568,11 @@ header.encabezado {
     font-variant-numeric: tabular-nums;
 }
 
+
+/* =========================
+   10. BOTÃ“N ELIMINAR
+   ========================= */
+
 .boton-eliminar {
     display: inline-flex;
     align-items: center;
@@ -538,6 +593,11 @@ header.encabezado {
 .boton-eliminar:hover {
     opacity: 0.7;
 }
+
+
+/* =========================
+   11. PRECIOS DEL PRODUCTO
+   ========================= */
 
 .carrito-item-precios {
     display: flex;
@@ -562,6 +622,11 @@ header.encabezado {
     font-weight: 600;
     font-variant-numeric: tabular-nums;
 }
+
+
+/* =========================
+   12. RESUMEN DEL PEDIDO
+   ========================= */
 
 .resumen-pedido {
     position: sticky;
@@ -642,6 +707,11 @@ header.encabezado {
     overflow-wrap: anywhere;
 }
 
+
+/* =========================
+   13. BOTONES DE COMPRA
+   ========================= */
+
 .boton-pagar,
 .boton-continuar {
     display: flex;
@@ -699,6 +769,11 @@ header.encabezado {
     font-size: 0.85rem;
     text-align: center;
 }
+
+
+/* =========================
+   14. PIE DE PÃGINA
+   ========================= */
 
 .pie-pagina {
     display: flex;
@@ -778,6 +853,11 @@ header.encabezado {
     border-color: var(--color-acento);
 }
 
+
+/* =========================
+   15. TABLETS Y PORTÃTILES
+   ========================= */
+
 @media (max-width: 1000px) {
     header.encabezado {
         gap: 1rem;
@@ -821,6 +901,11 @@ header.encabezado {
     }
 }
 
+
+/* =========================
+   16. TABLETS Y MÃ“VILES
+   ========================= */
+
 @media (max-width: 768px) {
     html {
         scroll-padding-top: 80px;
@@ -850,6 +935,7 @@ header.encabezado {
         gap: 0.6rem;
     }
 
+    /* Se conservan visibles los accesos rÃ¡pidos del encabezado. */
     .nav-derecho {
         grid-column: 2;
         grid-row: 1;
@@ -944,6 +1030,11 @@ header.encabezado {
         min-width: 0;
     }
 }
+
+
+/* =========================
+   17. CELULARES
+   ========================= */
 
 @media (max-width: 480px) {
     header.encabezado {
@@ -1081,6 +1172,11 @@ header.encabezado {
     }
 }
 
+
+/* =========================
+   18. CELULARES MUY ESTRECHOS
+   ========================= */
+
 @media (max-width: 350px) {
     .nombre-marca {
         font-size: 1.05rem;
@@ -1119,6 +1215,11 @@ header.encabezado {
     }
 }
 
+
+/* =========================
+   19. ACCESIBILIDAD
+   ========================= */
+
 @media (prefers-reduced-motion: reduce) {
     *,
     *::before,
@@ -1130,6 +1231,7 @@ header.encabezado {
     }
 }
 
+/* CorrecciÃ³n del fondo del botÃ³n Perfil */
 button.nav-icon.boton-perfil,
 button.nav-icon.boton-perfil:visited {
     background-color: transparent;
