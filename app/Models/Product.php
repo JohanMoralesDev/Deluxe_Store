@@ -42,6 +42,40 @@ class Product extends Model
         ];
     }
 
+    public function getIdAttribute(): int
+    {
+        return (int) $this->getKey();
+    }
+
+    public function getNameAttribute(): string
+    {
+        return (string) ($this->attributes['nombre'] ?? '');
+    }
+
+    public function getActiveAttribute(): bool
+    {
+        return (bool) ($this->attributes['esta_activo'] ?? false);
+    }
+
+    public function getPriceAttribute(): float
+    {
+        $offer = $this->attributes['precio_oferta'] ?? null;
+        $price = $offer !== null && (float) $offer > 0
+            ? $offer
+            : ($this->attributes['precio'] ?? 0);
+
+        return (float) $price;
+    }
+
+    public function getStockAttribute(): int
+    {
+        if (array_key_exists('stock', $this->attributes)) {
+            return (int) $this->attributes['stock'];
+        }
+
+        return (int) ($this->inventory?->cantidad ?? 0);
+    }
+
     public function category(): BelongsTo
     {
         return $this->belongsTo(

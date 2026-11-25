@@ -1,167 +1,107 @@
 @extends('layouts.app')
 
-@section('title', 'Deluxe Store')
+@section('title', 'Carrito - Deluxe Store')
 
 @push('head')
-    @vite(['assets/css/Carrito.css', 'assets/js/script.js'])
+    <link rel="stylesheet" href="{{ asset('assets/css/Carrito.css') }}">
+    <script src="{{ asset('assets/js/carrito.js') }}" defer></script>
 @endpush
 
 @section('content')
-<button type="button" class="boton-chatbot" aria-label="Abrir chatbot">
-        <i class="bi bi-chat-dots"></i>
-        <span>Chatbot</span>
-    </button>
+<main class="contenido-carrito">
+    <h1 class="titulo-carrito">TU CARRITO</h1>
 
+    @if(session('success'))
+        <p class="alerta alerta-exito">{{ session('success') }}</p>
+    @endif
+    @if(session('error'))
+        <p class="alerta alerta-error">{{ session('error') }}</p>
+    @endif
 
-    <main class="contenido-carrito">
+    @foreach($issues as $issue)
+        <p class="alerta alerta-error">{{ $issue }}</p>
+    @endforeach
 
-        <h1 class="titulo-carrito">TU CARRITO</h1>
-
+    @if(empty($items))
+        <section class="carrito-vacio">
+            <p>Tu carrito está vacío.</p>
+            <a href="{{ route('store.catalogo') }}" class="boton-continuar">Ir al catálogo</a>
+        </section>
+    @else
         <div class="carrito-layout">
-
-
             <section class="carrito-lista" aria-label="Productos en el carrito">
-
-                <article class="carrito-item" data-id="1">
-                    <div class="carrito-item-imagen">
-                        <img src="{{ asset('assets/images/store/Curren-Hombre.jpeg') }}" alt="Nombre del producto">
-                    </div>
-
-                    <div class="carrito-item-info">
-                        <h2 class="carrito-item-nombre">Reloj para caballero marca Curren</h2>
-                        <p class="carrito-item-descripcion">Descripción corta del producto</p>
-
-                        <div class="carrito-item-acciones">
-                            <div class="selector-cantidad" role="group" aria-label="Cantidad">
-                                <button type="button" class="cantidad-menos" aria-label="Disminuir cantidad">
-                                    <i class="bi bi-dash"></i>
-                                </button>
-                                <span class="cantidad-valor" aria-live="polite">1</span>
-                                <button type="button" class="cantidad-mas" aria-label="Aumentar cantidad">
-                                    <i class="bi bi-plus"></i>
-                                </button>
-                            </div>
-
-                            <button type="button" class="boton-eliminar">
-                                <i class="bi bi-trash3"></i>
-                                <span>Eliminar</span>
-                            </button>
+                @foreach($items as $item)
+                    @php($product = $item['product'])
+                    <article class="carrito-item">
+                        <div class="carrito-item-imagen">
+                            @if($product->url_imagen)
+                                <img src="{{ asset($product->url_imagen) }}" alt="{{ $product->name }}">
+                            @else
+                                <img src="{{ asset('assets/Imagenes/Logo.png') }}" alt="{{ $product->name }}">
+                            @endif
                         </div>
-                    </div>
 
-                    <p class="carrito-item-precios">
-                        <span class="precio-antes">Precio antes</span>
-                        <span class="precio-actual">Precio</span>
-                    </p>
-                </article>
+                        <div class="carrito-item-info">
+                            <h2 class="carrito-item-nombre">{{ $product->name }}</h2>
+                            <p class="carrito-item-descripcion">{{ $product->descripcion }}</p>
 
-                <article class="carrito-item" data-id="2">
-                    <div class="carrito-item-imagen">
-                        <img src="{{ asset('assets/images/store/Rolex.jpeg') }}" alt="Nombre del producto">
-                    </div>
+                            <form method="POST" action="{{ route('cart.update', $product) }}" class="carrito-item-acciones">
+                                @csrf
+                                @method('PATCH')
+                                <label>
+                                    Cantidad
+                                    <input type="number" name="quantity" min="1" max="{{ $product->stock }}" value="{{ $item['quantity'] }}" required>
+                                </label>
+                                <button type="submit" class="boton-continuar">Actualizar</button>
+                            </form>
 
-                    <div class="carrito-item-info">
-                        <h2 class="carrito-item-nombre">Reloj marca Rolex</h2>
-                        <p class="carrito-item-descripcion">Descripción corta del producto</p>
-
-                        <div class="carrito-item-acciones">
-                            <div class="selector-cantidad" role="group" aria-label="Cantidad">
-                                <button type="button" class="cantidad-menos" aria-label="Disminuir cantidad">
-                                    <i class="bi bi-dash"></i>
+                            <form method="POST" action="{{ route('cart.remove', $product) }}">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="boton-eliminar">
+                                    <i class="bi bi-trash3"></i> Eliminar
                                 </button>
-                                <span class="cantidad-valor" aria-live="polite">1</span>
-                                <button type="button" class="cantidad-mas" aria-label="Aumentar cantidad">
-                                    <i class="bi bi-plus"></i>
-                                </button>
-                            </div>
-
-                            <button type="button" class="boton-eliminar">
-                                <i class="bi bi-trash3"></i>
-                                <span>Eliminar</span>
-                            </button>
+                            </form>
                         </div>
-                    </div>
 
-                    <p class="carrito-item-precios">
-                        <span class="precio-antes">Precio antes</span>
-                        <span class="precio-actual">Precio</span>
-                    </p>
-                </article>
-
-                <article class="carrito-item" data-id="3">
-                    <div class="carrito-item-imagen">
-                        <img src="{{ asset('assets/images/store/Naviforce.jpeg') }}" alt="Nombre del producto">
-                    </div>
-
-                    <div class="carrito-item-info">
-                        <h2 class="carrito-item-nombre">Reloj Naviforce</h2>
-                        <p class="carrito-item-descripcion">Descripción corta del producto</p>
-
-                        <div class="carrito-item-acciones">
-                            <div class="selector-cantidad" role="group" aria-label="Cantidad">
-                                <button type="button" class="cantidad-menos" aria-label="Disminuir cantidad">
-                                    <i class="bi bi-dash"></i>
-                                </button>
-                                <span class="cantidad-valor" aria-live="polite">1</span>
-                                <button type="button" class="cantidad-mas" aria-label="Aumentar cantidad">
-                                    <i class="bi bi-plus"></i>
-                                </button>
-                            </div>
-
-                            <button type="button" class="boton-eliminar">
-                                <i class="bi bi-trash3"></i>
-                                <span>Eliminar</span>
-                            </button>
-                        </div>
-                    </div>
-
-                    <p class="carrito-item-precios">
-                        <span class="precio-antes">Precio antes</span>
-                        <span class="precio-actual">Precio</span>
-                    </p>
-                </article>
-
+                        <p class="carrito-item-precios">
+                            <span class="precio-actual">${{ number_format($item['subtotal'], 2, ',', '.') }}</span>
+                        </p>
+                    </article>
+                @endforeach
             </section>
 
-            <aside class="resumen-pedido" aria-labelledby="titulo-resumen">
-
-                <h2 id="titulo-resumen" class="resumen-titulo">Resumen del pedido</h2>
-
+            <aside class="resumen-pedido">
+                <h2 class="resumen-titulo">Resumen del pedido</h2>
                 <dl class="resumen-detalle">
                     <div class="resumen-fila">
                         <dt>Subtotal</dt>
-                        <dd id="resumen-subtotal">$----</dd>
+                        <dd>${{ number_format($total, 2, ',', '.') }}</dd>
                     </div>
-
-                    <div class="resumen-fila resumen-descuento">
-                        <dt>Descuento aplicado</dt>
-                        <dd id="resumen-descuento">-$----</dd>
-                    </div>
-
                     <div class="resumen-fila">
-                        <dt>Envío estimado</dt>
-                        <dd id="resumen-envio">Gratis</dd>
+                        <dt>Envio</dt>
+                        <dd>Gratis</dd>
                     </div>
                 </dl>
-
                 <div class="resumen-fila resumen-total">
                     <span>Total</span>
-                    <span id="resumen-total">$---</span>
+                    <span>${{ number_format($total, 2, ',', '.') }}</span>
                 </div>
 
-                <a href="pago.html" class="boton-pagar">Proceder al pago</a>
+                @auth
+                    <a href="{{ route('checkout') }}" class="boton-pagar">Proceder al pago</a>
+                @else
+                    <p>Inicia sesion para finalizar tu compra.</p>
+                @endauth
                 <a href="{{ route('store.catalogo') }}" class="boton-continuar">Continuar comprando</a>
 
-                <p class="resumen-seguro">
-                    <i class="bi bi-lock"></i>
-                    <span>Pago seguro SSL encriptado</span>
-                </p>
-
+                <form method="POST" action="{{ route('cart.clear') }}">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="boton-eliminar">Vaciar carrito</button>
+                </form>
             </aside>
-
         </div>
-
-    </main>
-
-    <!-- Pie de página -->
+    @endif
+</main>
 @endsection

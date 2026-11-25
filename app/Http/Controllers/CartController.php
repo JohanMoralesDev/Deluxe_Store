@@ -81,7 +81,20 @@ class CartController extends Controller
     public static function summary(): array
     {
         $cart     = session(self::KEY, []);
-        $products = Product::whereIn('id', array_keys($cart))->get()->keyBy('id');
+
+        if (empty($cart)) {
+            return [
+                'items'  => [],
+                'total'  => 0,
+                'count'  => 0,
+                'issues' => [],
+            ];
+        }
+
+        $products = Product::whereIn('id_producto', array_keys($cart))
+            ->with('inventory')
+            ->get()
+            ->keyBy('id_producto');
 
         $items = [];
         $total = 0;
