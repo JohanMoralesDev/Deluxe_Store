@@ -23,14 +23,14 @@
   --grad-esmeralda: linear-gradient(135deg, var(--esmeralda) 0%, var(--esmeralda-profundo) 55%, var(--esmeralda-noche) 100%);
   --grad-encabezado: linear-gradient(180deg, var(--esmeralda-profundo) 0%, var(--esmeralda-noche) 100%);
 
-  /* TipografÃ­a */
+  /* Tipografía */
   --fuente-titulo: "Cormorant Garamond", Georgia, serif;
   --fuente-texto: "Helvetica Neue", Arial, sans-serif;
 
   /* Movimiento */
   --suave: cubic-bezier(0.22, 0.8, 0.26, 1);
 
-  /* Color del aro de foco: cambia segÃºn el fondo */
+  /* Color del aro de foco: cambia según el fondo */
   --anillo: var(--oro);
 
   /* Alias de los nombres anteriores, por compatibilidad */
@@ -128,9 +128,9 @@ a {
 
 
 /* =========================================================
-   3. ENCABEZADO Y NAVEGACIÃ“N
-   IMPORTANTE: no aÃ±adir backdrop-filter, filter ni transform
-   al encabezado: romperÃ­a el menÃº mÃ³vil (position: fixed).
+   3. ENCABEZADO Y NAVEGACIÓN
+   IMPORTANTE: no añadir backdrop-filter, filter ni transform
+   al encabezado: rompería el menú móvil (position: fixed).
    ========================================================= */
 .encabezado {
   position: sticky;
@@ -268,7 +268,7 @@ a {
   transform: scale(0.95);
 }
 
-/* Elementos solo para mÃ³vil / tablet (se activan en la secciÃ³n 11) */
+/* Elementos solo para móvil / tablet (se activan en la sección 11) */
 .boton-menu-tienda,
 .menu-pantalla-completa {
   display: none;
@@ -290,9 +290,9 @@ a {
 
 
 /* =========================================================
-   4. BARRA DE BÃšSQUEDA
-   El contenedor conserva su tamaÃ±o; solo el campo se expande
-   (asÃ­ no empuja ni deforma el resto del encabezado).
+   4. BARRA DE BÚSQUEDA
+   El contenedor conserva su tamaño; solo el campo se expande
+   (así no empuja ni deforma el resto del encabezado).
    ========================================================= */
 .campoBuscar {
   position: relative;
@@ -364,7 +364,7 @@ a {
   padding: 0 clamp(1rem, 4vw, 2rem);
 }
 
-/* BotÃ³n base (dorado). Al pasar el cursor, un barrido lo vuelve blanco */
+/* Botón base (dorado). Al pasar el cursor, un barrido lo vuelve blanco */
 .boton {
   display: inline-block;
   padding: 0.75rem 1.8rem;
@@ -400,8 +400,8 @@ a {
 
 
 /* =========================================================
-   6. SECCIÃ“N NUEVA COLECCIÃ“N (HERO)
-   La foto se tiÃ±e de esmeralda con mezcla de color para que
+   6. SECCIÓN NUEVA COLECCIÓN (HERO)
+   La foto se tiñe de esmeralda con mezcla de color para que
    no aparezcan tonos ajenos a la paleta (la original es morada).
    ========================================================= */
 .nueva-coleccion {
@@ -457,7 +457,7 @@ a {
   gap: 1.5rem;
 }
 
-/* LÃ­nea dorada sobre el tÃ­tulo */
+/* Línea dorada sobre el título */
 .nueva-coleccion__texto::before {
   content: "";
   width: 72px;
@@ -488,7 +488,7 @@ a {
 
 
 /* =========================================================
-   7. SECCIÃ“N MÃS VENDIDOS
+   7. SECCIÓN MÁS VENDIDOS
    ========================================================= */
 .mas-vendidos {
   padding: clamp(3.5rem, 7vw, 6rem) 0;
@@ -549,7 +549,7 @@ a {
   line-height: 1.7;
 }
 
-/* CuadrÃ­cula */
+/* Cuadrícula */
 .mas-vendidos .productos {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -601,7 +601,7 @@ a {
   transform: scaleX(1);
 }
 
-/* Imagen (con animaciÃ³n de carga mientras llega la foto) */
+/* Imagen (con animación de carga mientras llega la foto) */
 .mas-vendidos .tarjeta-producto__imagen {
   position: relative;
   aspect-ratio: 4 / 4.5;
@@ -624,7 +624,7 @@ a {
   transform: scale(1.07);
 }
 
-/* Velo oscuro inferior para que el botÃ³n se lea bien sobre la foto */
+/* Velo oscuro inferior para que el botón se lea bien sobre la foto */
 .mas-vendidos .tarjeta-producto__imagen::after {
   content: "";
   position: absolute;
@@ -657,7 +657,7 @@ a {
   box-shadow: 0 4px 14px rgb(0 0 0 / 0.3);
 }
 
-/* AcciÃ³n sobre la imagen */
+/* Acción sobre la imagen */
 .producto-accion {
   position: absolute;
   right: 0.7rem;
@@ -709,7 +709,7 @@ a {
   transform: translateX(3px) scale(1.1);
 }
 
-/* InformaciÃ³n del producto */
+/* Información del producto */
 .tarjeta-producto__contenido {
   display: flex;
   flex: 1;
@@ -767,7 +767,7 @@ a {
   text-decoration-thickness: 1px;
 }
 
-/* BotÃ³n inferior */
+/* Botón inferior */
 .mas-vendidos__pie {
   margin-top: clamp(2rem, 4vw, 3rem);
 }
@@ -813,7 +813,7 @@ a {
 
 
 /* =========================================================
-   8. MODAL DE INICIO DE SESIÃ“N Y REGISTRO
+   8. MODAL DE INICIO DE SESIÓN Y REGISTRO
    ========================================================= */
 .modal-auth {
   position: fixed;
@@ -1022,7 +1022,7 @@ a {
   animation: aparecerFormulario 0.35s var(--suave) both;
 }
 
-/* Mensaje de validaciÃ³n */
+/* Mensaje de validación */
 .mensaje-formulario {
   margin: 0.25rem 0;
   padding: 0.6rem 0.8rem;
@@ -1039,7 +1039,7 @@ a {
   display: none;
 }
 
-/* Campo de contraseÃ±a con botÃ³n mostrar / ocultar */
+/* Campo de contraseña con botón mostrar / ocultar */
 .campo-password {
   position: relative;
   width: 100%;
@@ -1085,7 +1085,7 @@ a {
 
 
 /* =========================================================
-   9. PIE DE PÃGINA
+   9. PIE DE PÁGINA
    ========================================================= */
 .pie-pagina {
   position: relative;
@@ -1100,7 +1100,7 @@ a {
   color: var(--oro);
 }
 
-/* LÃ­nea dorada superior con desvanecido en los extremos */
+/* Línea dorada superior con desvanecido en los extremos */
 .pie-pagina::before {
   content: "";
   position: absolute;
@@ -1260,7 +1260,7 @@ a {
   to   { opacity: 1; translate: 0 0; }
 }
 
-/* ApariciÃ³n progresiva al desplazarse (scroll reveal) solo con CSS.
+/* Aparición progresiva al desplazarse (scroll reveal) solo con CSS.
    Si el navegador no lo soporta, el contenido se muestra normal. */
 @supports (animation-timeline: view()) {
   .mas-vendidos__encabezado,
@@ -1281,10 +1281,10 @@ a {
 
 
 /* =========================================================
-   11. DISEÃ‘O RESPONSIVE
+   11. DISEÑO RESPONSIVE
    ========================================================= */
 
-/* Escritorio pequeÃ±o y tablet: menÃº de pantalla completa.
+/* Escritorio pequeño y tablet: menú de pantalla completa.
    (La barra completa ya no cabe por debajo de 1100 px) */
 @media (max-width: 1100px) {
   .encabezado {
@@ -1324,7 +1324,7 @@ a {
     font-size: 1.2rem;
   }
 
-  /* BotÃ³n del menÃº: reservado en el extremo derecho */
+  /* Botón del menú: reservado en el extremo derecho */
   .boton-menu-tienda {
     position: absolute;
     top: 50%;
@@ -1356,7 +1356,7 @@ a {
     scale: 0.92;
   }
 
-  /* MenÃº de navegaciÃ³n a pantalla completa */
+  /* Menú de navegación a pantalla completa */
   .menu-pantalla-completa {
     position: fixed;
     inset: 0;
@@ -1392,7 +1392,7 @@ a {
     pointer-events: auto;
   }
 
-  /* Los enlaces entran uno tras otro al abrir el menÃº */
+  /* Los enlaces entran uno tras otro al abrir el menú */
   .menu-pantalla-completa a {
     position: relative;
     padding: 0.25rem 0.5rem;
@@ -1451,7 +1451,7 @@ a {
   }
 }
 
-/* Pantallas tÃ¡ctiles: el botÃ³n de la tarjeta siempre visible */
+/* Pantallas táctiles: el botón de la tarjeta siempre visible */
 @media (hover: none) {
   .producto-accion {
     opacity: 1;
@@ -1459,7 +1459,7 @@ a {
   }
 }
 
-/* MÃ³vil */
+/* Móvil */
 @media (max-width: 768px) {
   .nueva-coleccion {
     min-height: 360px;
@@ -1571,7 +1571,7 @@ a {
   }
 }
 
-/* MÃ³viles muy estrechos */
+/* Móviles muy estrechos */
 @media (max-width: 360px) {
   .mas-vendidos .tarjeta-producto__nombre {
     font-size: 1rem;
