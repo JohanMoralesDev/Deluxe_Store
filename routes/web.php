@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\AdminProductController;
 use App\Http\Controllers\Auth\LoginController;
@@ -10,7 +11,8 @@ use App\Http\Controllers\Auth\RegisterController;
 
 Route::view('/', 'home.index')->name('store.index');
 Route::view('/nuevo', 'store.nuevo')->name('store.nuevo');
-Route::view('/catalogo', 'products.index')->name('store.catalogo');
+Route::get('/catalogo', [ProductController::class, 'index'])->name('store.catalogo');
+Route::get('/productos/{product}', [ProductController::class, 'show'])->name('products.show');
 Route::get('/carrito', [CartController::class, 'index'])->name('store.carrito');
 Route::get('/login', fn () => redirect()->route('store.index'))
     ->name('login');
