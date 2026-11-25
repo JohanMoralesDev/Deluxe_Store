@@ -1,7 +1,6 @@
-
 /* =========================================================
-   DELUXE STORE â€” CARRITO
-   Estilos generales, navegaciÃ³n y diseÃ±o responsive
+   DELUXE STORE — CARRITO
+   Estilos generales, navegación y diseño responsive
    ========================================================= */
 
 /* =========================
@@ -174,7 +173,7 @@ header.encabezado {
 
 
 /* =========================
-   3. BÃšSQUEDA
+   3. BÚSQUEDA
    ========================= */
 
 .campoBuscar {
@@ -268,7 +267,7 @@ header.encabezado {
 
 
 /* =========================
-   4. BOTÃ“N DEL MENÃš MÃ“VIL
+   4. BOTÓN DEL MENÚ MÓVIL
    ========================= */
 
 .boton-menu-tienda {
@@ -309,7 +308,7 @@ header.encabezado {
 
 
 /* =========================
-   5. MENÃš DE PANTALLA COMPLETA
+   5. MENÚ DE PANTALLA COMPLETA
    ========================= */
 
 .menu-pantalla-completa {
@@ -384,7 +383,7 @@ header.encabezado {
 
 
 /* =========================
-   6. BOTÃ“N DEL CHATBOT
+   6. BOTÓN DEL CHATBOT
    ========================= */
 
 .boton-chatbot {
@@ -570,7 +569,7 @@ header.encabezado {
 
 
 /* =========================
-   10. BOTÃ“N ELIMINAR
+   10. BOTÓN ELIMINAR
    ========================= */
 
 .boton-eliminar {
@@ -772,7 +771,7 @@ header.encabezado {
 
 
 /* =========================
-   14. PIE DE PÃGINA
+   14. PIE DE PÁGINA
    ========================= */
 
 .pie-pagina {
@@ -855,7 +854,7 @@ header.encabezado {
 
 
 /* =========================
-   15. TABLETS Y PORTÃTILES
+   15. TABLETS Y PORTÁTILES
    ========================= */
 
 @media (max-width: 1000px) {
@@ -903,7 +902,7 @@ header.encabezado {
 
 
 /* =========================
-   16. TABLETS Y MÃ“VILES
+   16. TABLETS Y MÓVILES
    ========================= */
 
 @media (max-width: 768px) {
@@ -935,7 +934,7 @@ header.encabezado {
         gap: 0.6rem;
     }
 
-    /* Se conservan visibles los accesos rÃ¡pidos del encabezado. */
+    /* Se conservan visibles los accesos rápidos del encabezado. */
     .nav-derecho {
         grid-column: 2;
         grid-row: 1;
@@ -1231,7 +1230,7 @@ header.encabezado {
     }
 }
 
-/* CorrecciÃ³n del fondo del botÃ³n Perfil */
+/* Corrección del fondo del botón Perfil */
 button.nav-icon.boton-perfil,
 button.nav-icon.boton-perfil:visited {
     background-color: transparent;
