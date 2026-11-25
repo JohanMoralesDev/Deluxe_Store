@@ -126,7 +126,7 @@ header.encabezado {
 .nav-secundario {
     display: flex;
     align-items: center;
-    gap: 1.25rem;
+    gap: 24px;
 }
 
 .nav-principal a,
@@ -141,6 +141,8 @@ header.encabezado {
     border-bottom: 1px solid transparent;
     transition: border-color var(--transicion),
                 opacity var(--transicion);
+    text-decoration: none;
+    white-space: nowrap;   
 }
 
 .nav-principal a:hover,
