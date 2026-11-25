@@ -1,59 +1,56 @@
-
 <?php
 
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Role;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Validation\Rules\Password;
 
 class RegisterController extends Controller
 {
-    // Mostrar formulario de registro
     public function showRegistrationForm()
     {
         return view('auth.register');
     }
 
-    // Registrar usuario
     public function register(Request $request)
     {
-        // Validar información
-        $request->validate([
+        $datos = $request->validate([
             'nombre' => 'required|string|max:150',
             'correo' => 'required|email|max:150|unique:usuarios,correo',
-            'contrasena' => 'required|string|min:8|confirmed',
+            'contrasena' => [
+                'required',
+                'confirmed',
+                Password::min(8),
+            ],
         ]);
 
-        // Buscar el rol de cliente
-        $rol = Role::where('nombre', 'CLIENTE')->firstOrFail();
+        $usuario = DB::transaction(function () use ($datos) {
 
-        // Crear usuario y asignar rol
-        $usuario = DB::transaction(function () use ($request, $rol) {
+            $rol = Role::where('nombre', 'CLIENTE')->firstOrFail();
 
-            $nuevoUsuario = User::create([
-                'nombre' => $request->nombre,
-                'correo' => $request->correo,
-                'contrasena' => $request->contrasena,
+            $usuario = User::create([
+                'nombre' => $datos['nombre'],
+                'correo' => $datos['correo'],
+                'contrasena' => $datos['contrasena'],
                 'esta_activo' => true,
             ]);
 
-            $nuevoUsuario->roles()->attach($rol->id_rol);
+            $usuario->roles()->attach($rol->id_rol, [
+                'creado_en' => now(),
+            ]);
 
-            return $nuevoUsuario;
+            return $usuario;
         });
 
-        // Iniciar sesión
         Auth::login($usuario);
-
         $request->session()->regenerate();
 
-        return redirect('/')->with(
-            'success',
-            '¡Bienvenido a Deluxe Store!'
-        );
+        return redirect()->route('store.index')
+            ->with('success', '¡Bienvenido a Deluxe Store!');
     }
 }

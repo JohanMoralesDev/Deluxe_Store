@@ -7,17 +7,21 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Supplier extends Model
 {
+    // Tabla de la base de datos
     protected $table = 'proveedores';
 
+    // Llave primaria
     protected $primaryKey = 'id_proveedor';
 
     protected $keyType = 'int';
 
     public $incrementing = true;
 
+    // Columnas de fechas
     public const CREATED_AT = 'creado_en';
     public const UPDATED_AT = 'actualizado_en';
 
+    // Campos que se pueden asignar masivamente
     protected $fillable = [
         'nombre',
         'correo',
@@ -27,6 +31,7 @@ class Supplier extends Model
         'esta_activo',
     ];
 
+    // Conversión automática de datos
     protected function casts(): array
     {
         return [
@@ -36,10 +41,11 @@ class Supplier extends Model
         ];
     }
 
+    // Relación: un proveedor tiene muchas recepciones
     public function receptions(): HasMany
     {
         return $this->hasMany(
-            'App\\Models\\SupplierReception',
+            SupplierReception::class,
             'id_proveedor',
             'id_proveedor'
         );

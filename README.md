@@ -80,3 +80,43 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 ## License
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+
+
+## Módulo de autenticación
+
+El sistema de autenticación de Deluxe Store permite registrar
+usuarios, iniciar y cerrar sesión y gestionar perfiles.
+
+### Roles del sistema
+
+- ADMINISTRADOR: acceso a las funciones administrativas.
+- CLIENTE: consulta de productos y realización de pedidos.
+- EMPLEADO: gestión de operaciones de la tienda.
+
+### Estructura de usuarios
+
+- usuarios: almacena la información de las cuentas.
+- roles: almacena los roles disponibles.
+- usuario_rol: relaciona usuarios y roles.
+
+### Controladores
+
+- RegisterController: registro de usuarios.
+- LoginController: inicio y cierre de sesión.
+- ProfileController: consulta y actualización del perfil.
+
+### Seguridad
+
+- Las contraseñas se almacenan con hash.
+- Las rutas privadas requieren autenticación.
+- Las rutas administrativas requieren el rol ADMINISTRADOR.
+- Los usuarios nuevos reciben el rol CLIENTE.
+
+### Rutas principales
+
+- /registro
+- /login
+- /perfil
+- /admin/inicio
+- /logout
+

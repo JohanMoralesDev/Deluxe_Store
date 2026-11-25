@@ -7,12 +7,20 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class OrderStatusHistory extends Model
 {
+    // Tabla de la base de datos
     protected $table = 'historial_estados_pedido';
+
+    // Llave primaria
     protected $primaryKey = 'id_historial_pedido';
+
     protected $keyType = 'int';
+
     public $incrementing = true;
+
+    // No utiliza timestamps automáticos
     public $timestamps = false;
 
+    // Campos que se pueden asignar masivamente
     protected $fillable = [
         'id_pedido',
         'id_usuario',
@@ -22,6 +30,7 @@ class OrderStatusHistory extends Model
         'fecha_cambio',
     ];
 
+    // Conversión automática de datos
     protected function casts(): array
     {
         return [
@@ -30,6 +39,7 @@ class OrderStatusHistory extends Model
         ];
     }
 
+    // Relación: pertenece a un pedido
     public function order(): BelongsTo
     {
         return $this->belongsTo(
@@ -39,6 +49,7 @@ class OrderStatusHistory extends Model
         );
     }
 
+    // Relación: pertenece a un usuario
     public function user(): BelongsTo
     {
         return $this->belongsTo(

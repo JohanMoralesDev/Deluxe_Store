@@ -7,16 +7,20 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class SupplierReceptionDetail extends Model
 {
+    // Tabla de la base de datos
     protected $table = 'detalle_recepcion_proveedor';
 
+    // Llave primaria
     protected $primaryKey = 'id_detalle_recepcion';
 
     protected $keyType = 'int';
 
     public $incrementing = true;
 
+    // No utiliza timestamps automáticos
     public $timestamps = false;
 
+    // Campos que se pueden asignar masivamente
     protected $fillable = [
         'id_recepcion_proveedor',
         'id_producto',
@@ -25,6 +29,7 @@ class SupplierReceptionDetail extends Model
         'subtotal',
     ];
 
+    // Conversión automática de datos
     protected function casts(): array
     {
         return [
@@ -34,6 +39,7 @@ class SupplierReceptionDetail extends Model
         ];
     }
 
+    // Relación: pertenece a una recepción
     public function reception(): BelongsTo
     {
         return $this->belongsTo(
@@ -43,6 +49,7 @@ class SupplierReceptionDetail extends Model
         );
     }
 
+    // Relación: pertenece a un producto
     public function product(): BelongsTo
     {
         return $this->belongsTo(

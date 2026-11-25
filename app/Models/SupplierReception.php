@@ -8,17 +8,21 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class SupplierReception extends Model
 {
+    // Tabla de la base de datos
     protected $table = 'recepciones_proveedor';
 
+    // Llave primaria
     protected $primaryKey = 'id_recepcion_proveedor';
 
     protected $keyType = 'int';
 
     public $incrementing = true;
 
+    // Columnas de fechas
     public const CREATED_AT = 'creado_en';
     public const UPDATED_AT = 'actualizado_en';
 
+    // Campos que se pueden asignar masivamente
     protected $fillable = [
         'id_proveedor',
         'id_usuario',
@@ -28,6 +32,7 @@ class SupplierReception extends Model
         'observaciones',
     ];
 
+    // Conversión automática de datos
     protected function casts(): array
     {
         return [
@@ -39,6 +44,7 @@ class SupplierReception extends Model
         ];
     }
 
+    // Relación: una recepción pertenece a un proveedor
     public function supplier(): BelongsTo
     {
         return $this->belongsTo(
@@ -48,6 +54,7 @@ class SupplierReception extends Model
         );
     }
 
+    // Relación: una recepción pertenece a un usuario
     public function user(): BelongsTo
     {
         return $this->belongsTo(
@@ -57,10 +64,11 @@ class SupplierReception extends Model
         );
     }
 
+    // Relación: una recepción tiene muchos detalles
     public function details(): HasMany
     {
         return $this->hasMany(
-            'App\\Models\\SupplierReceptionDetail',
+            SupplierReceptionDetail::class,
             'id_recepcion_proveedor',
             'id_recepcion_proveedor'
         );

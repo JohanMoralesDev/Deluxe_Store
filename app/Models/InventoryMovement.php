@@ -7,16 +7,20 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class InventoryMovement extends Model
 {
+    // Tabla de la base de datos
     protected $table = 'movimientos_inventario';
 
+    // Llave primaria
     protected $primaryKey = 'id_movimiento_inventario';
 
     protected $keyType = 'int';
 
     public $incrementing = true;
 
+    // No utiliza timestamps automáticos
     public $timestamps = false;
 
+    // Campos que se pueden asignar masivamente
     protected $fillable = [
         'id_producto',
         'id_usuario',
@@ -30,6 +34,7 @@ class InventoryMovement extends Model
         'fecha_movimiento',
     ];
 
+    // Conversión automática de datos
     protected function casts(): array
     {
         return [
@@ -43,6 +48,7 @@ class InventoryMovement extends Model
         ];
     }
 
+    // Relación: pertenece a un producto
     public function product(): BelongsTo
     {
         return $this->belongsTo(
@@ -52,6 +58,7 @@ class InventoryMovement extends Model
         );
     }
 
+    // Relación: pertenece a un usuario
     public function user(): BelongsTo
     {
         return $this->belongsTo(
@@ -61,6 +68,7 @@ class InventoryMovement extends Model
         );
     }
 
+    // Relación: pertenece a un pedido
     public function order(): BelongsTo
     {
         return $this->belongsTo(
@@ -70,12 +78,13 @@ class InventoryMovement extends Model
         );
     }
 
+    // Relación: pertenece a una recepción de proveedor
     public function supplierReception(): BelongsTo
-{
-    return $this->belongsTo(
-        SupplierReception::class,
-        'id_recepcion_proveedor',
-        'id_recepcion_proveedor'
-    );
-}
+    {
+        return $this->belongsTo(
+            SupplierReception::class,
+            'id_recepcion_proveedor',
+            'id_recepcion_proveedor'
+        );
+    }
 }

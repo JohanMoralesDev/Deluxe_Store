@@ -7,17 +7,21 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class OrderDetail extends Model
 {
+    // Tabla de la base de datos
     protected $table = 'detalle_pedido';
 
+    // Llave primaria
     protected $primaryKey = 'id_detalle';
 
     protected $keyType = 'int';
 
     public $incrementing = true;
 
+    // Columnas de fechas
     public const CREATED_AT = 'creado_en';
     public const UPDATED_AT = 'actualizado_en';
 
+    // Campos que se pueden asignar masivamente
     protected $fillable = [
         'id_pedido',
         'id_producto',
@@ -28,6 +32,7 @@ class OrderDetail extends Model
         'subtotal',
     ];
 
+    // Conversión automática de datos
     protected function casts(): array
     {
         return [
@@ -39,6 +44,7 @@ class OrderDetail extends Model
         ];
     }
 
+    // Relación: el detalle pertenece a un pedido
     public function order(): BelongsTo
     {
         return $this->belongsTo(
@@ -48,6 +54,7 @@ class OrderDetail extends Model
         );
     }
 
+    // Relación: el detalle pertenece a un producto
     public function product(): BelongsTo
     {
         return $this->belongsTo(

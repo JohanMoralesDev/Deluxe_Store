@@ -8,17 +8,21 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Product extends Model
 {
+    // Tabla de la base de datos
     protected $table = 'productos';
 
+    // Llave primaria
     protected $primaryKey = 'id_producto';
 
     protected $keyType = 'int';
 
     public $incrementing = true;
 
+    // Columnas de fechas
     public const CREATED_AT = 'creado_en';
     public const UPDATED_AT = 'actualizado_en';
 
+    // Campos que se pueden asignar masivamente
     protected $fillable = [
         'id_categoria',
         'nombre',
@@ -31,6 +35,7 @@ class Product extends Model
         'esta_activo',
     ];
 
+    // Conversión automática de datos
     protected function casts(): array
     {
         return [
@@ -42,6 +47,7 @@ class Product extends Model
         ];
     }
 
+    // Relación: un producto pertenece a una categoría
     public function category(): BelongsTo
     {
         return $this->belongsTo(
@@ -51,10 +57,11 @@ class Product extends Model
         );
     }
 
+    // Relación: un producto tiene un registro de inventario
     public function inventory(): HasOne
     {
         return $this->hasOne(
-            'App\\Models\\Inventory',
+            Inventory::class,
             'id_producto',
             'id_producto'
         );
