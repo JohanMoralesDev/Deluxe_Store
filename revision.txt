@@ -1,0 +1,578 @@
+﻿
+===== database\migrations\2026_11_23_000001_create_shop_module_tables.php =====
+
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    public function up(): void
+    {
+        if (! Schema::hasTable('usuarios')) {
+            Schema::create('usuarios', function (Blueprint $table) {
+                $table->id('id_usuario');
+                $table->string('nombre', 150);
+                $table->string('correo', 150)->unique();
+                $table->string('contrasena', 255);
+                $table->string('telefono', 25)->nullable();
+                $table->string('direccion', 255)->nullable();
+                $table->string('ciudad', 100)->nullable();
+                $table->string('departamento', 100)->nullable();
+                $table->boolean('esta_activo')->default(true);
+                $table->timestamp('correo_verificado_en')->nullable();
+                $table->string('token_recordatorio', 100)->nullable();
+                $table->timestamp('creado_en')->nullable();
+                $table->timestamp('actualizado_en')->nullable();
+            });
+        }
+
+        if (! Schema::hasTable('categorias')) {
+            Schema::create('categorias', function (Blueprint $table) {
+                $table->id('id_categoria');
+                $table->string('nombre', 100)->unique();
+                $table->text('descripcion')->nullable();
+                $table->boolean('esta_activa')->default(true);
+                $table->timestamp('creado_en')->nullable();
+                $table->timestamp('actualizado_en')->nullable();
+            });
+        }
+
+        if (! Schema::hasTable('productos')) {
+            Schema::create('productos', function (Blueprint $table) {
+                $table->id('id_producto');
+                $table->unsignedBigInteger('id_categoria');
+                $table->string('nombre', 150);
+                $table->string('codigo_sku', 80)->unique();
+                $table->text('descripcion')->nullable();
+                $table->decimal('precio', 12, 2);
+                $table->decimal('precio_oferta', 12, 2)->nullable();
+                $table->string('color', 50)->nullable();
+                $table->string('url_imagen', 500)->nullable();
+                $table->boolean('esta_activo')->default(true);
+                $table->timestamp('creado_en')->nullable();
+                $table->timestamp('actualizado_en')->nullable();
+                $table->foreign('id_categoria')->references('id_categoria')->on('categorias')->restrictOnDelete();
+            });
+        }
+
+        if (! Schema::hasTable('inventarios')) {
+            Schema::create('inventarios', function (Blueprint $table) {
+                $table->id('id_inventario');
+                $table->unsignedBigInteger('id_producto')->unique();
+                $table->unsignedInteger('cantidad')->default(0);
+                $table->unsignedInteger('stock_minimo')->default(5);
+                $table->timestamp('actualizado_en')->nullable();
+                $table->foreign('id_producto')->references('id_producto')->on('productos')->restrictOnDelete();
+            });
+        }
+
+        if (! Schema::hasTable('pedidos')) {
+            Schema::create('pedidos', function (Blueprint $table) {
+                $table->id('id_pedido');
+                $table->unsignedBigInteger('id_usuario');
+                $table->string('numero_pedido', 50)->unique();
+                $table->string('estado', 30)->default('PENDIENTE');
+                $table->string('estado_pago', 30)->default('PENDIENTE');
+                $table->string('metodo_pago', 50)->nullable();
+                $table->decimal('subtotal', 14, 2)->default(0);
+                $table->decimal('costo_envio', 12, 2)->default(0);
+                $table->decimal('descuento', 12, 2)->default(0);
+                $table->decimal('total', 14, 2)->default(0);
+                $table->string('nombre_destinatario', 150);
+                $table->string('telefono_destinatario', 25);
+                $table->string('direccion_envio', 255);
+                $table->string('ciudad_envio', 100);
+                $table->string('departamento_envio', 100);
+                $table->text('observaciones')->nullable();
+                $table->dateTime('fecha_pedido');
+                $table->timestamp('creado_en')->nullable();
+                $table->timestamp('actualizado_en')->nullable();
+                $table->foreign('id_usuario')->references('id_usuario')->on('usuarios')->restrictOnDelete();
+                $table->index(['id_usuario', 'fecha_pedido']);
+            });
+        }
+
+        if (! Schema::hasTable('detalle_pedido')) {
+            Schema::create('detalle_pedido', function (Blueprint $table) {
+                $table->id('id_detalle');
+                $table->unsignedBigInteger('id_pedido');
+                $table->unsignedBigInteger('id_producto');
+                $table->string('nombre_producto', 150);
+                $table->string('codigo_sku', 80);
+                $table->unsignedInteger('cantidad');
+                $table->decimal('precio_unitario', 12, 2);
+                $table->decimal('subtotal', 14, 2);
+                $table->timestamp('creado_en')->nullable();
+                $table->timestamp('actualizado_en')->nullable();
+                $table->foreign('id_pedido')->references('id_pedido')->on('pedidos')->restrictOnDelete();
+                $table->foreign('id_producto')->references('id_producto')->on('productos')->restrictOnDelete();
+                $table->unique(['id_pedido', 'id_producto']);
+            });
+        }
+    }
+
+    public function down(): void
+    {
+        Schema::dropIfExists('detalle_pedido');
+        Schema::dropIfExists('pedidos');
+        Schema::dropIfExists('inventarios');
+        Schema::dropIfExists('productos');
+        Schema::dropIfExists('categorias');
+        Schema::dropIfExists('usuarios');
+    }
+};
+
+
+===== app\Models\Product.php =====
+
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOne;
+
+class Product extends Model
+{
+    protected $table = 'productos';
+
+    protected $primaryKey = 'id_producto';
+
+    protected $keyType = 'int';
+
+    public $incrementing = true;
+
+    public const CREATED_AT = 'creado_en';
+    public const UPDATED_AT = 'actualizado_en';
+
+    protected $fillable = [
+        'id_categoria',
+        'nombre',
+        'codigo_sku',
+        'descripcion',
+        'precio',
+        'precio_oferta',
+        'color',
+        'url_imagen',
+        'esta_activo',
+    ];
+
+    protected function casts(): array
+    {
+        return [
+            'precio' => 'decimal:2',
+            'precio_oferta' => 'decimal:2',
+            'esta_activo' => 'boolean',
+            'creado_en' => 'datetime',
+            'actualizado_en' => 'datetime',
+        ];
+    }
+
+    public function getIdAttribute(): int
+    {
+        return (int) $this->getKey();
+    }
+
+    public function getNameAttribute(): string
+    {
+        return (string) ($this->attributes['nombre'] ?? '');
+    }
+
+    public function getActiveAttribute(): bool
+    {
+        return (bool) ($this->attributes['esta_activo'] ?? false);
+    }
+
+    public function getPriceAttribute(): float
+    {
+        $offer = $this->attributes['precio_oferta'] ?? null;
+        $price = $offer !== null && (float) $offer > 0
+            ? $offer
+            : ($this->attributes['precio'] ?? 0);
+
+        return (float) $price;
+    }
+
+    public function getStockAttribute(): int
+    {
+        if (array_key_exists('stock', $this->attributes)) {
+            return (int) $this->attributes['stock'];
+        }
+
+        return (int) ($this->inventory?->cantidad ?? 0);
+    }
+
+    public function category(): BelongsTo
+    {
+        return $this->belongsTo(
+            Category::class,
+            'id_categoria',
+            'id_categoria'
+        );
+    }
+
+    public function inventory(): HasOne
+    {
+        return $this->hasOne(
+            'App\\Models\\Inventory',
+            'id_producto',
+            'id_producto'
+        );
+    }
+}
+
+===== app\Models\Category.php =====
+
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+
+class Category extends Model
+{
+    protected $table = 'categorias';
+
+    protected $primaryKey = 'id_categoria';
+
+    protected $keyType = 'int';
+
+    public $incrementing = true;
+
+    public const CREATED_AT = 'creado_en';
+    public const UPDATED_AT = 'actualizado_en';
+
+    protected $fillable = [
+        'nombre',
+        'descripcion',
+        'esta_activa',
+    ];
+
+    protected function casts(): array
+    {
+        return [
+            'esta_activa' => 'boolean',
+            'creado_en' => 'datetime',
+            'actualizado_en' => 'datetime',
+        ];
+    }
+
+    public function products(): HasMany
+    {
+        return $this->hasMany(
+            'App\\Models\\Product',
+            'id_categoria',
+            'id_categoria'
+        );
+    }
+}
+
+
+===== routes\web.php =====
+
+<?php
+
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\CartController;
+use App\Http\Controllers\OrderController;
+
+Route::view('/', 'home.index')->name('store.index');
+Route::view('/nuevo', 'store.nuevo')->name('store.nuevo');
+Route::view('/catalogo', 'products.index')->name('store.catalogo');
+Route::get('/carrito', [CartController::class, 'index'])->name('store.carrito');
+Route::get('/login', fn () => redirect()->route('store.index'))
+    ->name('login');
+
+Route::post('/carrito/{product}', [CartController::class, 'add'])->name('cart.add');
+Route::patch('/carrito/{product}', [CartController::class, 'update'])->name('cart.update');
+Route::delete('/carrito/{product}', [CartController::class, 'remove'])->name('cart.remove');
+Route::delete('/carrito', [CartController::class, 'clear'])->name('cart.clear');
+
+Route::middleware('auth')->group(function () {
+    Route::get('/checkout', [OrderController::class, 'checkout'])->name('checkout');
+    Route::post('/checkout', [OrderController::class, 'store'])->name('checkout.store');
+    Route::get('/pedidos', [OrderController::class, 'index'])->name('orders.index');
+    Route::get('/pedidos/{order}', [OrderController::class, 'show'])->name('orders.show');
+    Route::get('/pedidos/{order}/confirmacion', [OrderController::class, 'confirmation'])->name('orders.confirmation');
+});
+
+// Panel administrativo
+Route::view('/admin', 'admin')->name('admin.index');
+
+
+===== resources\views\products\index.blade.php =====
+
+@extends('layouts.app')
+
+@section('title', 'CatÃ¡logo - Deluxe Store')
+
+@push('head')
+    @vite(['assets/css/Catalogo.css', 'assets/css/style.css', 'assets/js/script.js'])
+@endpush
+
+@section('content')
+<div class="contenido-catalogo">
+      <h1 class="titulo-catalogo">TODA NUESTRA COLECCIÃ“N</h1>
+
+      <div class="arrow">
+    <div class="column-xs-12">
+
+        <!-- Mostrar todos los productos -->
+        <div class="arrow_container">
+            <button type="button"
+                    class="arrow_text filtro-opcion activo"
+                    data-filtro="todos"
+                    aria-pressed="true">
+                Todos
+            </button>
+        </div>
+
+        <!-- Ordenar por fecha de incorporaciÃ³n -->
+        <div class="arrow_container">
+            <button type="button"
+                    class="arrow_text filtro-opcion"
+                    data-filtro="nuevos"
+                    aria-pressed="false">
+                Nuevos modelos
+            </button>
+        </div>
+
+        <!-- Filtrar por colecciÃ³n -->
+        <div class="arrow_container">
+            <label class="arrow_text" for="filtroColeccion">
+                ColecciÃ³n
+            </label>
+
+            <select class="filtro" id="filtroColeccion">
+                <option value="todas">Todas las colecciones</option>
+                <option value="clasica">ClÃ¡sica</option>
+                <option value="elegante">Elegante</option>
+                <option value="deportiva">Deportiva</option>
+            </select>
+        </div>
+
+        <!-- Filtrar por tamaÃ±o de esfera -->
+        <div class="arrow_container">
+            <label class="arrow_text" for="filtroTamano">
+                TamaÃ±os
+            </label>
+
+            <select class="filtro" id="filtroTamano">
+                <option value="todos">Todos los tamaÃ±os</option>
+                <option value="pequeno">PequeÃ±o</option>
+                <option value="mediano">Mediano</option>
+                <option value="grande">Grande</option>
+            </select>
+        </div>
+
+        <!-- Filtrar por pÃºblico -->
+        <div class="arrow_container">
+            <label class="arrow_text" for="filtroPublico">
+                PÃºblico
+            </label>
+
+            <select class="filtro" id="filtroPublico">
+                <option value="todos">Todos</option>
+                <option value="dama">Dama</option>
+                <option value="caballero">Caballero</option>
+                <option value="ninos">NiÃ±os</option>
+            </select>
+        </div>
+
+    </div>
+</div>
+
+      <div class="row">
+
+      <article class="col-m-4 col-s-6 product-box" data-id="reloj-curren-hombre"
+      data-nombre="Curren" data-publico="caballero" data-coleccion="clasica" data-tamano="1" data-fecha="2025-11-06"
+      data-precio="160000" data-precio-anterior="175000">
+        <img src="{{ asset('assets/images/store/Curren-Hombre.jpeg') }}" alt="Reloj marca Curren para hombre"/>
+        <div class="hidden offer">OFERTA</div>
+        <h2>Reloj marca Curren para caballero</h2>
+        <strong class="product-price">$160.000,00<del class="precio-anterior">$175.000,00</del></strong>
+        <button type="button" class="agregar-carrito">
+          <i class="bi bi-cart-plus"></i>
+          AÃ±adir al carrito</button>
+      </article>
+
+      <article class="col-m-4 col-s-6 product-box" data-id="reloj-curren-dama" data-nombre="Curren"
+      data-publico="dama" data-coleccion="elegante" data-tamano="1" data-fecha="2025-08-29"
+      data-precio="130000" data-precio-anterior="136000">
+        <img src="{{ asset('assets/images/store/Curren-Dama.jpeg') }}" alt="Curren para mujer"/>
+        <div class="hidden offer">OFERTA</div>
+        <h2>Reloj marca Curren para mujer</h2>
+        <strong class="product-price">$130.000,00<del class="precio-anterior">$136.000,00</del></strong>
+        <button type="button" class="agregar-carrito">
+          <i class="bi bi-cart-plus"></i>
+          AÃ±adir al carrito</button>
+      </article>
+
+      <article class="col-m-4 col-s-6 product-box" data-id="reloj-qq" data-nombre="Q&Q"
+      data-publico="caballero" data-coleccion="clasica" data-tamano="1" data-fecha="2026-03-01"
+      data-precio="86000" data-precio-anterior="90000">
+        <img src="{{ asset('assets/images/store/Q&Q.jpeg') }}" alt="Reloj marca Q&Q"/>
+        <div class="hidden offer">OFERTA</div>
+        <h2>Reloj marca Q&Q</h2>
+        <strong class="product-price">$86.000,00<del class="precio-anterior">$90.000,00</del></strong>
+        <button type="button" class="agregar-carrito">
+          <i class="bi bi-cart-plus"></i>
+          AÃ±adir al carrito</button>
+      </article>
+
+      <article class="col-m-4 col-s-6 product-box" data-id="reloj-rolex" data-nombre="Rolex"
+      data-publico="caballero" data-coleccion="elegante" data-tamano="1" data-fecha="2026-06-15"
+      data-precio="120000" data-precio-anterior="135000">
+        <img src="{{ asset('assets/images/store/Rolex.jpeg') }}" alt="Rolex para hombre"/>
+        <div class="hidden offer">OFERTA</div>
+        <h2>Reloj marca Rolex para caballero</h2>
+        <strong class="product-price">$120.000,00<del class="precio-anterior">$135.000,00</del></strong>
+        <button type="button" class="agregar-carrito">
+          <i class="bi bi-cart-plus"></i>
+          AÃ±adir al carrito</button>
+      </article>
+
+      <article class="col-m-4 col-s-6 product-box" data-id="reloj-calvin-klein" data-nombre="Calvin Klein"
+      data-publico="caballero" data-coleccion="elegante" data-tamano="1" data-fecha="2025-06-06"
+      data-precio="20000" data-precio-anterior="25000">
+        <img src="{{ asset('assets/images/store/Calvin-Klein.jpeg') }}" alt="Reloj Calvin Klein para hombre"/>
+        <div class="hidden offer">OFERTA</div>
+        <h2>Reloj marca Calvin Klein para caballero</h2>
+        <strong class="product-price">$20.000,00<del class="precio-anterior">$25.000,00</del></strong>
+        <button type="button" class="agregar-carrito">
+          <i class="bi bi-cart-plus"></i>
+          AÃ±adir al carrito</button>
+      </article>
+
+      <article class="col-m-4 col-s-6 product-box" data-id="reloj-pandora" data-nombre="Pandora"
+      data-publico="dama" data-coleccion="elegante" data-tamano="1" data-fecha="2025-12-09"
+      data-precio="35000" data-precio-anterior="38000">
+        <img src="{{ asset('assets/images/store/Pandora.jpeg') }}" alt="Reloj Pandora"/>
+        <div class="hidden offer">OFERTA</div>
+        <h2>Reloj marca Pandora para dama</h2>
+        <strong class="product-price">$35.000,00<del class="precio-anterior">$38.000,00</del></strong>
+        <button type="button" class="agregar-carrito">
+          <i class="bi bi-cart-plus"></i>
+          AÃ±adir al carrito</button>
+      </article>
+
+      <article class="col-m-4 col-s-6 product-box" data-id="reloj-naviforce" data-nombre="Naviforce"
+      data-publico="caballero" data-coleccion="deportiva" data-tamano="1" data-fecha="2026-09-14"
+      data-precio="115000" data-precio-anterior="136000">
+        <img src="{{ asset('assets/images/store/Naviforce.jpeg') }}" alt="Reloj Naviforce"/>
+        <div class="hidden offer">OFERTA</div>
+        <h2>Reloj Naviforce para caballero</h2>
+        <strong class="product-price">$115.000,00<del class="precio-anterior">$136.000,00</del></strong>
+        <button type="button" class="agregar-carrito">
+          <i class="bi bi-cart-plus"></i>
+          AÃ±adir al carrito</button>
+      </article>
+
+      <article class="col-m-4 col-s-6 product-box" data-id="reloj-qubano" data-nombre="Qubano"
+     data-publico="caballero" data-coleccion="clasica" data-tamano="1" data-fecha="2026-02-16"
+     data-precio="86000" data-precio-anterior="90000">
+        <img src="{{ asset('assets/images/store/Qubano.jpeg') }}" alt="Reloj Qubano"/>
+        <div class="hidden offer">OFERTA</div>
+        <h2>Reloj Cubano para caballero</h2>
+        <strong class="product-price">$86.000,00<del class="precio-anterior">$90.000,00</del></strong>
+        <button type="button" class="agregar-carrito">
+          <i class="bi bi-cart-plus"></i>
+          AÃ±adir al carrito</button>
+      </article>
+
+      <article class="col-m-4 col-s-6 product-box" data-id="reloj-fairwhale" data-nombre="FairWhale"
+     data-publico="caballero" data-coleccion="clasica" data-tamano="1" data-fecha="2025-05-08"
+     data-precio="160000" data-precio-anterior="175000">
+        <img src="{{ asset('assets/images/store/FairWhale.jpeg') }}" alt="Reloj FairWhale"/>
+        <div class="hidden offer">OFERTA</div>
+        <h2>Reloj FairWhale para caballero</h2>
+        <strong class="product-price">$160.000,00<del class="precio-anterior">$175.000,00</del></strong>
+        <button type="button" class="agregar-carrito">
+          <i class="bi bi-cart-plus"></i>
+          AÃ±adir al carrito</button>
+      </article>
+
+      <article class="col-m-4 col-s-6 product-box" data-id="reloj-g-fox-automatico" data-nombre="G-Fox AutomÃ¡tico"
+     data-publico="caballero" data-coleccion="elegante" data-tamano="1" data-fecha="2025-09-18"
+     data-precio="140000" data-precio-anterior="145000">
+        <img src="{{ asset('assets/images/store/G-Fox-Automatico.jpeg') }}" alt="Reloj G-Fox AutomÃ¡tico"/>
+        <div class="hidden offer">OFERTA</div>
+        <h2>Reloj G-Fox AutomÃ¡tico para caballero</h2>
+        <strong class="product-price">$140.000,00<del class="precio-anterior">$145.000,00</del></strong>
+        <button type="button" class="agregar-carrito">
+          <i class="bi bi-cart-plus"></i>
+          AÃ±adir al carrito</button>
+      </article>
+
+      <article class="col-m-4 col-s-6 product-box" data-id="reloj-foxbox" data-nombre="FoxBox"
+      data-publico="caballero" data-coleccion="deportiva" data-tamano="1" data-fecha="2025-03-26"
+      data-precio="145000" data-precio-anterior="150000">
+        <img src="{{ asset('assets/images/store/FoxBox.jpeg') }}" alt="Reloj FoxBox"/>
+        <div class="hidden offer">OFERTA</div>
+        <h2>Reloj FoxBox para caballero</h2>
+        <strong class="product-price">$145.000,00<del class="precio-anterior">$150.000,00</del></strong>
+        <button type="button" class="agregar-carrito">
+          <i class="bi bi-cart-plus"></i>
+          AÃ±adir al carrito</button>
+      </article>
+      </div>
+    </div>
+
+    <!-- Pie de pÃ¡gina -->
+@endsection
+
+
+===== resources\views\admin\categories\create_categories_table.php =====
+
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    public function up(): void
+    {
+        Schema::create('categories', function (Blueprint $table) {
+            $table->id();
+            $table->string('name')->unique();
+            $table->string('slug')->unique();
+            $table->text('description')->nullable();
+            $table->boolean('is_active')->default(true);
+            $table->timestamps();
+        });
+    }
+
+    public function down(): void
+    {
+        Schema::dropIfExists('categories');
+    }
+};
+
+
+
+    Directorio: C:\Deluxe_Store\database\seeders
+
+
+Mode                 LastWriteTime         Length Name                                          
+----                 -------------         ------ ----                                          
+-a----      25/11/2026  6:53 a. m.              0 .gitkeep                                      
+-a----      25/11/2026  7:54 a. m.            269 CategorySeeder.php                            
+-a----      25/11/2026  7:54 a. m.            268 ProductSeeder.php                             
+
+
+    Directorio: C:\Deluxe_Store\resources\views\layouts
+
+
+Mode                 LastWriteTime         Length Name                                          
+----                 -------------         ------ ----                                          
+-a----      25/11/2026  6:53 a. m.            295 admin.blade.php                               
+-a----      25/11/2026  6:53 a. m.            895 app.blade.php                                 
+
+

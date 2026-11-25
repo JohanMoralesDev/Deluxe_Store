@@ -2,27 +2,21 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Product extends Model
 {
-    // Tabla de la base de datos
     protected $table = 'productos';
-
-    // Llave primaria
     protected $primaryKey = 'id_producto';
-
     protected $keyType = 'int';
-
     public $incrementing = true;
 
-    // Columnas de fechas
     public const CREATED_AT = 'creado_en';
     public const UPDATED_AT = 'actualizado_en';
 
-    // Campos que se pueden asignar masivamente
     protected $fillable = [
         'id_categoria',
         'nombre',
@@ -33,9 +27,10 @@ class Product extends Model
         'color',
         'url_imagen',
         'esta_activo',
+        'publico',
+        'tamano_esfera',
     ];
 
-    // Conversión automática de datos
     protected function casts(): array
     {
         return [
@@ -47,7 +42,40 @@ class Product extends Model
         ];
     }
 
-    // Relación: un producto pertenece a una categoría
+    public function getIdAttribute(): int
+    {
+        return (int) $this->getKey();
+    }
+
+    public function getNameAttribute(): string
+    {
+        return (string) ($this->attributes['nombre'] ?? '');
+    }
+
+    public function getActiveAttribute(): bool
+    {
+        return (bool) ($this->attributes['esta_activo'] ?? false);
+    }
+
+    public function getPriceAttribute(): float
+    {
+        $offer = $this->attributes['precio_oferta'] ?? null;
+        $price = $offer !== null && (float) $offer > 0
+            ? $offer
+            : ($this->attributes['precio'] ?? 0);
+
+        return (float) $price;
+    }
+
+    public function getStockAttribute(): int
+    {
+        if (array_key_exists('stock', $this->attributes)) {
+            return (int) $this->attributes['stock'];
+        }
+
+        return (int) ($this->inventory?->cantidad ?? 0);
+    }
+
     public function category(): BelongsTo
     {
         return $this->belongsTo(
@@ -57,7 +85,6 @@ class Product extends Model
         );
     }
 
-    // Relación: un producto tiene un registro de inventario
     public function inventory(): HasOne
     {
         return $this->hasOne(
@@ -65,5 +92,30 @@ class Product extends Model
             'id_producto',
             'id_producto'
         );
+    }
+
+    public function scopeActive(Builder $query): Builder
+    {
+        return $query->where('esta_activo', true);
+    }
+
+    public function scopeSearch(Builder $query, ?string $term): Builder
+    {
+        return $query->when($term, fn ($q) => $q->where(fn ($q) => $q
+            ->where('nombre', 'like', "%{$term}%")
+            ->orWhere('descripcion', 'like', "%{$term}%")
+            ->orWhere('codigo_sku', 'like', "%{$term}%")));
+    }
+
+    public function getImageUrlAttribute(): string
+    {
+        return asset($this->url_imagen ?: 'assets/Imagenes/Logo.png');
+    }
+
+    public function getHasOfferAttribute(): bool
+    {
+        $offer = (float) ($this->attributes['precio_oferta'] ?? 0);
+
+        return $offer > 0 && $offer < (float) ($this->attributes['precio'] ?? 0);
     }
 }

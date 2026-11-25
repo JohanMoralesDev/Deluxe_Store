@@ -3,120 +3,162 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\View\View;
 
 class CartController extends Controller
 {
-    // Mostrar el carrito
-    public function index()
+    private const KEY = 'cart';
+
+    public function index(): View
     {
-        $carrito = session()->get('carrito', []);
-
-        $total = collect($carrito)->sum(function ($item) {
-            return $item['precio'] * $item['cantidad'];
-        });
-
-        return view('cart.index', compact('carrito', 'total'));
+        return view('cart.index', self::summary());
     }
 
-    // Agregar un producto al carrito
-    public function add(Request $request, $id)
+    public function add(Request $request, Product $product): RedirectResponse|JsonResponse
     {
-        $producto = Product::with('inventory')
-            ->where('esta_activo', true)
-            ->findOrFail($id);
+        $data = $request->validate(['quantity' => ['nullable', 'integer', 'min:1', 'max:99']]);
+        $qty  = (int) ($data['quantity'] ?? 1);
 
-        $datos = $request->validate([
-            'cantidad' => 'required|integer|min:1',
-        ]);
-
-        $cantidad = $datos['cantidad'];
-
-        $carrito = session()->get('carrito', []);
-
-        $cantidadActual = $carrito[$producto->id_producto]['cantidad'] ?? 0;
-
-        $stock = $producto->inventory?->cantidad ?? 0;
-
-        if ($cantidadActual + $cantidad > $stock) {
-            return back()->with(
-                'error',
-                'No hay suficientes unidades disponibles.'
-            );
+        if (! $product->active || $product->stock < 1) {
+            return $this->respond($request, false, 'El producto no está disponible.');
         }
 
-        $precio = $producto->precio_oferta ?? $producto->precio;
+        $cart    = session(self::KEY, []);
+        $newQty  = ($cart[$product->id]['quantity'] ?? 0) + $qty;
 
-        if (isset($carrito[$producto->id_producto])) {
-            $carrito[$producto->id_producto]['cantidad'] += $cantidad;
+        if ($newQty > $product->stock) {
+            $newQty = $product->stock;
+            $msg = "Solo hay {$product->stock} unidades de {$product->name}.";
         } else {
-            $carrito[$producto->id_producto] = [
-                'id_producto' => $producto->id_producto,
-                'nombre' => $producto->nombre,
-                'precio' => (float) $precio,
-                'imagen' => $producto->url_imagen,
-                'cantidad' => $cantidad,
+            $msg = "{$product->name} agregado al carrito.";
+        }
+
+        $cart[$product->id] = ['quantity' => $newQty];
+        session([self::KEY => $cart]);
+
+        return $this->respond($request, true, $msg);
+    }
+
+    public function update(Request $request, Product $product): RedirectResponse|JsonResponse
+    {
+        $data = $request->validate(['quantity' => ['required', 'integer', 'min:1', 'max:99']]);
+        $cart = session(self::KEY, []);
+
+        if (! isset($cart[$product->id])) {
+            return $this->respond($request, false, 'El producto no está en el carrito.');
+        }
+
+        $qty = min((int) $data['quantity'], max($product->stock, 0));
+        if ($qty < 1) {
+            return $this->respond($request, false, 'El producto no está disponible.');
+        }
+
+        $cart[$product->id]['quantity'] = $qty;
+        session([self::KEY => $cart]);
+
+        return $this->respond($request, true, 'Cantidad actualizada.');
+    }
+
+    public function remove(Request $request, Product $product): RedirectResponse|JsonResponse
+    {
+        $cart = session(self::KEY, []);
+        unset($cart[$product->id]);
+        session([self::KEY => $cart]);
+
+        return $this->respond($request, true, 'Producto eliminado.');
+    }
+
+    public function clear(Request $request): RedirectResponse|JsonResponse
+    {
+        session()->forget(self::KEY);
+
+        return $this->respond($request, true, 'Carrito vaciado.');
+    }
+
+    public static function summary(): array
+    {
+        $cart     = session(self::KEY, []);
+
+        if (empty($cart)) {
+            return [
+                'items'  => [],
+                'total'  => 0,
+                'count'  => 0,
+                'issues' => [],
             ];
         }
 
-        session()->put('carrito', $carrito);
+        $products = Product::whereIn('id_producto', array_keys($cart))
+            ->with('inventory')
+            ->get()
+            ->keyBy('id_producto');
 
-        return redirect()->route('store.carrito')
-            ->with('success', 'Producto agregado al carrito.');
-    }
+        $items = [];
+        $total = 0;
+        $issues = [];
 
-    // Actualizar la cantidad de un producto
-    public function update(Request $request, $id)
-    {
-        $datos = $request->validate([
-            'cantidad' => 'required|integer|min:1',
-        ]);
+        foreach ($cart as $id => $row) {
+            $product = $products->get($id);
 
-        $carrito = session()->get('carrito', []);
+            if (! $product || ! $product->active) {
+                $issues[] = 'Un producto del carrito ya no está disponible y fue retirado.';
+                self::forget($id);
+                continue;
+            }
 
-        if (!isset($carrito[$id])) {
-            return back()->with('error', 'Producto no encontrado.');
+            $qty = $row['quantity'];
+            if ($qty > $product->stock) {
+                if ($product->stock < 1) {
+                    $issues[] = "{$product->name} está agotado y fue retirado.";
+                    self::forget($id);
+                    continue;
+                }
+                $issues[] = "Ajustamos {$product->name} a {$product->stock} unidades por disponibilidad.";
+                $qty = $product->stock;
+                $cart[$id]['quantity'] = $qty;
+                session([self::KEY => $cart]);
+            }
+
+            $subtotal = $product->price * $qty;
+            $total   += $subtotal;
+            $items[]  = [
+                'product'  => $product,
+                'quantity' => $qty,
+                'subtotal' => $subtotal,
+            ];
         }
 
-        $producto = Product::with('inventory')
-            ->findOrFail($id);
+        return [
+            'items'  => $items,
+            'total'  => $total,
+            'count'  => array_sum(array_column($items, 'quantity')),
+            'issues' => array_unique($issues),
+        ];
+    }
 
-        $stock = $producto->inventory?->cantidad ?? 0;
+    private static function forget(int|string $id): void
+    {
+        $cart = session(self::KEY, []);
+        unset($cart[$id]);
+        session([self::KEY => $cart]);
+    }
 
-        if ($datos['cantidad'] > $stock) {
-            return back()->with(
-                'error',
-                'La cantidad supera las existencias disponibles.'
-            );
+    private function respond(Request $request, bool $ok, string $message): RedirectResponse|JsonResponse
+    {
+        if ($request->expectsJson()) {
+            $s = self::summary();
+
+            return response()->json([
+                'ok'      => $ok,
+                'message' => $message,
+                'count'   => $s['count'],
+                'total'   => $s['total'],
+            ], $ok ? 200 : 422);
         }
 
-        $carrito[$id]['cantidad'] = $datos['cantidad'];
-
-        session()->put('carrito', $carrito);
-
-        return redirect()->route('store.carrito')
-            ->with('success', 'Cantidad actualizada.');
-    }
-
-    // Eliminar un producto del carrito
-    public function remove($id)
-    {
-        $carrito = session()->get('carrito', []);
-
-        unset($carrito[$id]);
-
-        session()->put('carrito', $carrito);
-
-        return redirect()->route('store.carrito')
-            ->with('success', 'Producto eliminado del carrito.');
-    }
-
-    // Vaciar el carrito
-    public function clear()
-    {
-        session()->forget('carrito');
-
-        return redirect()->route('store.carrito')
-            ->with('success', 'Carrito vaciado correctamente.');
+        return back()->with($ok ? 'success' : 'error', $message);
     }
 }
