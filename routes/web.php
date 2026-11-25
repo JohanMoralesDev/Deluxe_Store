@@ -9,3 +9,9 @@ Route::view('/carrito', 'cart.index')->name('store.carrito');
 
 // Panel administrativo
 Route::view('/admin', 'admin')->name('admin.index');
+use App\Http\Controllers\Auth\RegisterController;
+Route::get('/registro', [RegisterController::class, 'showRegistrationForm'])
+    ->name('register');
+
+Route::post('/registro', [RegisterController::class, 'register'])
+    ->name('register.store');

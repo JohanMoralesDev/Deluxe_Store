@@ -3,32 +3,24 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Concerns\HasRelationships;
 
 class Role extends Model
 {
-    protected $table = 'roles';
-    protected $primaryKey = 'id_rol';
-    protected $keyType = 'int';
-    public $incrementing = true;
+    use HasRelationships;
 
+    // Tabla de roles
+    protected $table = 'roles';
+
+    // Clave primaria
+    protected $primaryKey = 'id_rol';
+
+    // Columnas de fechas
     public const CREATED_AT = 'creado_en';
     public const UPDATED_AT = 'actualizado_en';
 
-    protected $fillable = [
-        'nombre',
-        'descripcion',
-    ];
-
-    protected function casts(): array
-    {
-        return [
-            'creado_en' => 'datetime',
-            'actualizado_en' => 'datetime',
-        ];
-    }
-
-    public function users(): BelongsToMany
+    // Relación con usuarios
+    public function usuarios()
     {
         return $this->belongsToMany(
             User::class,
