@@ -3,6 +3,10 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\AdminProductController;
+use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\RegisterController;
 
 Route::view('/', 'home.index')->name('store.index');
 Route::view('/nuevo', 'store.nuevo')->name('store.nuevo');
@@ -25,4 +29,19 @@ Route::middleware('auth')->group(function () {
 });
 
 // Panel administrativo
-Route::view('/admin', 'admin')->name('admin.index');
+Route::get('/admin', [DashboardController::class, 'index'])
+    ->name('admin.index');
+
+Route::get('/admin/productos', [AdminProductController::class, 'index'])
+    ->name('admin.productos.index');
+
+// Rutas de autenticación
+Route::post('/login', [LoginController::class, 'login'])
+    ->name('auth.login.store');
+
+Route::post('/registro', [RegisterController::class, 'register'])
+    ->name('auth.register.store');
+
+Route::post('/logout', [LoginController::class, 'logout'])
+    ->middleware('auth')
+    ->name('logout');
