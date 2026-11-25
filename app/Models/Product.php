@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Builder;
 
 class Product extends Model
 {
@@ -29,6 +30,8 @@ class Product extends Model
         'color',
         'url_imagen',
         'esta_activo',
+        'publico',
+        'tamano_esfera',
     ];
 
     protected function casts(): array
@@ -93,4 +96,30 @@ class Product extends Model
             'id_producto'
         );
     }
+
+    public function scopeActive(Builder $query): Builder
+    {
+        return $query->where('esta_activo', true);
+    }
+
+    public function scopeSearch(Builder $query, ?string $term): Builder
+    {
+        return $query->when($term, fn ($q) => $q->where(fn ($q) => $q
+            ->where('nombre', 'like', "%{$term}%")
+            ->orWhere('descripcion', 'like', "%{$term}%")
+            ->orWhere('codigo_sku', 'like', "%{$term}%")));
+    }
+
+    public function getImageUrlAttribute(): string
+    {
+        return asset($this->url_imagen ?: 'assets/images/store/Logo.png');
+    }
+
+    public function getHasOfferAttribute(): bool
+    {
+        $offer = (float) ($this->attributes['precio_oferta'] ?? 0);
+
+        return $offer > 0 && $offer < (float) ($this->attributes['precio'] ?? 0);
+    }
+
 }

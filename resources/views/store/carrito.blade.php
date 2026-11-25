@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <!-- TipografÃ­a externa -->
+    <!-- Tipografía externa -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300..700;1,300..700&display=swap" rel="stylesheet"/>
@@ -19,7 +19,7 @@
   <body>
     <header class="encabezado">
       <div class="nav-izquierdo">
-      <!-- Barra de navegaciÃ³n -->
+      <!-- Barra de navegación -->
         <div class="campoBuscar">
         <input type="text" placeholder="Buscar productos..." />
         <i class="bi bi-search iconoBusqueda"></i>
@@ -35,7 +35,7 @@
 
       <div class="nav-derecho">
         <nav class="nav-secundario">
-          <a href="{{ route('store.catalogo') }}">CatÃ¡logo</a>
+          <a href="{{ route('store.catalogo') }}">Catálogo</a>
           <a href="#sobre-nosotros">Sobre Nosotros</a>
         </nav>
 
@@ -51,19 +51,19 @@
           </button>
       </div>
 
-      <!-- BotÃ²n del menÃ¹ movil -->
+      <!-- Botòn del menù movil -->
        <button type="button" class="boton-menu-tienda" id="botonMenuTienda"
-       aria-label="Abrir menÃº de navegaciÃ³n" aria-control="cemuPantallaCompleta" aria-expanded="false">
+       aria-label="Abrir menú de navegación" aria-control="cemuPantallaCompleta" aria-expanded="false">
       <i class="bi bi-list" aria-hidden="true"></i>
     </button>
 
     <!-- Menu navegacion pantalla completa -->
-     <nav class="menu-pantalla-completa" id="menuPantallaCompleta"   aria-label="NavegaciÃ³n principal"
+     <nav class="menu-pantalla-completa" id="menuPantallaCompleta"   aria-label="Navegación principal"
      aria-hidden="true" inert>
 
     <a href="{{ route('store.index') }}">Inicio</a>
     <a href="{{ route('store.nuevo') }}">Nuevo</a>
-    <a href="{{ route('store.catalogo') }}">CatÃ¡logo</a>
+    <a href="{{ route('store.catalogo') }}">Catálogo</a>
     <a href="#sobre-nosotros">Sobre Nosotros</a></nav>
 </nav>
     </header>
@@ -91,7 +91,7 @@
 
                     <div class="carrito-item-info">
                         <h2 class="carrito-item-nombre">Reloj para caballero marca Curren</h2>
-                        <p class="carrito-item-descripcion">DescripciÃ³n corta del producto</p>
+                        <p class="carrito-item-descripcion">Descripción corta del producto</p>
 
                         <div class="carrito-item-acciones">
                             <div class="selector-cantidad" role="group" aria-label="Cantidad">
@@ -124,7 +124,7 @@
 
                     <div class="carrito-item-info">
                         <h2 class="carrito-item-nombre">Reloj marca Rolex</h2>
-                        <p class="carrito-item-descripcion">DescripciÃ³n corta del producto</p>
+                        <p class="carrito-item-descripcion">Descripción corta del producto</p>
 
                         <div class="carrito-item-acciones">
                             <div class="selector-cantidad" role="group" aria-label="Cantidad">
@@ -157,7 +157,7 @@
 
                     <div class="carrito-item-info">
                         <h2 class="carrito-item-nombre">Reloj Naviforce</h2>
-                        <p class="carrito-item-descripcion">DescripciÃ³n corta del producto</p>
+                        <p class="carrito-item-descripcion">Descripción corta del producto</p>
 
                         <div class="carrito-item-acciones">
                             <div class="selector-cantidad" role="group" aria-label="Cantidad">
@@ -201,7 +201,7 @@
                     </div>
 
                     <div class="resumen-fila">
-                        <dt>EnvÃ­o estimado</dt>
+                        <dt>Envío estimado</dt>
                         <dd id="resumen-envio">Gratis</dd>
                     </div>
                 </dl>
@@ -225,7 +225,7 @@
 
     </main>
 
-    <!-- Pie de pÃ¡gina -->
+    <!-- Pie de página -->
     <footer class="pie-pagina" id="sobre-nosotros">
       <div class="pie-pagina__marca">
         <a href="{{ route('store.index') }}" class="logo-tienda">
@@ -240,11 +240,11 @@
       </div>
 
       <ul class="pie-pagina__enlaces">
-        <li><a href="#informacion-legal">InformaciÃ³n legal</a></li>
-        <li><a href="#terminos">TÃ©rminos y Condiciones</a></li>
-        <li><a href="#privacidad">PolÃ­ticas de privacidad</a></li>
-        <li><a href="#envio">PolÃ­ticas de envÃ­o</a></li>
-        <li><a href="#devoluciones">Cambios y devoluciÃ³n</a></li>
+        <li><a href="#informacion-legal">Información legal</a></li>
+        <li><a href="#terminos">Términos y Condiciones</a></li>
+        <li><a href="#privacidad">Políticas de privacidad</a></li>
+        <li><a href="#envio">Políticas de envío</a></li>
+        <li><a href="#devoluciones">Cambios y devolución</a></li>
       </ul>
     </footer>
     <!-- JavaScript -->

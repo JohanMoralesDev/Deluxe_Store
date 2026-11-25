@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <!-- TipografÃ­a externa -->
+    <!-- Tipografía externa -->
     <link rel="preconnect" href="https://fonts.googleapis.com"/>
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300..700;1,300..700&display=swap" rel="stylesheet"/>
@@ -13,13 +13,13 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css"/>
     <!-- CSS Propio -->
     @vite(['assets/css/Catalogo.css', 'assets/css/style.css', 'assets/js/script.js', 'assets/js/carrito.js'])
-    <title>CatÃ¡logo - Deluxe Store</title>
+    <title>Catálogo - Deluxe Store</title>
   </head>
 
   <body>
     <header class="encabezado">
       <div class="nav-izquierdo">
-      <!-- Barra de navegaciÃ³n -->
+      <!-- Barra de navegación -->
         <div class="campoBuscar">
         <input id="buscarProducto" type="text" placeholder="Buscar productos..." />
         <i class="bi bi-search iconoBusqueda"></i>
@@ -35,7 +35,7 @@
 
       <div class="nav-derecho">
         <nav class="nav-secundario">
-          <a href="{{ route('store.catalogo') }}">CatÃ¡logo</a>
+          <a href="{{ route('store.catalogo') }}">Catálogo</a>
           <a href="#sobre-nosotros">Sobre Nosotros</a>
         </nav>
 
@@ -51,26 +51,26 @@
           </button>
       </div>
 
-      <!-- BotÃ²n del menÃ¹ movil -->
+      <!-- Botòn del menù movil -->
        <button type="button" class="boton-menu-tienda" id="botonMenuTienda"
-       aria-label="Abrir menÃº de navegaciÃ³n" aria-control="menuPantallaCompleta" aria-expanded="false">
+       aria-label="Abrir menú de navegación" aria-control="menuPantallaCompleta" aria-expanded="false">
 
       <i class="bi bi-list" aria-hidden="true"></i>
     </button>
 
     <!-- Menu navegacion pantalla completa -->
-     <nav class="menu-pantalla-completa" id="menuPantallaCompleta"   aria-label="NavegaciÃ³n principal"
+     <nav class="menu-pantalla-completa" id="menuPantallaCompleta"   aria-label="Navegación principal"
      aria-hidden="true" inert>
 
     <a href="{{ route('store.index') }}">Inicio</a>
     <a href="{{ route('store.nuevo') }}">Nuevo</a>
-    <a href="{{ route('store.catalogo') }}">CatÃ¡logo</a>
+    <a href="{{ route('store.catalogo') }}">Catálogo</a>
     <a href="#sobre-nosotros">Sobre Nosotros</a></nav>
     </nav>
     </header>
 
     <div class="contenido-catalogo">
-      <h1 class="titulo-catalogo">TODA NUESTRA COLECCIÃ“N</h1>
+      <h1 class="titulo-catalogo">TODA NUESTRA COLECCIÓN</h1>
 
       <div class="arrow">
     <div class="column-xs-12">
@@ -85,7 +85,7 @@
             </button>
         </div>
 
-        <!-- Ordenar por fecha de incorporaciÃ³n -->
+        <!-- Ordenar por fecha de incorporación -->
         <div class="arrow_container">
             <button type="button"
                     class="arrow_text filtro-opcion"
@@ -95,45 +95,45 @@
             </button>
         </div>
 
-        <!-- Filtrar por colecciÃ³n -->
+        <!-- Filtrar por colección -->
         <div class="arrow_container">
             <label class="arrow_text" for="filtroColeccion">
-                ColecciÃ³n
+                Colección
             </label>
 
             <select class="filtro" id="filtroColeccion">
                 <option value="todas">Todas las colecciones</option>
-                <option value="clasica">ClÃ¡sica</option>
+                <option value="clasica">Clásica</option>
                 <option value="elegante">Elegante</option>
                 <option value="deportiva">Deportiva</option>
             </select>
         </div>
 
-        <!-- Filtrar por tamaÃ±o de esfera -->
+        <!-- Filtrar por tamaño de esfera -->
         <div class="arrow_container">
             <label class="arrow_text" for="filtroTamano">
-                TamaÃ±os
+                Tamaños
             </label>
 
             <select class="filtro" id="filtroTamano">
-                <option value="todos">Todos los tamaÃ±os</option>
-                <option value="pequeno">PequeÃ±o</option>
+                <option value="todos">Todos los tamaños</option>
+                <option value="pequeno">Pequeño</option>
                 <option value="mediano">Mediano</option>
                 <option value="grande">Grande</option>
             </select>
         </div>
 
-        <!-- Filtrar por pÃºblico -->
+        <!-- Filtrar por público -->
         <div class="arrow_container">
             <label class="arrow_text" for="filtroPublico">
-                PÃºblico
+                Público
             </label>
 
             <select class="filtro" id="filtroPublico">
                 <option value="todos">Todos</option>
                 <option value="dama">Dama</option>
                 <option value="caballero">Caballero</option>
-                <option value="ninos">NiÃ±os</option>
+                <option value="ninos">Niños</option>
             </select>
         </div>
 
@@ -151,7 +151,7 @@
         <strong class="product-price">$160.000,00<del class="precio-anterior">$175.000,00</del></strong>
         <button type="button" class="agregar-carrito">
           <i class="bi bi-cart-plus"></i>
-          AÃ±adir al carrito</button>
+          Añadir al carrito</button>
       </article>
 
       <article class="col-m-4 col-s-6 product-box" data-id="reloj-curren-dama" data-nombre="Curren"
@@ -163,7 +163,7 @@
         <strong class="product-price">$130.000,00<del class="precio-anterior">$136.000,00</del></strong>
         <button type="button" class="agregar-carrito">
           <i class="bi bi-cart-plus"></i>
-          AÃ±adir al carrito</button>
+          Añadir al carrito</button>
       </article>
 
       <article class="col-m-4 col-s-6 product-box" data-id="reloj-qq" data-nombre="Q&Q"
@@ -175,7 +175,7 @@
         <strong class="product-price">$86.000,00<del class="precio-anterior">$90.000,00</del></strong>
         <button type="button" class="agregar-carrito">
           <i class="bi bi-cart-plus"></i>
-          AÃ±adir al carrito</button>
+          Añadir al carrito</button>
       </article>
 
       <article class="col-m-4 col-s-6 product-box" data-id="reloj-rolex" data-nombre="Rolex"
@@ -187,7 +187,7 @@
         <strong class="product-price">$120.000,00<del class="precio-anterior">$135.000,00</del></strong>
         <button type="button" class="agregar-carrito">
           <i class="bi bi-cart-plus"></i>
-          AÃ±adir al carrito</button>
+          Añadir al carrito</button>
       </article>
 
       <article class="col-m-4 col-s-6 product-box" data-id="reloj-calvin-klein" data-nombre="Calvin Klein"
@@ -199,7 +199,7 @@
         <strong class="product-price">$20.000,00<del class="precio-anterior">$25.000,00</del></strong>
         <button type="button" class="agregar-carrito">
           <i class="bi bi-cart-plus"></i>
-          AÃ±adir al carrito</button>
+          Añadir al carrito</button>
       </article>
 
       <article class="col-m-4 col-s-6 product-box" data-id="reloj-pandora" data-nombre="Pandora"
@@ -211,7 +211,7 @@
         <strong class="product-price">$35.000,00<del class="precio-anterior">$38.000,00</del></strong>
         <button type="button" class="agregar-carrito">
           <i class="bi bi-cart-plus"></i>
-          AÃ±adir al carrito</button>
+          Añadir al carrito</button>
       </article>
 
       <article class="col-m-4 col-s-6 product-box" data-id="reloj-naviforce" data-nombre="Naviforce"
@@ -223,7 +223,7 @@
         <strong class="product-price">$115.000,00<del class="precio-anterior">$136.000,00</del></strong>
         <button type="button" class="agregar-carrito">
           <i class="bi bi-cart-plus"></i>
-          AÃ±adir al carrito</button>
+          Añadir al carrito</button>
       </article>
 
       <article class="col-m-4 col-s-6 product-box" data-id="reloj-qubano" data-nombre="Qubano"
@@ -235,7 +235,7 @@
         <strong class="product-price">$86.000,00<del class="precio-anterior">$90.000,00</del></strong>
         <button type="button" class="agregar-carrito">
           <i class="bi bi-cart-plus"></i>
-          AÃ±adir al carrito</button>
+          Añadir al carrito</button>
       </article>
 
       <article class="col-m-4 col-s-6 product-box" data-id="reloj-fairwhale" data-nombre="FairWhale"
@@ -247,19 +247,19 @@
         <strong class="product-price">$160.000,00<del class="precio-anterior">$175.000,00</del></strong>
         <button type="button" class="agregar-carrito">
           <i class="bi bi-cart-plus"></i>
-          AÃ±adir al carrito</button>
+          Añadir al carrito</button>
       </article>
 
-      <article class="col-m-4 col-s-6 product-box" data-id="reloj-g-fox-automatico" data-nombre="G-Fox AutomÃ¡tico"
+      <article class="col-m-4 col-s-6 product-box" data-id="reloj-g-fox-automatico" data-nombre="G-Fox Automático"
      data-publico="caballero" data-coleccion="elegante" data-tamano="1" data-fecha="2025-09-18"
      data-precio="140000" data-precio-anterior="145000">
-        <img src="{{ asset('assets/images/store/G-Fox-Automatico.jpeg') }}" alt="Reloj G-Fox AutomÃ¡tico"/>
+        <img src="{{ asset('assets/images/store/G-Fox-Automatico.jpeg') }}" alt="Reloj G-Fox Automático"/>
         <div class="hidden offer">OFERTA</div>
-        <h2>Reloj G-Fox AutomÃ¡tico para caballero</h2>
+        <h2>Reloj G-Fox Automático para caballero</h2>
         <strong class="product-price">$140.000,00<del class="precio-anterior">$145.000,00</del></strong>
         <button type="button" class="agregar-carrito">
           <i class="bi bi-cart-plus"></i>
-          AÃ±adir al carrito</button>
+          Añadir al carrito</button>
       </article>
 
       <article class="col-m-4 col-s-6 product-box" data-id="reloj-foxbox" data-nombre="FoxBox"
@@ -271,12 +271,12 @@
         <strong class="product-price">$145.000,00<del class="precio-anterior">$150.000,00</del></strong>
         <button type="button" class="agregar-carrito">
           <i class="bi bi-cart-plus"></i>
-          AÃ±adir al carrito</button>
+          Añadir al carrito</button>
       </article>
       </div>
     </div>
 
-    <!-- Pie de pÃ¡gina -->
+    <!-- Pie de página -->
     <footer class="pie-pagina" id="sobre-nosotros">
       <div class="pie-pagina__marca">
         <a href="{{ route('store.index') }}" class="logo-tienda">
@@ -291,11 +291,11 @@
       </div>
 
       <ul class="pie-pagina__enlaces">
-        <li><a href="#informacion-legal">InformaciÃ³n legal</a></li>
-        <li><a href="#terminos">TÃ©rminos y Condiciones</a></li>
-        <li><a href="#privacidad">PolÃ­ticas de privacidad</a></li>
-        <li><a href="#envio">PolÃ­ticas de envÃ­o</a></li>
-        <li><a href="#devoluciones">Cambios y devoluciÃ³n</a></li>
+        <li><a href="#informacion-legal">Información legal</a></li>
+        <li><a href="#terminos">Términos y Condiciones</a></li>
+        <li><a href="#privacidad">Políticas de privacidad</a></li>
+        <li><a href="#envio">Políticas de envío</a></li>
+        <li><a href="#devoluciones">Cambios y devolución</a></li>
       </ul>
     </footer>
     <!-- JavaScript -->
