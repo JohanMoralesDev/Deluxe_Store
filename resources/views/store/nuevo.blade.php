@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <!-- TipografÃ­a externa -->
+    <!-- Tipografía externa -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -28,7 +28,7 @@
 
     <header class="encabezado">
       <div class="nav-izquierdo">
-      <!-- Barra de navegaciÃ³n -->
+      <!-- Barra de navegación -->
         <div class="campoBuscar">
         <input type="text" placeholder="Buscar productos..." />
         <i class="bi bi-search iconoBusqueda"></i>
@@ -45,7 +45,7 @@
 
       <div class="nav-derecho">
         <nav class="nav-secundario">
-          <a href="{{ route('store.catalogo') }}">CatÃ¡logo</a>
+          <a href="{{ route('store.catalogo') }}">Catálogo</a>
           <a href="#sobre-nosotros">Sobre Nosotros</a>
         </nav>
 
@@ -63,14 +63,14 @@
 
     <main class="contenido-nuevo">
         <section class="nuevo-modelo" id="nuevo">
-            <img src="{{ asset('assets/images/store/Rolex.jpeg') }}" alt="Nuevos modelos de la colecciÃ³n" />
+            <img src="{{ asset('assets/images/store/Rolex.jpeg') }}" alt="Nuevos modelos de la colección" />
             <div class="contenedor-texto">
                 <h1 class="titulo-nuevo">Nuevos Modelos</h1>
                 <p class="subtitulo-nuevo">Disponibles</p>
             </div>
         </section>
 
-        <p class="frase-nuevo">Descubre los Ãºltimos modelos de nueva colecciÃ³n</p>
+        <p class="frase-nuevo">Descubre los últimos modelos de nueva colección</p>
 
         <section class="nuevos-productos">
             <article class="producto-nuevo">
@@ -83,7 +83,7 @@
                     <span class="precio-actual">$145.000,00</span>
                     <del class="precio-anterior">$170.000,00</del>
                 </p>
-                <a href="{{ route('store.carrito') }}"><button class="boton producto-nuevo__boton">AÃ±adir al carrito</button></a>
+                <a href="{{ route('store.carrito') }}"><button class="boton producto-nuevo__boton">Añadir al carrito</button></a>
             </article>
 
             <article class="producto-nuevo">
@@ -96,7 +96,7 @@
                     <span class="precio-actual">$98.000,00</span>
                     <del class="precio-anterior">$120.000,00</del>
                 </p>
-                <a href="{{ route('store.carrito') }}"><button class="boton producto-nuevo__boton">AÃ±adir al carrito</button></a>
+                <a href="{{ route('store.carrito') }}"><button class="boton producto-nuevo__boton">Añadir al carrito</button></a>
             </article>
 
             <article class="producto-nuevo">
@@ -109,7 +109,7 @@
                     <span class="precio-actual">$112.500,00</span>
                     <del class="precio-anterior">$135.000,00</del>
                 </p>
-                <a href="{{ route('store.carrito') }}"><button class="boton producto-nuevo__boton">AÃ±adir al carrito</button></a>
+                <a href="{{ route('store.carrito') }}"><button class="boton producto-nuevo__boton">Añadir al carrito</button></a>
             </article>
 
             <article class="producto-nuevo">
@@ -122,7 +122,7 @@
                     <span class="precio-actual">$89.900,00</span>
                     <del class="precio-anterior">$105.000,00</del>
                 </p>
-                <a href="{{ route('store.carrito') }}"><button class="boton producto-nuevo__boton">AÃ±adir al carrito</button></a>
+                <a href="{{ route('store.carrito') }}"><button class="boton producto-nuevo__boton">Añadir al carrito</button></a>
             </article>
         </section>
 
@@ -143,11 +143,11 @@
       </div>
 
       <ul class="pie-pagina__enlaces">
-        <li><a href="#informacion-legal">InformaciÃ³n legal</a></li>
-        <li><a href="#terminos">TÃ©rminos y Condiciones</a></li>
-        <li><a href="#privacidad">PolÃ­ticas de privacidad</a></li>
-        <li><a href="#envio">PolÃ­ticas de envÃ­o</a></li>
-        <li><a href="#devoluciones">Cambios y devoluciÃ³n</a></li>
+        <li><a href="#informacion-legal">Información legal</a></li>
+        <li><a href="#terminos">Términos y Condiciones</a></li>
+        <li><a href="#privacidad">Políticas de privacidad</a></li>
+        <li><a href="#envio">Políticas de envío</a></li>
+        <li><a href="#devoluciones">Cambios y devolución</a></li>
       </ul>
     </footer>
 
