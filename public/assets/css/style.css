@@ -285,6 +285,29 @@ a {
   display: none;
 }
 
+/* Mejor separación de los elementos del encabezado */
+.nav-izquierdo {
+  gap: 2.5rem;
+}
+
+.nav-derecho {
+  gap: 2rem;
+}
+
+/* Separación entre enlaces de navegación */
+.nav-principal ul,
+.nav-secundario ul {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  list-style: none;
+}
+
+/* Separación entre iconos y sus textos */
+.nav-icon {
+  gap: 0.6rem;
+}
+
 /* Sombra del encabezado que aparece al desplazarse (solo CSS) */
 @supports (animation-timeline: scroll()) {
   .encabezado {
@@ -493,8 +516,29 @@ a {
 }
 
 .nueva-coleccion__texto .boton {
-  padding: 0.85rem 2.2rem;
-  animation: entradaSuave 0.9s var(--suave) 0.35s both;
+    padding: 0.85rem 2.2rem;
+    animation: entradaSuave 0.9s var(--suave) 0.35s both;
+    background: #D4AF37;
+    background-image: none;
+    color: var(--esmeralda-noche);
+    font-weight: 700;
+    box-shadow: none;
+    transition:
+        background-color 0.3s var(--suave),
+        transform 0.3s var(--suave);
+}
+
+.nueva-coleccion__texto .boton:hover,
+.nueva-coleccion__texto .boton:focus-visible {
+    background: #c9a227;
+    background-image: none;
+    color: var(--esmeralda-noche);
+    box-shadow: none;
+    transform: scale(1.04);
+}
+
+.nueva-coleccion__texto .boton:active {
+    transform: scale(0.98);
 }
 
 
@@ -1098,20 +1142,24 @@ a {
 /* =========================================================
    9. PIE DE PÁGINA
    ========================================================= */
+
+/* =========================================================
+   9. PIE DE PÁGINA
+   ========================================================= */
+
 .pie-pagina {
   position: relative;
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1.75rem;
+  display: grid;
+  grid-template-columns: 1.4fr 1fr 1fr;
+  align-items: start;
+  gap: 3rem;
   margin-top: 3rem;
-  padding: 2.75rem clamp(1rem, 4vw, 2.5rem);
+  padding: 3rem clamp(1.5rem, 5vw, 4rem) 1.5rem;
   background: var(--grad-esmeralda);
   color: var(--oro);
 }
 
-/* Línea dorada superior con desvanecido en los extremos */
+/* Línea dorada superior */
 .pie-pagina::before {
   content: "";
   position: absolute;
@@ -1119,13 +1167,26 @@ a {
   right: 0;
   left: 0;
   height: 2px;
-  background: linear-gradient(90deg, transparent, var(--oro), transparent);
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--oro),
+    transparent
+  );
 }
 
+/* Identidad de la tienda */
 .pie-pagina__marca {
   display: flex;
-  align-items: center;
-  gap: 0.9rem;
+  align-items: flex-start;
+  gap: 1.2rem;
+}
+
+.pie-pagina__identidad {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.35rem;
 }
 
 .logo-tienda {
@@ -1133,39 +1194,58 @@ a {
   flex-shrink: 0;
   width: 56px;
   height: 56px;
-  min-width: 56px;
-  min-height: 56px;
-  aspect-ratio: 1 / 1;
   overflow: hidden;
   border-radius: 50%;
-  box-shadow: 0 0 0 2px var(--oro), 0 0 0 6px rgb(var(--oro-rgb) / 0.22);
-  transition: transform 0.4s var(--suave), box-shadow 0.4s var(--suave);
+  box-shadow:
+    0 0 0 2px var(--oro),
+    0 0 0 6px rgb(var(--oro-rgb) / 0.22);
+  transition: transform 0.4s var(--suave),
+              box-shadow 0.4s var(--suave);
 }
 
 .logo-tienda:hover {
   transform: rotate(-6deg) scale(1.06);
-  box-shadow: 0 0 0 2px var(--oro), 0 0 0 8px rgb(var(--oro-rgb) / 0.32);
 }
 
 .logo-tienda img {
   width: 100%;
   height: 100%;
-  aspect-ratio: 1 / 1;
+  object-fit: contain;
   border-radius: 50%;
-  object-fit: cover;
 }
 
 .pie-pagina__nombre {
   font-family: var(--fuente-titulo);
-  font-size: 1.5rem;
+  font-size: 1.6rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  line-height: 1.2;
+}
+
+/* Firma del equipo de desarrollo */
+.pie-pagina__desarrollo {
+  font-family: var(--fuente-texto);
+  font-size: 0.85rem;
+  color: rgb(255 255 255 / 0.8);
+}
+
+.pie-pagina__desarrollo strong {
+  color: var(--oro);
   font-weight: 700;
   letter-spacing: 0.06em;
 }
 
+.pie-pagina__descripcion {
+  margin-top: 0.35rem;
+  color: rgb(255 255 255 / 0.8);
+  font-size: 0.95rem;
+}
+
+/* Redes sociales */
 .redes-sociales {
   display: flex;
   gap: 0.6rem;
-  margin-left: 0.5rem;
+  margin-top: 0.8rem;
 }
 
 .redes-sociales a {
@@ -1179,8 +1259,7 @@ a {
   transition:
     background-color 0.3s var(--suave),
     color 0.3s var(--suave),
-    transform 0.3s var(--suave),
-    box-shadow 0.3s var(--suave);
+    transform 0.3s var(--suave);
 }
 
 .redes-sociales a:hover,
@@ -1188,21 +1267,36 @@ a {
   background-color: var(--oro);
   color: var(--esmeralda-noche);
   transform: translateY(-4px);
-  box-shadow: 0 10px 22px rgb(0 0 0 / 0.35);
+}
+
+/* Columnas de enlaces */
+.pie-pagina__columna {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.pie-pagina__titulo {
+  color: var(--oro);
+  font-family: var(--fuente-titulo);
+  font-size: 1.35rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
 }
 
 .pie-pagina__enlaces {
   display: flex;
-  flex-wrap: wrap;
-  gap: 0.6rem 1.5rem;
+  flex-direction: column;
+  gap: 0.75rem;
   list-style: none;
-  font-size: 1rem;
+  font-family: var(--fuente-texto);
+  font-size: 0.95rem;
 }
 
 .pie-pagina__enlaces a {
   position: relative;
   padding: 0.2rem 0;
-  font-weight: 600;
+  font-weight: 500;
   transition: color 0.3s var(--suave);
 }
 
@@ -1228,6 +1322,18 @@ a {
 .pie-pagina__enlaces a:focus-visible::after {
   transform: scaleX(1);
   transform-origin: left;
+}
+
+/* Franja inferior */
+.pie-pagina__inferior {
+  grid-column: 1 / -1;
+  margin-top: 1rem;
+  padding-top: 1.2rem;
+  border-top: 1px solid rgb(var(--oro-rgb) / 0.35);
+  color: rgb(255 255 255 / 0.75);
+  font-family: var(--fuente-texto);
+  font-size: 0.8rem;
+  text-align: center;
 }
 
 
@@ -1563,22 +1669,36 @@ a {
     min-height: 48px;
   }
 
+  
   .pie-pagina {
-    flex-direction: column;
-    align-items: flex-start;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    padding: 2.5rem 1.5rem 1.25rem;
   }
 
   .pie-pagina__marca {
-    flex-wrap: wrap;
+    align-items: flex-start;
   }
 
-  .redes-sociales {
-    margin-left: 0;
+  .pie-pagina__columna {
+    gap: 0.7rem;
   }
 
-  .pie-pagina__enlaces {
-    flex-direction: column;
-    gap: 0.75rem;
+  .pie-pagina__inferior {
+    grid-column: 1 / -1;
+    width: 100%;
+    text-align: center;
+    margin-top: 1.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+
+/* Acciones visibles en pantallas táctiles */
+@media (hover: none) {
+  .producto-accion {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 
