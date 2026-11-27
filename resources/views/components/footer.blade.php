@@ -1,21 +1,38 @@
-<footer class="pie-pagina" id="sobre-nosotros">
-      <div class="pie-pagina__marca">
-        <a href="{{ route('store.index') }}" class="logo-tienda">
-        <img src="{{ asset('assets/images/store/Logo.png') }}" alt="Logo de Deluxe Store" />
+<footer class="pie-pagina" id="sobre-nosotros" aria-labelledby="titulo-footer">
+    <section class="pie-pagina__marca" aria-labelledby="titulo-footer">
+        <a href="{{ route('store.index') }}" class="logo-tienda" aria-label="Deluxe Store, inicio">
+            <img src="{{ asset('assets/images/store/Logo.png') }}" alt="">
         </a>
-        <p class="pie-pagina__nombre">Deluxe Store</p>
-
-        <div class="redes-sociales">
-          <a href="https://www.instagram.com/deluxestoremajo?stkn=MXQ2NDFqejMweWdpYg==" aria-label="Instagram"><i class="bi bi-instagram"></i></a>
-          <a href="https://www.tiktok.com/@deluxestoremajo?_r=1&_t=ZS-9ALdsl9GegP" aria-label="TikTok"><i class="bi bi-tiktok"></i></a>
+        <div class="pie-pagina__identidad">
+            <h2 class="pie-pagina__nombre" id="titulo-footer">DELUXE STORE</h2>
+            <p class="pie-pagina__desarrollo">Desarrollado por <strong>Zentrix</strong></p>
+            <p class="pie-pagina__descripcion">Tienda de relojes para diferentes estilos y ocasiones.</p>
         </div>
-      </div>
+    </section>
 
-      <ul class="pie-pagina__enlaces">
-        <li><a href="#informacion-legal">Información legal</a></li>
-        <li><a href="#terminos">Términos y Condiciones</a></li>
-        <li><a href="#privacidad">Políticas de privacidad</a></li>
-        <li><a href="#envio">Políticas de envío</a></li>
-        <li><a href="#devoluciones">Cambios y devolución</a></li>
-      </ul>
-    </footer>
+    <nav class="pie-pagina__columna" aria-label="Enlaces del pie de página">
+        <h2 class="pie-pagina__titulo">Navegación</h2>
+        <ul class="pie-pagina__enlaces">
+            <li><a href="{{ route('store.index') }}">Inicio</a></li>
+            <li><a href="{{ route('store.catalogo') }}">Catálogo</a></li>
+            <li><a href="{{ route('store.nuevo') }}">Novedades</a></li>
+            <li><a href="{{ route('store.index') }}#sobre-nosotros">Sobre nosotros</a></li>
+            <li><a href="{{ route('store.carrito') }}">Carrito</a></li>
+        </ul>
+    </nav>
+
+    <section class="pie-pagina__columna" aria-labelledby="titulo-contacto-footer">
+        <h2 class="pie-pagina__titulo" id="titulo-contacto-footer">Canales digitales</h2>
+        <p class="pie-pagina__descripcion">Encuéntranos en las redes sociales de la tienda.</p>
+        <div class="redes-sociales">
+            <a href="https://www.instagram.com/deluxestoremajo?stkn=MXQ2NDFqejMweWdpYg==" aria-label="Instagram de Deluxe Store" target="_blank" rel="noopener noreferrer">
+                <i class="bi bi-instagram" aria-hidden="true"></i>
+            </a>
+            <a href="https://www.tiktok.com/@deluxestoremajo?_r=1&_t=ZS-9ALdsl9GegP" aria-label="TikTok de Deluxe Store" target="_blank" rel="noopener noreferrer">
+                <i class="bi bi-tiktok" aria-hidden="true"></i>
+            </a>
+        </div>
+    </section>
+
+    <div class="pie-pagina__inferior">© {{ date('Y') }} Deluxe Store</div>
+</footer>

@@ -10,7 +10,8 @@ class CategoryController extends Controller
     // Mostrar todas las categorías
     public function index()
     {
-        $categorias = Category::orderBy('nombre')
+        $categorias = Category::withCount('products')
+            ->orderBy('nombre')
             ->paginate(10);
 
         return view('admin.categories.index', compact('categorias'));

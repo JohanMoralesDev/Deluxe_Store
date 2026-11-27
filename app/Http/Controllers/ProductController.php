@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\Product;
+use App\Http\Requests\StoreProductRequest;
+use App\Http\Requests\UpdateProductRequest;
 use Illuminate\Http\Request;
-use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
 
 class ProductController extends Controller
@@ -48,11 +50,17 @@ class ProductController extends Controller
         return view('admin.products.create', compact('categorias'));
     }
 
-    public function store(Request $request)
+    public function store(StoreProductRequest $request)
     {
-        $datos = $this->validateProduct($request);
+        $datos = $request->validated();
         $datos['esta_activo'] = $request->boolean('esta_activo');
-        Product::create($datos);
+        DB::transaction(function () use ($datos): void {
+            $product = Product::create($datos);
+            $product->inventory()->create([
+                'cantidad' => 0,
+                'stock_minimo' => 5,
+            ]);
+        });
 
         return redirect()->route('admin.products.index')
             ->with('success', 'Producto registrado correctamente.');
@@ -84,9 +92,9 @@ class ProductController extends Controller
         return view('admin.products.edit', compact('product', 'categorias'));
     }
 
-    public function update(Request $request, Product $product)
+    public function update(UpdateProductRequest $request, Product $product)
     {
-        $datos = $this->validateProduct($request, $product);
+        $datos = $request->validated();
         $datos['esta_activo'] = $request->boolean('esta_activo');
         $product->update($datos);
 
@@ -100,25 +108,5 @@ class ProductController extends Controller
 
         return redirect()->route('admin.products.index')
             ->with('success', 'Producto desactivado correctamente.');
-    }
-
-    private function validateProduct(Request $request, ?Product $product = null): array
-    {
-        $skuRule = Rule::unique('productos', 'codigo_sku');
-        if ($product) {
-            $skuRule->ignore($product->getKey(), 'id_producto');
-        }
-
-        return $request->validate([
-            'id_categoria' => ['required', 'integer', Rule::exists('categorias', 'id_categoria')->where('esta_activa', true)],
-            'nombre' => 'required|string|max:150',
-            'codigo_sku' => ['required', 'string', 'max:100', $skuRule],
-            'descripcion' => 'nullable|string',
-            'precio' => 'required|numeric|min:0',
-            'precio_oferta' => 'nullable|numeric|min:0|lt:precio',
-            'color' => 'nullable|string|max:50',
-            'url_imagen' => 'nullable|string|max:255',
-            'esta_activo' => 'sometimes|boolean',
-        ]);
     }
 }

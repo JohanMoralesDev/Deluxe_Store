@@ -2,7 +2,6 @@
 
 namespace App\Services;
 
-use App\Models\Inventory;
 use App\Models\Order;
 use App\Models\OrderDetail;
 use App\Models\Product;
@@ -13,6 +12,8 @@ use RuntimeException;
 class OrderService
 {
     private const CART_KEY = 'cart';
+
+    public function __construct(private readonly InventoryService $inventoryService) {}
 
     public function create(User $user, array $data): Order
     {
@@ -85,15 +86,13 @@ class OrderService
                     'subtotal' => $line['subtotal'],
                 ]);
 
-                $inventory = Inventory::where('id_producto', $product->getKey())
-                    ->lockForUpdate()
-                    ->first();
-
-                if (! $inventory) {
-                    throw new RuntimeException("No existe inventario para {$product->name}.");
-                }
-
-                $inventory->decrement('cantidad', $line['quantity']);
+                $this->inventoryService->registerExit(
+                    $product->getKey(),
+                    $line['quantity'],
+                    $user->getKey(),
+                    "Salida por pedido {$order->numero_pedido}",
+                    $order->getKey()
+                );
             }
 
             session()->forget(self::CART_KEY);

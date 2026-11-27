@@ -3,7 +3,7 @@
 @section('title', $product->nombre.' - Deluxe Store')
 
 @push('head')
-    <link rel="stylesheet" href="{{ asset('assets/css/Catalogo.css') }}">
+    @vite(['public/assets/css/catalogo.css'])
 @endpush
 
 @section('content')

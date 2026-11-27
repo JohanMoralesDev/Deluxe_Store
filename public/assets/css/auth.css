@@ -1,0 +1,105 @@
+.cuenta-menu-contenedor {
+  position: relative;
+}
+
+.menu-cuenta,
+.menu-cuenta[hidden] {
+  display: none;
+}
+
+.menu-cuenta:not([hidden]) {
+  position: absolute;
+  z-index: 1200;
+  top: calc(100% + .65rem);
+  right: 0;
+  display: grid;
+  width: min(19rem, calc(100vw - 1.5rem));
+  padding: .6rem;
+  border: 1px solid rgb(0 77 49 / 12%);
+  border-radius: 12px;
+  background: #fff;
+  box-shadow: 0 14px 36px rgb(0 77 49 / 18%);
+}
+
+.menu-cuenta__usuario {
+  display: grid;
+  gap: .2rem;
+  padding: .75rem .8rem;
+  border-bottom: 1px solid #e5ebe7;
+  color: #004d31;
+  overflow-wrap: anywhere;
+}
+
+.menu-cuenta__usuario span {
+  color: #5e6c65;
+  font-size: .88rem;
+}
+
+.menu-cuenta > a,
+.menu-cuenta form button {
+  display: block;
+  width: 100%;
+  padding: .7rem .8rem;
+  border: 0;
+  border-radius: 7px;
+  background: transparent;
+  color: #004d31;
+  font: inherit;
+  text-align: left;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.menu-cuenta > a:hover,
+.menu-cuenta form button:hover {
+  background: #edf7f2;
+  color: #006d46;
+}
+
+.menu-cuenta > a:focus-visible,
+.menu-cuenta form button:focus-visible,
+.cuenta-menu-boton:focus-visible {
+  outline: 2px solid #ecc440;
+  outline-offset: 2px;
+}
+
+.menu-cuenta form {
+  margin: .25rem 0 0;
+  border-top: 1px solid #e5ebe7;
+}
+
+.mensaje-campo-error {
+  display: block;
+  margin-top: -.2rem;
+  color: #a3212e;
+  font-size: .88rem;
+}
+
+.cuenta-formulario input:user-valid,
+.modal-auth input:user-valid {
+  border-color: #006d46;
+}
+
+.cuenta-formulario input:user-invalid,
+.modal-auth input:user-invalid,
+.cuenta-formulario [aria-invalid="true"],
+.modal-auth input[aria-invalid="true"] {
+  border-color: #a3212e;
+}
+
+.cuenta-formulario input[aria-invalid="true"]:focus-visible,
+.modal-auth input[aria-invalid="true"]:focus-visible {
+  outline-color: #a3212e;
+}
+
+.ayuda-contrasena {
+  display: block;
+  margin-top: -.2rem;
+  color: #53645b;
+}
+
+@media (max-width: 760px) {
+  .menu-cuenta:not([hidden]) {
+    right: -3rem;
+  }
+}

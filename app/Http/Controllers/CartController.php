@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
+use App\Services\CartService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -12,9 +13,11 @@ class CartController extends Controller
 {
     private const KEY = 'cart';
 
+    public function __construct(private readonly CartService $cartService) {}
+
     public function index(): View
     {
-        return view('cart.index', self::summary());
+        return view('cart.index', $this->cartService->summary());
     }
 
     public function add(Request $request, Product $product): RedirectResponse|JsonResponse
@@ -78,78 +81,10 @@ class CartController extends Controller
         return $this->respond($request, true, 'Carrito vaciado.');
     }
 
-    public static function summary(): array
-    {
-        $cart     = session(self::KEY, []);
-
-        if (empty($cart)) {
-            return [
-                'items'  => [],
-                'total'  => 0,
-                'count'  => 0,
-                'issues' => [],
-            ];
-        }
-
-        $products = Product::whereIn('id_producto', array_keys($cart))
-            ->with('inventory')
-            ->get()
-            ->keyBy('id_producto');
-
-        $items = [];
-        $total = 0;
-        $issues = [];
-
-        foreach ($cart as $id => $row) {
-            $product = $products->get($id);
-
-            if (! $product || ! $product->active) {
-                $issues[] = 'Un producto del carrito ya no está disponible y fue retirado.';
-                self::forget($id);
-                continue;
-            }
-
-            $qty = $row['quantity'];
-            if ($qty > $product->stock) {
-                if ($product->stock < 1) {
-                    $issues[] = "{$product->name} está agotado y fue retirado.";
-                    self::forget($id);
-                    continue;
-                }
-                $issues[] = "Ajustamos {$product->name} a {$product->stock} unidades por disponibilidad.";
-                $qty = $product->stock;
-                $cart[$id]['quantity'] = $qty;
-                session([self::KEY => $cart]);
-            }
-
-            $subtotal = $product->price * $qty;
-            $total   += $subtotal;
-            $items[]  = [
-                'product'  => $product,
-                'quantity' => $qty,
-                'subtotal' => $subtotal,
-            ];
-        }
-
-        return [
-            'items'  => $items,
-            'total'  => $total,
-            'count'  => array_sum(array_column($items, 'quantity')),
-            'issues' => array_unique($issues),
-        ];
-    }
-
-    private static function forget(int|string $id): void
-    {
-        $cart = session(self::KEY, []);
-        unset($cart[$id]);
-        session([self::KEY => $cart]);
-    }
-
     private function respond(Request $request, bool $ok, string $message): RedirectResponse|JsonResponse
     {
         if ($request->expectsJson()) {
-            $s = self::summary();
+            $s = $this->cartService->summary();
 
             return response()->json([
                 'ok'      => $ok,

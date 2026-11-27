@@ -3,20 +3,12 @@
 @section('title', 'Carrito - Deluxe Store')
 
 @push('head')
-    <link rel="stylesheet" href="{{ asset('assets/css/Carrito.css') }}">
-    <script src="{{ asset('assets/js/carrito.js') }}" defer></script>
+    @vite(['public/assets/css/carrito.css'])
 @endpush
 
 @section('content')
 <main class="contenido-carrito">
     <h1 class="titulo-carrito">TU CARRITO</h1>
-
-    @if(session('success'))
-        <p class="alerta alerta-exito">{{ session('success') }}</p>
-    @endif
-    @if(session('error'))
-        <p class="alerta alerta-error">{{ session('error') }}</p>
-    @endif
 
     @foreach($issues as $issue)
         <p class="alerta alerta-error">{{ $issue }}</p>

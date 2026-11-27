@@ -1,155 +1,58 @@
-<!DOCTYPE html>
-<html lang="es">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <!-- Tipografía externa -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300..700;1,300..700&display=swap"
-      rel="stylesheet"
-    />
-    <!-- Bootstrap -->
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-    />
-    <!-- Bootstrap Icons -->
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css"
-    />
-    <!-- CSS Propio -->
-    @vite(['assets/css/style.css', 'assets/css/Nuevo.css', 'assets/js/script.js'])
-    <title>Nuevo - Deluxe Store</title>
-  </head>
-<body>
+﻿@extends('layouts.app')
 
-    <header class="encabezado">
-      <div class="nav-izquierdo">
-      <!-- Barra de navegación -->
-        <div class="campoBuscar">
-        <input type="text" placeholder="Buscar productos..." />
-        <i class="bi bi-search iconoBusqueda"></i>
+@section('title', 'Nuevos modelos | Deluxe Store')
+
+@push('head')
+    @vite(['public/assets/css/nuevo.css'])
+@endpush
+
+@section('content')
+<main class="contenido-nuevo">
+    <section class="nuevo-modelo" id="nuevo" aria-labelledby="titulo-nuevo">
+        <img src="{{ asset('assets/images/store/Rolex.jpeg') }}" alt="Relojes de la colección Deluxe Store" />
+        <div class="contenedor-texto">
+            <h1 class="titulo-nuevo" id="titulo-nuevo">Nuevos modelos</h1>
+            <p class="subtitulo-nuevo">Consulta las incorporaciones más recientes</p>
         </div>
-        </form>
+    </section>
 
-        <nav class="nav-principal">
-          <a href="{{ route('store.index') }}">Inicio</a>
-          <a href="{{ route('store.nuevo') }}">Nuevo</a>
-        </nav>
-      </div>
+    <p class="frase-nuevo">Explora los modelos agregados recientemente al catálogo.</p>
 
-      <a href="{{ route('store.index') }}" class="nombre-marca">DELUXE STORE</a>
-
-      <div class="nav-derecho">
-        <nav class="nav-secundario">
-          <a href="{{ route('store.catalogo') }}">Catálogo</a>
-          <a href="#sobre-nosotros">Sobre Nosotros</a>
-        </nav>
-
-        <a href="{{ route('store.carrito') }}" class="nav-icono">
-          <i class="bi bi-cart-check"></i>
-          <span>Carrito</span>
-        </a>
-
-        <a href="{{ route('store.index') }}" class="nav-icono">
-          <i class="bi bi-person-circle"></i>
-          <span>Perfil</span>
-        </a>
-      </div>
-    </header>
-
-    <main class="contenido-nuevo">
-        <section class="nuevo-modelo" id="nuevo">
-            <img src="{{ asset('assets/images/store/Rolex.jpeg') }}" alt="Nuevos modelos de la colección" />
-            <div class="contenedor-texto">
-                <h1 class="titulo-nuevo">Nuevos Modelos</h1>
-                <p class="subtitulo-nuevo">Disponibles</p>
-            </div>
-        </section>
-
-        <p class="frase-nuevo">Descubre los últimos modelos de nueva colección</p>
-
-        <section class="nuevos-productos">
+    <section class="nuevos-productos" aria-label="Productos recientes">
+        @forelse ($products as $product)
             <article class="producto-nuevo">
                 <div class="producto-nuevo__imagen">
-                    <img src="{{ asset('assets/images/store/Naviforce.jpeg') }}" alt="Reloj Naviforce para hombre" />
-                    <span class="descuento">-15%</span>
+                    <a href="{{ route('products.show', $product) }}" aria-label="Ver {{ $product->nombre }}">
+                        <img src="{{ $product->image_url }}" alt="{{ $product->nombre }}" loading="lazy" />
+                    </a>
+                    @if ($product->has_offer)
+                        @php($descuento = (int) round((($product->precio - $product->price) / $product->precio) * 100))
+                        <span class="descuento">-{{ $descuento }}%</span>
+                    @endif
                 </div>
-                <h2 class="producto-nuevo__nombre">Reloj Naviforce para hombre</h2>
+
+                <h2 class="producto-nuevo__nombre">{{ $product->nombre }}</h2>
                 <p class="producto-nuevo__precio">
-                    <span class="precio-actual">$145.000,00</span>
-                    <del class="precio-anterior">$170.000,00</del>
+                    <span class="precio-actual">${{ number_format($product->price, 0, ',', '.') }}</span>
+                    @if ($product->has_offer)
+                        <del class="precio-anterior">${{ number_format($product->precio, 0, ',', '.') }}</del>
+                    @endif
                 </p>
-                <a href="{{ route('store.carrito') }}"><button class="boton producto-nuevo__boton">Añadir al carrito</button></a>
+
+                @if ($product->stock > 0)
+                    <form method="POST" action="{{ route('cart.add', $product) }}">
+                        @csrf
+                        <button type="submit" class="boton producto-nuevo__boton">Añadir al carrito</button>
+                    </form>
+                @else
+                    <button type="button" class="boton producto-nuevo__boton" disabled>Agotado</button>
+                @endif
             </article>
+        @empty
+            <p>No hay productos recientes para mostrar.</p>
+        @endforelse
+    </section>
 
-            <article class="producto-nuevo">
-                <div class="producto-nuevo__imagen">
-                    <img src="{{ asset('assets/images/store/Pandora.jpeg') }}" alt="Reloj Pandora para dama" />
-                    <span class="descuento">-18%</span>
-                </div>
-                <h2 class="producto-nuevo__nombre">Reloj Pandora para dama</h2>
-                <p class="producto-nuevo__precio">
-                    <span class="precio-actual">$98.000,00</span>
-                    <del class="precio-anterior">$120.000,00</del>
-                </p>
-                <a href="{{ route('store.carrito') }}"><button class="boton producto-nuevo__boton">Añadir al carrito</button></a>
-            </article>
-
-            <article class="producto-nuevo">
-                <div class="producto-nuevo__imagen">
-                    <img src="{{ asset('assets/images/store/Qubano.jpeg') }}" alt="Reloj Qubano para hombre" />
-                    <span class="descuento">-17%</span>
-                </div>
-                <h2 class="producto-nuevo__nombre">Reloj Qubano para hombre</h2>
-                <p class="producto-nuevo__precio">
-                    <span class="precio-actual">$112.500,00</span>
-                    <del class="precio-anterior">$135.000,00</del>
-                </p>
-                <a href="{{ route('store.carrito') }}"><button class="boton producto-nuevo__boton">Añadir al carrito</button></a>
-            </article>
-
-            <article class="producto-nuevo">
-                <div class="producto-nuevo__imagen">
-                    <img src="{{ asset('assets/images/store/FoxBox.jpeg') }}" alt="Reloj FoxBox para hombre" />
-                    <span class="descuento">-14%</span>
-                </div>
-                <h2 class="producto-nuevo__nombre">Reloj FoxBox para hombre</h2>
-                <p class="producto-nuevo__precio">
-                    <span class="precio-actual">$89.900,00</span>
-                    <del class="precio-anterior">$105.000,00</del>
-                </p>
-                <a href="{{ route('store.carrito') }}"><button class="boton producto-nuevo__boton">Añadir al carrito</button></a>
-            </article>
-        </section>
-
-
-
-
-
-    </main>
-<footer class="pie-pagina" id="sobre-nosotros">
-      <div class="pie-pagina__marca">
-        <img src="{{ asset('assets/images/store/Logo.png') }}" alt="Logo de Deluxe Store" />
-        <p class="pie-pagina__nombre">Deluxe Store</p>
-
-        <div class="redes-sociales">
-          <a href="https://www.instagram.com/deluxestoremajo?stkn=MXQ2NDFqejMweWdpYg==" aria-label="Instagram"><i class="bi bi-instagram"></i></a>
-          <a href="https://www.tiktok.com/@deluxestoremajo?_r=1&_t=ZS-9ALdsl9GegP" aria-label="TikTok"><i class="bi bi-tiktok"></i></a>
-        </div>
-      </div>
-
-      <ul class="pie-pagina__enlaces">
-        <li><a href="#informacion-legal">Información legal</a></li>
-        <li><a href="#terminos">Términos y Condiciones</a></li>
-        <li><a href="#privacidad">Políticas de privacidad</a></li>
-        <li><a href="#envio">Políticas de envío</a></li>
-        <li><a href="#devoluciones">Cambios y devolución</a></li>
-      </ul>
-    </footer>
-
-</body>
-</html>
+    {{ $products->links() }}
+</main>
+@endsection

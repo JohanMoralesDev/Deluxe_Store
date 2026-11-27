@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Product extends Model
 {
@@ -89,6 +90,15 @@ class Product extends Model
     {
         return $this->hasOne(
             Inventory::class,
+            'id_producto',
+            'id_producto'
+        );
+    }
+
+    public function orderDetails(): HasMany
+    {
+        return $this->hasMany(
+            OrderDetail::class,
             'id_producto',
             'id_producto'
         );
