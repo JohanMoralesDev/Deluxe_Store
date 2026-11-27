@@ -118,7 +118,22 @@ class Product extends Model
 
     public function getImageUrlAttribute(): string
     {
-        return asset($this->url_imagen ?: 'assets/Imagenes/Logo.png');
+        $imagenesCurrenLocales = [
+            'CUR-8225' => 'assets/images/store/curren-8225.jpg',
+            'CUR-8329' => 'assets/images/store/curren-8329.jpg',
+            'CUR-8355' => 'assets/images/store/curren-8355.jpg',
+            'CUR-8473' => 'assets/images/store/curren-8473.jpg',
+            'CUR-9007' => 'assets/images/store/curren-9007.jpg',
+        ];
+
+        $sku = (string) ($this->attributes['codigo_sku'] ?? '');
+        $imagenLocal = $imagenesCurrenLocales[$sku] ?? null;
+
+        if ($imagenLocal !== null && is_file(public_path($imagenLocal))) {
+            return asset($imagenLocal);
+        }
+
+        return asset($this->url_imagen ?: 'assets/images/store/imagen-referencia.svg');
     }
 
     public function getHasOfferAttribute(): bool

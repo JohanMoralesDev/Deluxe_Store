@@ -7,8 +7,8 @@
 @endpush
 
 @section('content')
-<div class="contenido-catalogo">
-  <a href="{{ route('store.catalogo') }}">← Volver al catálogo</a>
+<div class="contenido-catalogo detalle-producto">
+  <a class="enlace-explorar" href="{{ route('store.catalogo') }}"><i class="bi bi-arrow-left" aria-hidden="true"></i> Explora toda la colección</a>
 
   <div class="row">
     <div class="col-m-6">
@@ -30,19 +30,20 @@
 
       <form method="POST" action="{{ route('cart.add', $product) }}">
         @csrf
-        <button type="submit" class="agregar-carrito"><i class="bi bi-cart-plus"></i> Añadir al carrito</button>
+        <button type="submit" class="agregar-carrito"><i class="bi bi-cart-plus" aria-hidden="true"></i> Añadir al carrito</button>
       </form>
     </div>
   </div>
 
   @if ($related->isNotEmpty())
-    <h2>Más de esta colección</h2>
+    <h2>Descubre más de esta selección</h2>
     <div class="row">
       @foreach ($related as $item)
         <article class="col-m-3 col-s-6 product-box">
-          <a href="{{ route('products.show', $item) }}">
+          <a class="enlace-producto-relacionado" href="{{ route('products.show', $item) }}" aria-label="Conoce {{ $item->nombre }}">
             <img src="{{ $item->image_url }}" alt="{{ $item->nombre }}">
             <h3>{{ $item->nombre }}</h3>
+            <span class="enlace-explorar">Conoce este producto <i class="bi bi-arrow-right" aria-hidden="true"></i></span>
           </a>
         </article>
       @endforeach

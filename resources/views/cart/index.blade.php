@@ -17,7 +17,7 @@
     @if(empty($items))
         <section class="carrito-vacio">
             <p>Tu carrito está vacío.</p>
-            <a href="{{ route('store.catalogo') }}" class="boton-continuar">Ir al catálogo</a>
+            <a href="{{ route('store.catalogo') }}" class="boton-continuar"><i class="bi bi-compass" aria-hidden="true"></i> Explora toda la colección</a>
         </section>
     @else
         <div class="carrito-layout">
@@ -85,7 +85,7 @@
                 @else
                     <p>Inicia sesion para finalizar tu compra.</p>
                 @endauth
-                <a href="{{ route('store.catalogo') }}" class="boton-continuar">Continuar comprando</a>
+                <a href="{{ route('store.catalogo') }}" class="boton-continuar"><i class="bi bi-arrow-left" aria-hidden="true"></i> Sigue descubriendo</a>
 
                 <form method="POST" action="{{ route('cart.clear') }}">
                     @csrf

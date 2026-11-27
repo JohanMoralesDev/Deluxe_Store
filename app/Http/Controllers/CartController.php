@@ -34,9 +34,9 @@ class CartController extends Controller
 
         if ($newQty > $product->stock) {
             $newQty = $product->stock;
-            $msg = "Solo hay {$product->stock} unidades de {$product->name}.";
+            $msg = "Solo hay {$product->stock} unidades de {$product->name}; ajustamos tu carrito a esa cantidad.";
         } else {
-            $msg = "{$product->name} agregado al carrito.";
+            $msg = "Listo, {$product->name} se añadió a tu carrito.";
         }
 
         $cart[$product->id] = ['quantity' => $newQty];

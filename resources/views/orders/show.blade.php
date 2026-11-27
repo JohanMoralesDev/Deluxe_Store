@@ -27,6 +27,6 @@
     </section>
 
     <h2>Total: ${{ number_format($order->total, 2, ',', '.') }}</h2>
-    <a href="{{ route('orders.index') }}" class="boton-continuar">Volver al historial</a>
+    <a href="{{ route('orders.index') }}" class="boton-continuar"><i class="bi bi-arrow-left" aria-hidden="true"></i> Consultar mis pedidos</a>
 </main>
 @endsection

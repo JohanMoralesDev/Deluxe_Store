@@ -11,11 +11,9 @@ class HomeController extends Controller
     {
         $productosDestacados = Product::query()
             ->active()
-            ->whereHas('orderDetails')
             ->with('category')
-            ->withSum('orderDetails as unidades_vendidas', 'cantidad')
-            ->orderByDesc('unidades_vendidas')
-            ->take(4)
+            ->inRandomOrder()
+            ->limit(5)
             ->get();
 
         return view('home.index', compact('productosDestacados'));

@@ -9,7 +9,7 @@
     <section class="nueva-coleccion" id="inicio">
         <div class="nueva-coleccion__texto">
             <h1 class="titulo">Nueva Colección</h1>
-            <a href="{{ route('store.nuevo') }}" class="boton">Descubre más</a>
+            <a href="{{ route('store.nuevo') }}" class="boton">Descubre las novedades <i class="bi bi-arrow-right" aria-hidden="true"></i></a>
         </div>
     </section>
 
@@ -18,7 +18,7 @@
             <span class="mas-vendidos__etiqueta">SELECCIÓN DEL MOMENTO</span>
             <br>
             <h2 class="titulo" id="titulo-mas-vendidos">Más vendidos</h2>
-            <p class="mas-vendidos__descripcion">Productos ordenados por unidades vendidas registradas.</p>
+            <p class="mas-vendidos__descripcion">Una selección aleatoria de productos activos disponibles.</p>
         </div>
 
         @if ($productosDestacados->isNotEmpty())
@@ -34,7 +34,7 @@
                                 <span class="producto-etiqueta">-{{ $descuento }}%</span>
                             @endif
                             <a href="{{ route('products.show', $product) }}" class="producto-accion">
-                                <i class="bi bi-eye" aria-hidden="true"></i> Ver producto
+                                <i class="bi bi-eye" aria-hidden="true"></i> Conoce este producto
                             </a>
                         </div>
 
@@ -52,7 +52,7 @@
                 @endforeach
             </div>
         @else
-            <p class="mas-vendidos__descripcion">Aún no hay ventas registradas para mostrar productos destacados.</p>
+            <p class="mas-vendidos__descripcion">Aún no hay productos disponibles para mostrar.</p>
         @endif
 
         <div class="mas-vendidos__pie">
