@@ -27,7 +27,7 @@ class HomeController extends Controller
             ->active()
             ->with(['category', 'inventory'])
             ->latest('creado_en')
-            ->paginate(8);
+            ->get();
 
         return view('store.nuevo', compact('products'));
     }

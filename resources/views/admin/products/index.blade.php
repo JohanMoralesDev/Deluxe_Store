@@ -27,7 +27,7 @@
                     <td>${{ number_format((float) $producto->price, 0, ',', '.') }}</td>
                     <td>{{ $producto->inventory?->cantidad ?? 0 }}</td>
                     <td>{{ $producto->inventory?->stock_minimo ?? 5 }}</td>
-                    <td>{{ $producto->esta_activo ? 'Activo' : 'Inactivo' }}</td>
+                    <td>{{ $producto->esta_activo ? 'Publicado' : 'Borrador / desactivado' }}</td>
                     <td class="text-end text-nowrap">
                         <a class="btn btn-sm btn-outline-success" href="{{ route('admin.products.show', $producto) }}">Ver</a>
                         <a class="btn btn-sm btn-outline-secondary" href="{{ route('admin.products.edit', $producto) }}">Editar</a>

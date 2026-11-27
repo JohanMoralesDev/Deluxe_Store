@@ -10,7 +10,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300..700;1,300..700&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
-    @vite(['public/assets/css/admin.css', 'public/assets/css/assistant.css', 'public/assets/js/admin.js'])
+    @vite(['public/assets/css/admin.css', 'public/assets/css/assistant.css', 'public/assets/js/admin.js', 'public/assets/js/assistant.js'])
     @stack('head')
     @stack('styles')
 </head>
@@ -27,8 +27,8 @@
             <a href="{{ route('admin.index') }}" class="enlace-admin @yield('menu-dashboard')"><i class="bi bi-grid" aria-hidden="true"></i><span>Dashboard</span></a>
             <a href="{{ route('admin.inventory.index') }}" class="enlace-admin @yield('menu-inventario')"><i class="bi bi-box-seam" aria-hidden="true"></i><span>Inventario</span></a>
             <a href="{{ route('admin.inventory.index') }}#movimientos" class="enlace-admin"><i class="bi bi-arrow-left-right" aria-hidden="true"></i><span>Movimientos</span></a>
-            <a href="{{ route('admin.orders.index') }}" class="enlace-admin"><i class="bi bi-receipt" aria-hidden="true"></i><span>Pedidos</span></a>
-            <a href="{{ route('admin.reports.index') }}" class="enlace-admin"><i class="bi bi-bar-chart" aria-hidden="true"></i><span>Informes</span></a>
+            <a href="{{ route('admin.orders.index') }}" class="enlace-admin @yield('menu-pedidos')"><i class="bi bi-receipt" aria-hidden="true"></i><span>Pedidos</span></a>
+            <a href="{{ route('admin.reports.index') }}" class="enlace-admin @yield('menu-reportes')"><i class="bi bi-bar-chart" aria-hidden="true"></i><span>Informes</span></a>
             <a href="{{ route('admin.productos.index') }}" class="enlace-admin"><i class="bi bi-tags" aria-hidden="true"></i><span>Productos</span></a>
             <a href="{{ route('admin.categories.index') }}" class="enlace-admin"><i class="bi bi-collection" aria-hidden="true"></i><span>Categorías</span></a>
         </nav>

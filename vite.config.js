@@ -17,6 +17,7 @@ export default defineConfig({
                 'public/assets/css/assistant.css',
                 'public/assets/js/script.js',
                 'public/assets/js/admin.js',
+                'public/assets/js/assistant.js',
             ],
             refresh: true,
         }),

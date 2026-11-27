@@ -10,7 +10,7 @@
     </div>
 
     <div class="card"><div class="card-body">
-        <form method="POST" action="{{ route('admin.products.update', $product) }}">
+        <form method="POST" action="{{ route('admin.products.update', $product) }}" enctype="multipart/form-data">
             @csrf
             @method('PUT')
             @include('admin.products._form', ['submitLabel' => 'Guardar cambios'])

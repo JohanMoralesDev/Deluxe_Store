@@ -60,12 +60,11 @@ class Product extends Model
 
     public function getPriceAttribute(): float
     {
+        $original = (float) ($this->attributes['precio'] ?? 0);
         $offer = $this->attributes['precio_oferta'] ?? null;
-        $price = $offer !== null && (float) $offer > 0
-            ? $offer
-            : ($this->attributes['precio'] ?? 0);
+        $hasValidOffer = $offer !== null && (float) $offer > 0 && (float) $offer < $original;
 
-        return (float) $price;
+        return $hasValidOffer ? (float) $offer : $original;
     }
 
     public function getStockAttribute(): int
@@ -127,5 +126,17 @@ class Product extends Model
         $offer = (float) ($this->attributes['precio_oferta'] ?? 0);
 
         return $offer > 0 && $offer < (float) ($this->attributes['precio'] ?? 0);
+    }
+
+    public function getDiscountPercentAttribute(): int
+    {
+        if (! $this->has_offer) {
+            return 0;
+        }
+
+        $original = (float) $this->attributes['precio'];
+        $offer = (float) $this->attributes['precio_oferta'];
+
+        return max(1, (int) round((($original - $offer) / $original) * 100));
     }
 }

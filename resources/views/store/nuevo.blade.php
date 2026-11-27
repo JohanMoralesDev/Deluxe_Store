@@ -1,6 +1,6 @@
 ﻿@extends('layouts.app')
 
-@section('title', 'Nuevos modelos | Deluxe Store')
+@section('title', 'Novedades | Deluxe Store')
 
 @push('head')
     @vite(['public/assets/css/nuevo.css'])
@@ -11,8 +11,8 @@
     <section class="nuevo-modelo" id="nuevo" aria-labelledby="titulo-nuevo">
         <img src="{{ asset('assets/images/store/Rolex.jpeg') }}" alt="Relojes de la colección Deluxe Store" />
         <div class="contenedor-texto">
-            <h1 class="titulo-nuevo" id="titulo-nuevo">Nuevos modelos</h1>
-            <p class="subtitulo-nuevo">Consulta las incorporaciones más recientes</p>
+            <h1 class="titulo-nuevo" id="titulo-nuevo">Novedades</h1>
+            <p class="subtitulo-nuevo">Consulta los productos agregados recientemente</p>
         </div>
     </section>
 
@@ -53,6 +53,5 @@
         @endforelse
     </section>
 
-    {{ $products->links() }}
 </main>
 @endsection

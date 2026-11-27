@@ -74,6 +74,7 @@ function mostrarRegistro() {
 if (botonAbrirModal) {
   botonAbrirModal.addEventListener("click", abrirModal);
 }
+document.getElementById("abrirModalPerfilMovil")?.addEventListener("click", abrirModal);
  
 if (botonCerrarModal) {
   botonCerrarModal.addEventListener("click", cerrarModal);

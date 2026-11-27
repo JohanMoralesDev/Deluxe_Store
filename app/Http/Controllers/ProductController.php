@@ -6,8 +6,14 @@ use App\Models\Category;
 use App\Models\Product;
 use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
+use App\Services\InventoryService;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
+use RuntimeException;
+use Throwable;
 use Illuminate\View\View;
 
 class ProductController extends Controller
@@ -22,21 +28,21 @@ class ProductController extends Controller
             return view('admin.products.index', compact('productos'));
         }
 
-        $precioVigente = 'COALESCE(NULLIF(precio_oferta, 0), precio)';
+        $precioVigente = 'CASE WHEN precio_oferta > 0 AND precio_oferta < precio THEN precio_oferta ELSE precio END';
         $products = Product::with('category')
+            ->with('inventory')
             ->active()
             ->search($request->query('q'))
-            ->when($request->filled('categoria'), fn ($query, $value) => $query->where('id_categoria', $value))
-            ->when($request->filled('publico'), fn ($query, $value) => $query->where('publico', $value))
-            ->when($request->filled('tamano'), fn ($query, $value) => $query->where('tamano_esfera', $value))
+            ->when($request->filled('categoria'), fn ($query) => $query->where('id_categoria', $request->query('categoria')))
+            ->when($request->filled('publico'), fn ($query) => $query->where('publico', $request->query('publico')))
+            ->when($request->filled('tamano'), fn ($query) => $query->where('tamano_esfera', $request->query('tamano')))
             ->when($request->boolean('nuevos'), fn ($query) => $query->where('creado_en', '>=', now()->subMonths(6)))
-            ->when($request->filled('orden'), fn ($query, $orden) => match ($orden) {
+            ->when($request->filled('orden'), fn ($query) => match ($request->query('orden')) {
                 'precio_asc' => $query->orderByRaw("$precioVigente ASC"),
                 'precio_desc' => $query->orderByRaw("$precioVigente DESC"),
                 default => $query->latest('creado_en'),
             }, fn ($query) => $query->latest('creado_en'))
-            ->paginate(12)
-            ->withQueryString();
+            ->get();
 
         $categories = Category::where('esta_activa', true)->orderBy('nombre')->get();
 
@@ -50,17 +56,42 @@ class ProductController extends Controller
         return view('admin.products.create', compact('categorias'));
     }
 
-    public function store(StoreProductRequest $request)
+    public function store(StoreProductRequest $request, InventoryService $inventoryService)
     {
         $datos = $request->validated();
+        $cantidadInicial = (int) $datos['cantidad_inicial'];
+        $imagen = $datos['imagen'] ?? null;
+        unset($datos['cantidad_inicial'], $datos['imagen']);
         $datos['esta_activo'] = $request->boolean('esta_activo');
-        DB::transaction(function () use ($datos): void {
-            $product = Product::create($datos);
-            $product->inventory()->create([
-                'cantidad' => 0,
-                'stock_minimo' => 5,
-            ]);
-        });
+        $rutaImagen = $imagen instanceof UploadedFile ? $this->storeProductImage($imagen) : null;
+        if ($rutaImagen !== null) {
+            $datos['url_imagen'] = $rutaImagen;
+        }
+
+        try {
+            DB::transaction(function () use ($datos, $cantidadInicial, $inventoryService): void {
+                $product = Product::create($datos);
+                $product->inventory()->create([
+                    'cantidad' => 0,
+                    'stock_minimo' => 5,
+                ]);
+
+                if ($cantidadInicial > 0) {
+                    $inventoryService->registerEntry(
+                        $product->getKey(),
+                        $cantidadInicial,
+                        Auth::id(),
+                        'Existencia inicial al crear producto'
+                    );
+                }
+            });
+        } catch (Throwable $exception) {
+            if ($rutaImagen !== null) {
+                $this->deleteManagedProductImage($rutaImagen);
+            }
+
+            throw $exception;
+        }
 
         return redirect()->route('admin.products.index')
             ->with('success', 'Producto registrado correctamente.');
@@ -95,8 +126,28 @@ class ProductController extends Controller
     public function update(UpdateProductRequest $request, Product $product)
     {
         $datos = $request->validated();
+        $imagen = $datos['imagen'] ?? null;
+        unset($datos['imagen']);
         $datos['esta_activo'] = $request->boolean('esta_activo');
-        $product->update($datos);
+        $imagenAnterior = $product->url_imagen;
+        $rutaImagen = $imagen instanceof UploadedFile ? $this->storeProductImage($imagen) : null;
+        if ($rutaImagen !== null) {
+            $datos['url_imagen'] = $rutaImagen;
+        }
+
+        try {
+            DB::transaction(fn () => $product->update($datos));
+        } catch (Throwable $exception) {
+            if ($rutaImagen !== null) {
+                $this->deleteManagedProductImage($rutaImagen);
+            }
+
+            throw $exception;
+        }
+
+        if ($imagenAnterior !== $product->url_imagen) {
+            $this->deleteReplacedImageIfUnused($imagenAnterior, $product->getKey());
+        }
 
         return redirect()->route('admin.products.index')
             ->with('success', 'Producto actualizado correctamente.');
@@ -108,5 +159,41 @@ class ProductController extends Controller
 
         return redirect()->route('admin.products.index')
             ->with('success', 'Producto desactivado correctamente.');
+    }
+
+    private function storeProductImage(UploadedFile $image): string
+    {
+        $path = $image->storePublicly('productos', 'public');
+
+        if (! is_string($path) || $path === '') {
+            throw new RuntimeException('No fue posible guardar la imagen del producto.');
+        }
+
+        return 'storage/'.$path;
+    }
+
+    private function deleteManagedProductImage(?string $path): void
+    {
+        $prefix = 'storage/productos/';
+        if ($path !== null && str_starts_with($path, $prefix)) {
+            Storage::disk('public')->delete(substr($path, strlen('storage/')));
+        }
+    }
+
+    private function deleteReplacedImageIfUnused(?string $path, int $productId): void
+    {
+        $prefix = 'storage/productos/';
+        if ($path === null || ! str_starts_with($path, $prefix)) {
+            return;
+        }
+
+        $stillReferenced = Product::query()
+            ->where('url_imagen', $path)
+            ->where('id_producto', '!=', $productId)
+            ->exists();
+
+        if (! $stillReferenced) {
+            $this->deleteManagedProductImage($path);
+        }
     }
 }

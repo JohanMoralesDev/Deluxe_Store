@@ -1,8 +1,11 @@
 <?php
 
 use App\Http\Controllers\Admin\AdminProductController;
+use App\Http\Controllers\Admin\AdminOrderController;
+use App\Http\Controllers\Admin\AssistantController as AdminAssistantController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\InventoryController;
+use App\Http\Controllers\Admin\ReportController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\CartController;
@@ -11,6 +14,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\StoreAssistantController;
 use Illuminate\Support\Facades\Route;
 
 // Compatibilidad con enlaces de las páginas HTML originales.
@@ -24,6 +28,9 @@ Route::get('/', [HomeController::class, 'index'])->name('store.index');
 Route::get('/nuevo', [HomeController::class, 'newArrivals'])->name('store.nuevo');
 Route::get('/catalogo', [ProductController::class, 'index'])->name('store.catalogo');
 Route::get('/productos/{product}', [ProductController::class, 'show'])->name('products.show');
+Route::post('/asistente/consulta', [StoreAssistantController::class, 'ask'])
+    ->middleware('throttle:20,1')
+    ->name('assistant.store.ask');
 
 Route::get('/carrito', [CartController::class, 'index'])->name('store.carrito');
 Route::post('/carrito/{product}', [CartController::class, 'add'])->name('cart.add');
@@ -56,7 +63,13 @@ Route::middleware(['auth', 'auth.session'])->group(function () {
 
 Route::middleware(['auth', 'auth.session', 'admin'])->prefix('admin')->group(function () {
     Route::get('/', [DashboardController::class, 'index'])->name('admin.index');
+    Route::post('/asistente/consulta', [AdminAssistantController::class, 'ask'])
+        ->middleware('throttle:20,1')
+        ->name('admin.assistant.ask');
     Route::get('/productos', [AdminProductController::class, 'index'])->name('admin.productos.index');
+    Route::get('/pedidos', [AdminOrderController::class, 'index'])->name('admin.orders.index');
+    Route::get('/pedidos/{order}', [AdminOrderController::class, 'show'])->name('admin.orders.show');
+    Route::get('/informes', [ReportController::class, 'index'])->name('admin.reports.index');
     Route::get('/inventario', [InventoryController::class, 'index'])->name('admin.inventory.index');
     Route::post('/inventario/{product}/movimientos', [InventoryController::class, 'storeMovement'])
         ->name('admin.inventory.movements.store');

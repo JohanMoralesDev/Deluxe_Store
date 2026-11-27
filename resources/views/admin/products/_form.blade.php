@@ -48,16 +48,30 @@
         </select>
     </div>
     <div class="col-12">
-        <label class="form-label" for="producto-imagen">Ruta de imagen</label>
-        <input class="form-control" id="producto-imagen" name="url_imagen" value="{{ old('url_imagen', $product?->url_imagen) }}" maxlength="500" placeholder="assets/images/store/nombre-imagen.jpeg">
+        <label class="form-label" for="producto-imagen">Subir imagen del producto (JPG, PNG o WebP; máximo 5 MB)</label>
+        <input class="form-control" id="producto-imagen" type="file" name="imagen" accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp">
+        @if ($product?->url_imagen)
+            <div class="mt-2">
+                <img src="{{ $product->image_url }}" alt="Imagen actual de {{ $product->nombre }}" style="max-width: 160px; max-height: 120px; object-fit: contain">
+            </div>
+        @endif
+        <label class="form-label mt-3" for="producto-ruta-imagen">Ruta existente (opcional)</label>
+        <input class="form-control" id="producto-ruta-imagen" name="url_imagen" value="{{ old('url_imagen', $product?->url_imagen) }}" maxlength="500" placeholder="assets/images/store/nombre-imagen.jpeg">
+        <div class="form-text">Si subes un archivo, este reemplazará la ruta indicada.</div>
     </div>
+    @if (!$product)
+        <div class="col-md-6">
+            <label class="form-label" for="producto-stock-inicial">Existencias iniciales</label>
+            <input class="form-control" id="producto-stock-inicial" type="number" name="cantidad_inicial" min="0" max="4294967295" step="1" value="{{ old('cantidad_inicial', 0) }}" required>
+        </div>
+    @endif
     <div class="col-12">
         <label class="form-label" for="producto-descripcion">Descripción</label>
         <textarea class="form-control" id="producto-descripcion" name="descripcion" rows="4">{{ old('descripcion', $product?->descripcion) }}</textarea>
     </div>
     <div class="col-12 form-check ms-2">
         <input class="form-check-input" id="producto-activo" type="checkbox" name="esta_activo" value="1" @checked(old('esta_activo', $product?->esta_activo ?? true))>
-        <label class="form-check-label" for="producto-activo">Producto activo</label>
+        <label class="form-check-label" for="producto-activo">Publicado en la tienda (desmarcar para dejar en borrador o desactivar)</label>
     </div>
 </div>
 

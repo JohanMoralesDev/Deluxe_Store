@@ -69,11 +69,16 @@
         <a href="{{ route('store.catalogo') }}" @if (request()->routeIs('store.catalogo', 'products.*')) aria-current="page" @endif>Catálogo</a>
         <a href="{{ route('store.nuevo') }}" @if (request()->routeIs('store.nuevo')) aria-current="page" @endif>Novedades</a>
         <a href="{{ route('store.index') }}#sobre-nosotros">Sobre nosotros</a>
+        <a href="{{ route('store.carrito') }}">Carrito</a>
         @auth
             <a href="{{ route('account.show') }}">Mi cuenta</a>
             @if (auth()->user()->roles->contains('nombre', 'ADMINISTRADOR'))
                 <a href="{{ route('admin.index') }}">Panel administrativo</a>
             @endif
+            <form class="menu-movil-sesion" action="{{ route('auth.logout') }}" method="POST">
+                @csrf
+                <button type="submit">Cerrar sesión</button>
+            </form>
         @else
             <button class="menu-movil-cuenta" type="button" id="abrirModalPerfilMovil" aria-controls="modalAutenticacion">
                 Iniciar sesión o registrarse

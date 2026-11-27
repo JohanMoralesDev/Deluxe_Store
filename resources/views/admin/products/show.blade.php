@@ -17,7 +17,7 @@
                 <dt class="col-sm-3">Precio de oferta</dt><dd class="col-sm-9">${{ number_format((float) $product->precio_oferta, 0, ',', '.') }}</dd>
             @endif
             <dt class="col-sm-3">Existencias</dt><dd class="col-sm-9">{{ $product->inventory?->cantidad ?? 0 }}</dd>
-            <dt class="col-sm-3">Estado</dt><dd class="col-sm-9">{{ $product->esta_activo ? 'Activo' : 'Inactivo' }}</dd>
+            <dt class="col-sm-3">Estado</dt><dd class="col-sm-9">{{ $product->esta_activo ? 'Publicado' : 'Borrador / desactivado' }}</dd>
             <dt class="col-sm-3">Descripción</dt><dd class="col-sm-9">{{ $product->descripcion ?: 'Sin descripción.' }}</dd>
         </dl>
     </div></div>
